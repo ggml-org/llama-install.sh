@@ -55,11 +55,25 @@ set(GGML_NATIVE OFF CACHE BOOL "" FORCE)
 set(GGML_OPENMP OFF CACHE BOOL "" FORCE)
 set(GGML_LTO    OFF CACHE BOOL "" FORCE)
 
-set(LLAMA_BUILD_BORINGSSL ON  CACHE BOOL "" FORCE)
+set(LLAMA_BUILD_BORINGSSL OFF CACHE BOOL "" FORCE)
+set(LLAMA_BUILD_LIBRESSL  ON  CACHE BOOL "" FORCE)
 set(LLAMA_BUILD_COMMON    ON  CACHE BOOL "" FORCE)
 set(LLAMA_BUILD_TOOLS     ON  CACHE BOOL "" FORCE)
 set(LLAMA_BUILD_SERVER    ON  CACHE BOOL "" FORCE)
 set(LLAMA_BUILD_APP       ON  CACHE BOOL "" FORCE)
+
+# Zig clang in cross mode to x86_64-windows-gnu exposes glibc symbols (syslog,
+# getentropy, ...) that LibreSSL's check_function_exists picks up as available
+# but that fail to compile because the mingw headers do not declare them.
+# Pin these probes to FALSE so the compat layer keeps its Windows fallbacks.
+set(HAVE_GETENTROPY FALSE CACHE INTERNAL "")
+set(HAVE_SYSLOG     FALSE CACHE INTERNAL "")
+set(HAVE_SYSLOG_R   FALSE CACHE INTERNAL "")
+
+# LibreSSL ships mingw64 perlasm output that uses COFF directives like .def /
+# .scl / .endef which the Zig clang assembler does not understand. Disable the
+# assembly path so the C fallback is used in this cross compile.
+set(ENABLE_ASM OFF CACHE BOOL "" FORCE)
 
 #add_compile_options(
 #    -ffp-model=fast
@@ -97,6 +111,11 @@ else()
         TARGET_DIRECTORY ggml-cpu
         APPEND PROPERTY COMPILE_OPTIONS "-fno-unroll-loops"
     )
+    # LTO through clang cross to mingw miscompiles the SSL stack bignum, which
+    # silently hangs the TLS handshake on the Windows prebuilds. Keep LTO off
+    # on the crypto and ssl targets even when the global IPO is on.
+    set_target_properties(crypto PROPERTIES INTERPROCEDURAL_OPTIMIZATION OFF)
+    set_target_properties(ssl    PROPERTIES INTERPROCEDURAL_OPTIMIZATION OFF)
 endif()
 
 llama_install_link_win32_shim(${LLAMA_INSTALL_TARGET})
