@@ -16,16 +16,6 @@ check_path() {
 	return 1
 }
 
-setup_path() {
-	for arg; do
-		printf "Configuring ~/%s\n" "$arg"
-		cat >> "$HOME/$arg" <<-'EOF'
-		# Added by ggml-org/llama-install.sh
-		export PATH="$HOME/.local/bin:$PATH"
-		EOF
-	done
-}
-
 dl_bin() {
 	[ -x "$1" ] && return
 	check_bin curl || die "Please install curl"
@@ -134,8 +124,8 @@ main() {
 	printf "Installation completed successfully\n\n"
 
 	if check_path "$PATH"; then
-		cat <<-'EOF'
-		Please run the following command to start it:
+		cat <<-EOF
+		Run the following command to start it:
 
 		  llama serve
 
@@ -146,22 +136,36 @@ main() {
 	LOGIN_SHELL="${SHELL:-/bin/sh}"
 	LOGIN_PATH=$("$LOGIN_SHELL" -l -c 'echo $PATH' 2>/dev/null)
 
-	if [ -z "$SKIP_PATH_UPDATE" ] && ! check_path "$LOGIN_PATH"; then
-		case "$LOGIN_SHELL" in
-		(*zsh*)  setup_path .zshrc  .zprofile     ;;
-		(*bash*) setup_path .bashrc .bash_profile ;;
-		esac
-		LOGIN_PATH=$("$LOGIN_SHELL" -l -c 'echo $PATH' 2>/dev/null)
-	fi
-
 	if check_path "$LOGIN_PATH"; then
 		cat <<-'EOF'
 		Please open a new terminal window or restart your shell.
-		Or ensure ~/.local/bin is in PATH:
 
-		  export PATH="$HOME/.local/bin:$PATH"
+		  llama serve
 
-		Then, run the following command to start it:
+		EOF
+	else
+		RC_FILE=
+		case "${SHELL##*/}" in
+		(bash) RC_FILE=".bash_profile" ;;
+		(zsh)  RC_FILE=".zprofile" ;;
+		esac
+		if [ "$RC_FILE" ]; then
+			cat <<-EOF
+			To make llama available in future sessions, add ~/.local/bin to your PATH by running:
+
+			  echo 'export PATH="\$HOME/.local/bin:\$PATH"' >> ~/${RC_FILE}
+
+			EOF
+		else
+			cat <<-EOF
+			Add this line to your shell profile to include ~/.local/bin to your PATH:
+
+			  export PATH="\$HOME/.local/bin:\$PATH"
+
+			EOF
+		fi
+		cat <<-EOF
+		Then open a new terminal and run:
 
 		  llama serve
 
