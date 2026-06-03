@@ -24,7 +24,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      ZIG_VERSION: "0.17.0-dev.389+f5a1968f6"
+      ZIG_VERSION: "0.17.0-dev.657+2faf8debf"
       VULKAN_VERSION: "1.4.350.1"
 
     steps:
