@@ -94,7 +94,7 @@ endif()
 #)
 
 add_compile_options(
-    -fmacro-prefix-map=${CMAKE_SOURCE_DIR}/deps//=
+    -fmacro-prefix-map=${CMAKE_SOURCE_DIR}/deps/=
     -ffunction-sections
     -fdata-sections
     -fno-ident
