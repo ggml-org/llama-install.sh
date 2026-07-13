@@ -28,7 +28,7 @@ jobs:
     runs-on: ${{ startsWith(inputs.filter, 'aarch64-') && 'ubuntu-22.04-arm' || 'ubuntu-22.04' }}
     env:
       CUDA_VERSION_128: "12.8.2"
-      CUDA_VERSION_129: "12.9.0"
+      CUDA_VERSION_129: "12.9.2"
     steps:
       - uses: actions/checkout@v5
 

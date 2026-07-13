@@ -24,7 +24,7 @@ jobs:
   build:
     runs-on: ubuntu-22.04
     env:
-      ROCM_VERSION: "7.15.0a20260702"
+      ROCM_VERSION: "7.15.0a20260712"
 
     steps:
       - uses: actions/checkout@v5
