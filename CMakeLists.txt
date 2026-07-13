@@ -48,13 +48,13 @@ FetchDep(llamacpp
 set(CMAKE_BUILD_TYPE "Release" CACHE STRING "" FORCE)
 set(BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE)
 
-# LTO is broken for now
+# LTO is broken on windows for now
 if(LLAMA_INSTALL_OS STREQUAL "windows")
     set(CMAKE_INTERPROCEDURAL_OPTIMIZATION OFF CACHE BOOL "" FORCE)
-    add_compile_options(-g0)
 else()
     set(CMAKE_INTERPROCEDURAL_OPTIMIZATION ON CACHE BOOL "" FORCE)
 endif()
+
 set(CMAKE_POSITION_INDEPENDENT_CODE    ON CACHE BOOL "" FORCE)
 set(CMAKE_SKIP_RPATH                   ON CACHE BOOL "" FORCE)
 
@@ -94,11 +94,11 @@ endif()
 #)
 
 add_compile_options(
-    -fmacro-prefix-map=${CMAKE_SOURCE_DIR}/deps/boringssl/=
-    -fmacro-prefix-map=${CMAKE_SOURCE_DIR}/deps/llamacpp/=
+    -fmacro-prefix-map=${CMAKE_SOURCE_DIR}/deps//=
     -ffunction-sections
     -fdata-sections
     -fno-ident
+    -g0
 )
 
 if(CMAKE_C_COMPILER_ID STREQUAL "Clang" OR CMAKE_C_COMPILER_ID STREQUAL "GNU")
