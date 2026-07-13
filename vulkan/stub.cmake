@@ -19,8 +19,6 @@ if (VULKAN_HEADERS)
         C_VISIBILITY_PRESET default
     )
 
-    llama_install_link_win32_shim(vulkan_stub)
-
     if(WIN32)
         set_target_properties(vulkan_stub PROPERTIES
             OUTPUT_NAME "vulkan-1"

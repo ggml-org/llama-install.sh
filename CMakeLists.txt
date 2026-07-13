@@ -48,7 +48,12 @@ FetchDep(llamacpp
 set(CMAKE_BUILD_TYPE "Release" CACHE STRING "" FORCE)
 set(BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE)
 
-set(CMAKE_INTERPROCEDURAL_OPTIMIZATION ON CACHE BOOL "" FORCE)
+# LTO is broken for now
+if(LLAMA_INSTALL_OS STREQUAL "windows")
+    set(CMAKE_INTERPROCEDURAL_OPTIMIZATION OFF CACHE BOOL "" FORCE)
+else()
+    set(CMAKE_INTERPROCEDURAL_OPTIMIZATION ON CACHE BOOL "" FORCE)
+endif()
 set(CMAKE_POSITION_INDEPENDENT_CODE    ON CACHE BOOL "" FORCE)
 set(CMAKE_SKIP_RPATH                   ON CACHE BOOL "" FORCE)
 
@@ -109,7 +114,6 @@ else()
     message(WARNING "Unknown compiler: ${CMAKE_C_COMPILER_ID}")
 endif()
 
-include("${CMAKE_CURRENT_LIST_DIR}/win32/shim.cmake")
 include("${CMAKE_CURRENT_LIST_DIR}/vulkan/stub.cmake")
 include("${CMAKE_CURRENT_LIST_DIR}/cuda/stub.cmake")
 
@@ -127,8 +131,6 @@ else()
         APPEND PROPERTY COMPILE_OPTIONS "-fno-unroll-loops"
     )
 endif()
-
-llama_install_link_win32_shim(${LLAMA_INSTALL_TARGET})
 
 set(LLAMA_INSTALL_FILE "${LLAMA_INSTALL_DIR}/${LLAMA_INSTALL_TARGET}.zst")
 
