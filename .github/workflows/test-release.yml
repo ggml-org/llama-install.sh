@@ -52,10 +52,36 @@ jobs:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: ${{ matrix.llama }} bench -v -hf ggml-org/test-model-stories260K
 
+  test-no-zstd:
+    name: Test (linux, no zstd)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Hide zstd
+        run: |
+          ZSTD=$(command -v zstd) && sudo mv "$ZSTD" /tmp/zstd.disabled
+          ! command -v zstd
+
+      - name: Install
+        env:
+          LLAMA_BUCKET: ${{ vars.HF_REPO }}
+          LLAMA_VERSION: ${{ inputs.llamacpp_version }}
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: sh install.sh
+
+      - name: Check downloaded binaries
+        run: |
+          for FILE in ~/.llama-app/*; do
+            head -c 4 "$FILE" | od -An -tx1 | tr -d ' \n' | grep -qx 7f454c46 ||
+              { printf "%s: not an ELF binary\n" "$FILE" >&2; exit 1; }
+          done
+
   latest:
     runs-on: ubuntu-latest
     needs:
       - test
+      - test-no-zstd
     if: ${{ vars.HF_REPO != '' && inputs.write_latest == true && inputs.llamacpp_version != '' }}
     steps:
       - uses: actions/checkout@v5

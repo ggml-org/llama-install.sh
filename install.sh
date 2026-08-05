@@ -27,6 +27,9 @@ curl() {
 dl_bin() {
 	[ -x "$1" ] && return
 	check_bin curl || die "Please install curl"
+	case "$2" in
+	(*.zst) check_bin zstd || dl_bin unzstd "$ARCH/$OS/unzstd" || return 1 ;;
+	esac
 	printf "Downloading %s...\n" "$1"
 	case "$2" in
 	(*.zst) curl -fsSL "$REPO/$LLAMA_VERSION/$2" | unzstd ;;
@@ -38,8 +41,7 @@ dl_bin() {
 }
 
 unzstd() (
-	command -v zstd >/dev/null 2>/dev/null && exec zstd -d
-	dl_bin unzstd "$ARCH/$OS/unzstd"
+	check_bin zstd && exec zstd -d
 	exec ./unzstd
 )
 
