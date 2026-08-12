@@ -15,6 +15,12 @@ vkGetInstanceProcAddr(VkInstance i, const char *c)
     return 0;
 }
 
+VK_STUB_ENTRY(PFN_vkVoidFunction)
+vkGetDeviceProcAddr(VkDevice d, const char *c)
+{
+    return 0;
+}
+
 VK_STUB_ENTRY(void)
 vkGetPhysicalDeviceFeatures2(VkPhysicalDevice pd, VkPhysicalDeviceFeatures2 *pdf2)
 { }
