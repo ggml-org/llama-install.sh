@@ -153,10 +153,8 @@ main() {
 	VERSION=$(~/.llama-app/llama version 2>/dev/null) || die \
 		"Downloaded llama binary failed to run"
 
-	case "$VERSION" in
-	("$LLAMA_VERSION"-*) ;;
-	(*) die "Version mismatch: expected $LLAMA_VERSION, got $VERSION" ;;
-	esac
+	echo "$VERSION" | grep -q "build ${LLAMA_VERSION#b}" || die \
+		"Version mismatch: expected build ${LLAMA_VERSION#b}, got $VERSION
 
 	mkdir -p ~/.local/bin &&
 	cp ~/.llama-app/llama ~/.local/bin/llama.tmp &&
