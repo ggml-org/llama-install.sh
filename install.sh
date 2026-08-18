@@ -150,7 +150,7 @@ main() {
 		return
 	fi
 
-	VERSION=$(~/.llama-app/llama version 2>/dev/null) || die \
+	VERSION=$(~/.llama-app/llama version 2>&1) || die \
 		"Downloaded llama binary failed to run"
 
     case "$VERSION" in
