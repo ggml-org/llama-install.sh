@@ -36,6 +36,7 @@ dl_bin() {
 	(*.zst) curl -fsSL "$REPO/$LLAMA_VERSION/$2" | unzstd ;;
 	(*)     curl -fsSL "$REPO/$LLAMA_VERSION/$2" ;;
 	esac > "$1.tmp" 2>/dev/null &&
+	[ -s "$1.tmp" ] &&
 	chmod +x "$1.tmp" && mv "$1.tmp" "$1" && return
 	info "Failed to download"
 	return 1
