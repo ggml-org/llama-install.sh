@@ -635,6 +635,7 @@ jobs:
       - x86_64-linux-cuda
       - x86_64-windows-cuda
       - x86_64-linux-rocm
+      - x86_64-linux-sycl
       - aarch64-macos-metal
     steps:
       - uses: actions/checkout@v5
@@ -658,4 +659,22 @@ jobs:
     with:
       llamacpp_version: ${{ needs.init.outputs.llamacpp_version }}
       write_latest: ${{ needs.init.outputs.write_latest == 'true' }}
+    secrets: inherit
+  x86_64-linux-sycl:
+    name: ${{ matrix.filter }}
+    needs:
+      - init
+    strategy:
+      fail-fast: false
+      matrix:
+        filter:
+          - x86_64-linux-sycl-fp16
+          - x86_64-linux-sycl-probe
+    uses: ./.github/workflows/build-any-sycl.yml
+    with:
+      filter: ${{ matrix.filter }}
+      deploy: true
+      llamacpp_repo: ${{ inputs.llamacpp_repo }}
+      llamacpp_version: ${{ needs.init.outputs.llamacpp_version }}
+      boringssl_version: ${{ needs.init.outputs.boringssl_version }}
     secrets: inherit

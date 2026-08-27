@@ -65,6 +65,14 @@ probe_rocm() {
 	dl_bin llama "$ARCH/$OS/rocm/$CONFIG/llama-app.zst"
 }
 
+probe_sycl() {
+	[ -z "$SKIP_SYCL" ] && info "Probing SYCL..." &&
+	dl_bin sycl-probe "$ARCH/$OS/sycl/probe/probe.zst" &&
+	CONFIG=$(./sycl-probe) 2>/dev/null &&
+	info "Found: $CONFIG" &&
+	dl_bin llama "$ARCH/$OS/sycl/$CONFIG/llama-app.zst"
+}
+
 probe_vulkan() {
 	[ -z "$SKIP_VULKAN" ] && info "Probing Vulkan..." &&
 	dl_bin vulkan-probe "$ARCH/$OS/vulkan/probe/probe.zst" &&
@@ -136,6 +144,7 @@ main() {
 		(macos)   [ -x llama ] || probe_metal ;;
 		(linux)   [ -x llama ] || probe_cuda
 		          [ -x llama ] || probe_rocm
+		          [ -x llama ] || probe_sycl
 		          [ -x llama ] || probe_vulkan
 		          [ -x llama ] || probe_cpu ;;
 		(freebsd) [ -x llama ] || probe_cpu ;;
