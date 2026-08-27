@@ -3729,6 +3729,31 @@
       "generator": "Ninja"
     },
     {
+      "name": "x86_64-linux-sycl-fp16",
+      "binaryDir": "build/${presetName}",
+      "cacheVariables": {
+        "LLAMA_INSTALL_DIR": "${sourceDir}/output/x86_64/linux/sycl/fp16",
+        "LLAMA_INSTALL_OS": "linux",
+        "LLAMA_INSTALL_ARCH": "x86_64",
+        "GGML_SYCL": "ON",
+        "GGML_SYCL_F16": "ON"
+      },
+      "toolchainFile": "toolchains/sycl.cmake",
+      "generator": "Ninja"
+    },
+    {
+      "name": "x86_64-linux-sycl-probe",
+      "binaryDir": "build/${presetName}",
+      "cacheVariables": {
+        "LLAMA_INSTALL_DIR": "${sourceDir}/output/x86_64/linux/sycl/probe",
+        "LLAMA_INSTALL_OS": "linux",
+        "LLAMA_INSTALL_ARCH": "x86_64",
+        "LLAMA_INSTALL_PROBE": "sycl"
+      },
+      "toolchainFile": "toolchains/sycl.cmake",
+      "generator": "Ninja"
+    },
+    {
       "name": "aarch64-macos-metal-m1",
       "binaryDir": "build/${presetName}",
       "cacheVariables": {
@@ -6131,6 +6156,22 @@
     {
       "name": "x86_64-linux-rocm-probe",
       "configurePreset": "x86_64-linux-rocm-probe",
+      "jobs": 0,
+      "targets": [
+        "llama-install"
+      ]
+    },
+    {
+      "name": "x86_64-linux-sycl-fp16",
+      "configurePreset": "x86_64-linux-sycl-fp16",
+      "jobs": 0,
+      "targets": [
+        "llama-install"
+      ]
+    },
+    {
+      "name": "x86_64-linux-sycl-probe",
+      "configurePreset": "x86_64-linux-sycl-probe",
       "jobs": 0,
       "targets": [
         "llama-install"
@@ -9927,6 +9968,32 @@
         {
           "type": "build",
           "name": "x86_64-linux-rocm-probe"
+        }
+      ]
+    },
+    {
+      "name": "x86_64-linux-sycl-fp16",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "x86_64-linux-sycl-fp16"
+        },
+        {
+          "type": "build",
+          "name": "x86_64-linux-sycl-fp16"
+        }
+      ]
+    },
+    {
+      "name": "x86_64-linux-sycl-probe",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "x86_64-linux-sycl-probe"
+        },
+        {
+          "type": "build",
+          "name": "x86_64-linux-sycl-probe"
         }
       ]
     },
