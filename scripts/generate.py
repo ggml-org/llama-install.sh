@@ -602,7 +602,7 @@ def generate_jobs(workflow_presets):
 
     jobs = {}
     for group, filters in groups.items():
-        backend = group.split("-")[2]
+        _, os_name, backend = group.split("-")
         matrix = {"filter": filters}
         extra = {}
         if backend == "cuda":
@@ -611,6 +611,7 @@ def generate_jobs(workflow_presets):
                 for f in filters
             ]}
             extra = {"cuda_code": "${{ matrix.cuda_code }}"}
+        workflow_name = f"{os_name}-{backend}" if backend == "cuda" else backend
         jobs[group] = {
             "name": "${{ matrix.filter }}",
             "needs": ["init"],
@@ -618,7 +619,7 @@ def generate_jobs(workflow_presets):
                 "fail-fast": False,
                 "matrix": matrix
             },
-            "uses": f"./.github/workflows/build-any-{backend}.yml",
+            "uses": f"./.github/workflows/build-any-{workflow_name}.yml",
             "with": {
                 "filter": "${{ matrix.filter }}",
                 **extra,

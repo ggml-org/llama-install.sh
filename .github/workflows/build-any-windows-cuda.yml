@@ -1,11 +1,11 @@
-name: Build any cuda
+name: Build any windows cuda
 
 on:
   workflow_call:
     inputs: &common_inputs
       filter:
         type: string
-        default: 'x86_64-linux-cuda'
+        default: 'x86_64-windows-cuda-12-80'
       cuda_code:
         type: string
         default: '128'
@@ -28,21 +28,14 @@ permissions:
 
 jobs:
   build:
-    runs-on: ${{ contains(inputs.filter, '-windows-') && 'windows-2022' || (startsWith(inputs.filter, 'aarch64-') && 'ubuntu-22.04-arm' || 'ubuntu-22.04') }}
+    runs-on: windows-2022
     steps:
       - uses: actions/checkout@v5
-
-      - name: Setup linux env
-        run: |
-          sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-12 100
-          sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-12 100
-        if: runner.os == 'Linux'
 
       - name: Setup windows env
         uses: ilammy/msvc-dev-cmd@v1
         with:
           arch: x64
-        if: runner.os == 'Windows'
 
       - name: Install cuda
         env:
@@ -57,8 +50,7 @@ jobs:
           BORINGSSL_VERSION: ${{ inputs.boringssl_version }}
           HF_TOKEN: ${{ secrets.HF_TOKEN_READ }}
           FILTER: ${{ inputs.filter }}
-        shell: bash
-        run: cmake --workflow --preset "$FILTER"
+        run: cmake --workflow --preset "$env:FILTER"
 
       - name: Deploy
         if: ${{ inputs.deploy && vars.HF_REPO != '' }}
@@ -66,7 +58,6 @@ jobs:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
           HF_REPO: ${{ vars.HF_REPO }}
           VERSION: ${{ inputs.llamacpp_version || 'test' }}
-        shell: bash
         run: |
           pip install -U "hf[hf_xet]"
-          python scripts/upload.py "$HF_REPO/$VERSION"
+          python scripts/upload.py "$env:HF_REPO/$env:VERSION"

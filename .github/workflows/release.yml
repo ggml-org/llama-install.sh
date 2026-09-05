@@ -472,7 +472,7 @@ jobs:
             cuda_code: '129'
           - filter: aarch64-linux-cuda-probe
             cuda_code: '129'
-    uses: ./.github/workflows/build-any-cuda.yml
+    uses: ./.github/workflows/build-any-linux-cuda.yml
     with:
       filter: ${{ matrix.filter }}
       cuda_code: ${{ matrix.cuda_code }}
@@ -507,7 +507,7 @@ jobs:
             cuda_code: '129'
           - filter: x86_64-linux-cuda-probe
             cuda_code: '129'
-    uses: ./.github/workflows/build-any-cuda.yml
+    uses: ./.github/workflows/build-any-linux-cuda.yml
     with:
       filter: ${{ matrix.filter }}
       cuda_code: ${{ matrix.cuda_code }}
@@ -558,7 +558,7 @@ jobs:
             cuda_code: '130'
           - filter: x86_64-windows-cuda-probe
             cuda_code: '129'
-    uses: ./.github/workflows/build-any-cuda.yml
+    uses: ./.github/workflows/build-any-windows-cuda.yml
     with:
       filter: ${{ matrix.filter }}
       cuda_code: ${{ matrix.cuda_code }}
