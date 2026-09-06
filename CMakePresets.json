@@ -3065,8 +3065,8 @@
         "GGML_STATIC": "ON",
         "CMAKE_CUDA_ARCHITECTURES": "75-real",
         "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc",
-        "CMAKE_CUDA_FLAGS": "-Xcompiler -march=x86_64_v3 -isystem ${sourceDir}/deps/cuda/include",
-        "LLAMA_INSTALL_FLAGS": "-march=x86_64_v3"
+        "CMAKE_CUDA_FLAGS": "-Xcompiler -march=x86-64-v3 -isystem ${sourceDir}/deps/cuda/include",
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
       "toolchainFile": "toolchains/base.cmake",
       "generator": "Ninja"
@@ -3082,8 +3082,8 @@
         "GGML_STATIC": "ON",
         "CMAKE_CUDA_ARCHITECTURES": "80-real",
         "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc",
-        "CMAKE_CUDA_FLAGS": "-Xcompiler -march=x86_64_v3 -isystem ${sourceDir}/deps/cuda/include",
-        "LLAMA_INSTALL_FLAGS": "-march=x86_64_v3"
+        "CMAKE_CUDA_FLAGS": "-Xcompiler -march=x86-64-v3 -isystem ${sourceDir}/deps/cuda/include",
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
       "toolchainFile": "toolchains/base.cmake",
       "generator": "Ninja"
@@ -3099,8 +3099,8 @@
         "GGML_STATIC": "ON",
         "CMAKE_CUDA_ARCHITECTURES": "86-real",
         "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc",
-        "CMAKE_CUDA_FLAGS": "-Xcompiler -march=x86_64_v3 -isystem ${sourceDir}/deps/cuda/include",
-        "LLAMA_INSTALL_FLAGS": "-march=x86_64_v3"
+        "CMAKE_CUDA_FLAGS": "-Xcompiler -march=x86-64-v3 -isystem ${sourceDir}/deps/cuda/include",
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
       "toolchainFile": "toolchains/base.cmake",
       "generator": "Ninja"
@@ -3116,8 +3116,8 @@
         "GGML_STATIC": "ON",
         "CMAKE_CUDA_ARCHITECTURES": "89-real",
         "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc",
-        "CMAKE_CUDA_FLAGS": "-Xcompiler -march=x86_64_v3 -isystem ${sourceDir}/deps/cuda/include",
-        "LLAMA_INSTALL_FLAGS": "-march=x86_64_v3"
+        "CMAKE_CUDA_FLAGS": "-Xcompiler -march=x86-64-v3 -isystem ${sourceDir}/deps/cuda/include",
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
       "toolchainFile": "toolchains/base.cmake",
       "generator": "Ninja"
@@ -3133,8 +3133,8 @@
         "GGML_STATIC": "ON",
         "CMAKE_CUDA_ARCHITECTURES": "90-real",
         "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc",
-        "CMAKE_CUDA_FLAGS": "-Xcompiler -march=x86_64_v3 -isystem ${sourceDir}/deps/cuda/include",
-        "LLAMA_INSTALL_FLAGS": "-march=x86_64_v3"
+        "CMAKE_CUDA_FLAGS": "-Xcompiler -march=x86-64-v3 -isystem ${sourceDir}/deps/cuda/include",
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
       "toolchainFile": "toolchains/base.cmake",
       "generator": "Ninja"
@@ -3150,8 +3150,8 @@
         "GGML_STATIC": "ON",
         "CMAKE_CUDA_ARCHITECTURES": "100-real",
         "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc",
-        "CMAKE_CUDA_FLAGS": "-Xcompiler -march=x86_64_v3 -isystem ${sourceDir}/deps/cuda/include",
-        "LLAMA_INSTALL_FLAGS": "-march=x86_64_v3"
+        "CMAKE_CUDA_FLAGS": "-Xcompiler -march=x86-64-v3 -isystem ${sourceDir}/deps/cuda/include",
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
       "toolchainFile": "toolchains/base.cmake",
       "generator": "Ninja"
@@ -3167,8 +3167,8 @@
         "GGML_STATIC": "ON",
         "CMAKE_CUDA_ARCHITECTURES": "120-real",
         "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc",
-        "CMAKE_CUDA_FLAGS": "-Xcompiler -march=x86_64_v3 -isystem ${sourceDir}/deps/cuda/include",
-        "LLAMA_INSTALL_FLAGS": "-march=x86_64_v3"
+        "CMAKE_CUDA_FLAGS": "-Xcompiler -march=x86-64-v3 -isystem ${sourceDir}/deps/cuda/include",
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
       "toolchainFile": "toolchains/base.cmake",
       "generator": "Ninja"
@@ -3184,8 +3184,8 @@
         "GGML_STATIC": "ON",
         "CMAKE_CUDA_ARCHITECTURES": "121",
         "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc",
-        "CMAKE_CUDA_FLAGS": "-Xcompiler -march=x86_64_v3 -isystem ${sourceDir}/deps/cuda/include",
-        "LLAMA_INSTALL_FLAGS": "-march=x86_64_v3"
+        "CMAKE_CUDA_FLAGS": "-Xcompiler -march=x86-64-v3 -isystem ${sourceDir}/deps/cuda/include",
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
       "toolchainFile": "toolchains/base.cmake",
       "generator": "Ninja"
@@ -3506,7 +3506,7 @@
         "GGML_HIP": "ON",
         "GGML_HIP_ROCWMMA_FATTN": "OFF",
         "CMAKE_HIP_ARCHITECTURES": "gfx906",
-        "LLAMA_INSTALL_FLAGS": "-march=x86_64_v3"
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
       "toolchainFile": "toolchains/rocm.cmake",
       "generator": "Ninja"
@@ -3521,7 +3521,7 @@
         "GGML_HIP": "ON",
         "GGML_HIP_ROCWMMA_FATTN": "ON",
         "CMAKE_HIP_ARCHITECTURES": "gfx90a",
-        "LLAMA_INSTALL_FLAGS": "-march=x86_64_v3"
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
       "toolchainFile": "toolchains/rocm.cmake",
       "generator": "Ninja"
@@ -3536,7 +3536,7 @@
         "GGML_HIP": "ON",
         "GGML_HIP_ROCWMMA_FATTN": "ON",
         "CMAKE_HIP_ARCHITECTURES": "gfx942",
-        "LLAMA_INSTALL_FLAGS": "-march=x86_64_v3"
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
       "toolchainFile": "toolchains/rocm.cmake",
       "generator": "Ninja"
@@ -3551,7 +3551,7 @@
         "GGML_HIP": "ON",
         "GGML_HIP_ROCWMMA_FATTN": "ON",
         "CMAKE_HIP_ARCHITECTURES": "gfx950",
-        "LLAMA_INSTALL_FLAGS": "-march=x86_64_v3"
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
       "toolchainFile": "toolchains/rocm.cmake",
       "generator": "Ninja"
@@ -3566,7 +3566,7 @@
         "GGML_HIP": "ON",
         "GGML_HIP_ROCWMMA_FATTN": "OFF",
         "CMAKE_HIP_ARCHITECTURES": "gfx1030",
-        "LLAMA_INSTALL_FLAGS": "-march=x86_64_v3"
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
       "toolchainFile": "toolchains/rocm.cmake",
       "generator": "Ninja"
@@ -3581,7 +3581,7 @@
         "GGML_HIP": "ON",
         "GGML_HIP_ROCWMMA_FATTN": "OFF",
         "CMAKE_HIP_ARCHITECTURES": "gfx1031",
-        "LLAMA_INSTALL_FLAGS": "-march=x86_64_v3"
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
       "toolchainFile": "toolchains/rocm.cmake",
       "generator": "Ninja"
@@ -3596,7 +3596,7 @@
         "GGML_HIP": "ON",
         "GGML_HIP_ROCWMMA_FATTN": "OFF",
         "CMAKE_HIP_ARCHITECTURES": "gfx1032",
-        "LLAMA_INSTALL_FLAGS": "-march=x86_64_v3"
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
       "toolchainFile": "toolchains/rocm.cmake",
       "generator": "Ninja"
@@ -3611,7 +3611,7 @@
         "GGML_HIP": "ON",
         "GGML_HIP_ROCWMMA_FATTN": "OFF",
         "CMAKE_HIP_ARCHITECTURES": "gfx1011",
-        "LLAMA_INSTALL_FLAGS": "-march=x86_64_v3"
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
       "toolchainFile": "toolchains/rocm.cmake",
       "generator": "Ninja"
@@ -3626,7 +3626,7 @@
         "GGML_HIP": "ON",
         "GGML_HIP_ROCWMMA_FATTN": "ON",
         "CMAKE_HIP_ARCHITECTURES": "gfx1100",
-        "LLAMA_INSTALL_FLAGS": "-march=x86_64_v3"
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
       "toolchainFile": "toolchains/rocm.cmake",
       "generator": "Ninja"
@@ -3641,7 +3641,7 @@
         "GGML_HIP": "ON",
         "GGML_HIP_ROCWMMA_FATTN": "ON",
         "CMAKE_HIP_ARCHITECTURES": "gfx1101",
-        "LLAMA_INSTALL_FLAGS": "-march=x86_64_v3"
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
       "toolchainFile": "toolchains/rocm.cmake",
       "generator": "Ninja"
@@ -3656,7 +3656,7 @@
         "GGML_HIP": "ON",
         "GGML_HIP_ROCWMMA_FATTN": "ON",
         "CMAKE_HIP_ARCHITECTURES": "gfx1102",
-        "LLAMA_INSTALL_FLAGS": "-march=x86_64_v3"
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
       "toolchainFile": "toolchains/rocm.cmake",
       "generator": "Ninja"
@@ -3671,7 +3671,7 @@
         "GGML_HIP": "ON",
         "GGML_HIP_ROCWMMA_FATTN": "ON",
         "CMAKE_HIP_ARCHITECTURES": "gfx1103",
-        "LLAMA_INSTALL_FLAGS": "-march=x86_64_v3"
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
       "toolchainFile": "toolchains/rocm.cmake",
       "generator": "Ninja"
@@ -3686,7 +3686,7 @@
         "GGML_HIP": "ON",
         "GGML_HIP_ROCWMMA_FATTN": "ON",
         "CMAKE_HIP_ARCHITECTURES": "gfx1150",
-        "LLAMA_INSTALL_FLAGS": "-march=x86_64_v3"
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
       "toolchainFile": "toolchains/rocm.cmake",
       "generator": "Ninja"
@@ -3701,7 +3701,7 @@
         "GGML_HIP": "ON",
         "GGML_HIP_ROCWMMA_FATTN": "ON",
         "CMAKE_HIP_ARCHITECTURES": "gfx1151",
-        "LLAMA_INSTALL_FLAGS": "-march=x86_64_v3"
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
       "toolchainFile": "toolchains/rocm.cmake",
       "generator": "Ninja"
@@ -3716,7 +3716,7 @@
         "GGML_HIP": "ON",
         "GGML_HIP_ROCWMMA_FATTN": "ON",
         "CMAKE_HIP_ARCHITECTURES": "gfx1152",
-        "LLAMA_INSTALL_FLAGS": "-march=x86_64_v3"
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
       "toolchainFile": "toolchains/rocm.cmake",
       "generator": "Ninja"
@@ -3731,7 +3731,7 @@
         "GGML_HIP": "ON",
         "GGML_HIP_ROCWMMA_FATTN": "ON",
         "CMAKE_HIP_ARCHITECTURES": "gfx1153",
-        "LLAMA_INSTALL_FLAGS": "-march=x86_64_v3"
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
       "toolchainFile": "toolchains/rocm.cmake",
       "generator": "Ninja"
@@ -3746,7 +3746,7 @@
         "GGML_HIP": "ON",
         "GGML_HIP_ROCWMMA_FATTN": "ON",
         "CMAKE_HIP_ARCHITECTURES": "gfx1200",
-        "LLAMA_INSTALL_FLAGS": "-march=x86_64_v3"
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
       "toolchainFile": "toolchains/rocm.cmake",
       "generator": "Ninja"
@@ -3761,7 +3761,7 @@
         "GGML_HIP": "ON",
         "GGML_HIP_ROCWMMA_FATTN": "ON",
         "CMAKE_HIP_ARCHITECTURES": "gfx1201",
-        "LLAMA_INSTALL_FLAGS": "-march=x86_64_v3"
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
       "toolchainFile": "toolchains/rocm.cmake",
       "generator": "Ninja"
