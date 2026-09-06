@@ -70,6 +70,12 @@ CUDA_ARCHS = {
 }
 CUDA_MAJORS = ["12", "13"]
 
+BASELINE_FLAGS = {
+    "x86_64":  "-march=x86_64_v3",
+    "aarch64": "-march=armv8.2-a",
+}
+MSVC_BASELINE_FLAGS = "/arch:AVX2"
+
 METAL_ARCHS = {
     "m1":  ("13.3", False, None),
     "m2":  ("13.3", False, None),
@@ -320,6 +326,7 @@ def generate_x86_64_linux_rocm_presets():
             "GGML_HIP": "ON",
             "GGML_HIP_ROCWMMA_FATTN": "ON" if rocwmma(arch) else "OFF",
             "CMAKE_HIP_ARCHITECTURES": name,
+            "LLAMA_INSTALL_FLAGS": BASELINE_FLAGS["x86_64"],
         }
         configs.append((name, cache))
 
@@ -356,7 +363,8 @@ def generate_linux_cuda_presets(arch):
             "GGML_STATIC": "ON",
             "CMAKE_CUDA_ARCHITECTURES": cuda_arch if cuda_arch == last_arch else f"{cuda_arch}-real",
             "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc",
-            "CMAKE_CUDA_FLAGS": "-isystem ${sourceDir}/deps/cuda/include",
+            "CMAKE_CUDA_FLAGS": f"-Xcompiler {BASELINE_FLAGS[arch]} -isystem ${{sourceDir}}/deps/cuda/include",
+            "LLAMA_INSTALL_FLAGS": BASELINE_FLAGS[arch],
         }
         configs.append((cuda_arch, cache))
 
@@ -400,7 +408,8 @@ def generate_windows_cuda_presets(arch):
                 "GGML_STATIC": "ON",
                 "CMAKE_CUDA_ARCHITECTURES": cuda_arch if cuda_arch == last_arch else f"{cuda_arch}-real",
                 "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc.exe",
-                "CMAKE_CUDA_FLAGS": "-diag-suppress 221 -isystem ${sourceDir}/deps/cuda/include",
+                "CMAKE_CUDA_FLAGS": f"-diag-suppress 221 {MSVC_BASELINE_FLAGS} -isystem ${{sourceDir}}/deps/cuda/include",
+                "LLAMA_INSTALL_FLAGS": MSVC_BASELINE_FLAGS,
             }
             configs.append((config_name, cache))
 
