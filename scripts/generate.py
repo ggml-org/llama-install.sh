@@ -408,7 +408,7 @@ def generate_windows_cuda_presets(arch):
                 "GGML_STATIC": "ON",
                 "CMAKE_CUDA_ARCHITECTURES": cuda_arch if cuda_arch == last_arch else f"{cuda_arch}-real",
                 "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc.exe",
-                "CMAKE_CUDA_FLAGS": f"-diag-suppress 221 {MSVC_BASELINE_FLAGS} -isystem ${{sourceDir}}/deps/cuda/include",
+                "CMAKE_CUDA_FLAGS": f"-diag-suppress 221 -Xcompiler={MSVC_BASELINE_FLAGS} -isystem ${{sourceDir}}/deps/cuda/include",
                 "LLAMA_INSTALL_FLAGS": MSVC_BASELINE_FLAGS,
             }
             configs.append((config_name, cache))
