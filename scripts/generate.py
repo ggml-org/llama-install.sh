@@ -71,7 +71,7 @@ CUDA_ARCHS = {
 CUDA_MAJORS = ["12", "13"]
 
 BASELINE_FLAGS = {
-    "x86_64":  "-march=x86_64_v3",
+    "x86_64":  "-march=x86-64-v3",
     "aarch64": "-march=armv8.2-a",
 }
 MSVC_BASELINE_FLAGS = "/arch:AVX2"
