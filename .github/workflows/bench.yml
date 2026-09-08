@@ -90,5 +90,5 @@ jobs:
           (*) echo "Could not parse llama version: $OUT"; exit 1 ;;
           esac
           VERSION=b$N
-          pip install -U "hf[hf_xet]" ||:
+          python3 -m pip install -U --break-system-packages "hf[hf_xet]"
           python3 scripts/upload.py "$REPO/$VERSION"
