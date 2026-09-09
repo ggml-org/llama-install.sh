@@ -1,0 +1,74 @@
+name: Completion
+
+on:
+  schedule:
+    - cron: '0 2 * * 6'
+  workflow_dispatch:
+    inputs: &inputs
+      version:
+        required: false
+        default: ''
+        type: string
+  workflow_call:
+    inputs: *inputs
+
+permissions:
+  contents: read
+
+jobs:
+  completion:
+    name: ${{ matrix.model }}:${{ matrix.quant }}
+    runs-on: [self-hosted, Linux, devlab-dispatch, strix-halo]
+    strategy:
+      fail-fast: false
+      matrix:
+        model:
+          - unsloth/Qwen3.5-0.8B-GGUF
+        quant:
+          - Q3_K_S
+          - Q3_K_M
+          - Q4_0
+          - Q4_1
+          - Q4_K_S
+          - Q4_K_M
+          - Q5_K_S
+          - Q5_K_M
+          - Q6_K
+          - Q8_0
+          - BF16
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Install
+        env:
+          LLAMA_BUCKET: ${{ vars.HF_REPO }}
+          LLAMA_VERSION: ${{ inputs.version }}
+          HF_TOKEN: ${{ secrets.HF_TOKEN_READ }}
+        run: SKIP_INSTALL=1 sh install.sh
+
+      - name: Download model
+        id: download
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN_READ }}
+          MODEL: ${{ matrix.model }}
+          QUANT: ${{ matrix.quant }}
+        run: |
+          if ~/.llama-app/llama download -hf "$MODEL:$QUANT" 1>/dev/null
+          then echo "present=true"
+          else echo "::notice::$MODEL:$QUANT not present, skipping"
+               echo "present=false"
+          fi >> "$GITHUB_OUTPUT"
+
+      - name: Completion
+        if: steps.download.outputs.present == 'true'
+        env:
+          MODEL: ${{ matrix.model }}
+          QUANT: ${{ matrix.quant }}
+        run: |
+          for UB in 512 1024 2048 4096
+          do ~/.llama-app/llama completion \
+              --offline -no-cnv -hf "$MODEL:$QUANT" \
+              -c 8192 -b 4096 --no-display-prompt --ignore-eos \
+              -s 1234 -n 48 --temp 0 -f data/prompt.txt \
+              -ub "$UB"
+          done
