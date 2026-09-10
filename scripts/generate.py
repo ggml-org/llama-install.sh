@@ -82,7 +82,6 @@ BASELINE_FLAGS = {
     "x86_64":  "-march=x86-64-v3",
     "aarch64": "-march=armv8.2-a",
 }
-MSVC_BASELINE_FLAGS = "/arch:AVX2"
 
 METAL_ARCHS = {
     "m1":  ("13.3", False, None),
@@ -417,8 +416,6 @@ def cuda_platform_archs(os_name, arch):
 def generate_windows_cuda_presets(arch):
     configs = []
     last_arch = next(reversed(CUDA_ARCHS))
-    msvc_flags = MSVC_BASELINE_FLAGS if arch == "x86_64" else None
-    cuda_flags = f"-Xcompiler={MSVC_BASELINE_FLAGS} " if arch == "x86_64" else ""
     for major in cuda_platform_majors("windows", arch):
         for cuda_arch in cuda_platform_archs("windows", arch):
             config_name = f"{major}/{cuda_arch}"
@@ -427,17 +424,16 @@ def generate_windows_cuda_presets(arch):
                 "GGML_STATIC": "ON",
                 "CMAKE_CUDA_ARCHITECTURES": cuda_arch if cuda_arch == last_arch else f"{cuda_arch}-real",
                 "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc.exe",
-                "CMAKE_CUDA_FLAGS": f"-diag-suppress 221 {cuda_flags}-isystem ${{sourceDir}}/deps/cuda/include",
+                "CMAKE_CUDA_FLAGS": f"-diag-suppress 221 -Xcompiler {BASELINE_FLAGS[arch]} -isystem ${{sourceDir}}/deps/cuda/include",
+                "LLAMA_INSTALL_FLAGS": BASELINE_FLAGS[arch],
             }
-            if msvc_flags:
-                cache["LLAMA_INSTALL_FLAGS"] = msvc_flags
             configs.append((config_name, cache))
 
     return generate_presets(
         os_name   = 'windows',
         arch      = arch,
         backend   = 'cuda',
-        toolchain = 'toolchains/base.cmake',
+        toolchain = 'toolchains/clangcl.cmake',
         configs   = configs,
     )
 
@@ -458,7 +454,7 @@ def generate_windows_cuda_probe_preset(arch):
         os_name   = 'windows',
         arch      = arch,
         backend   = 'cuda',
-        toolchain = 'toolchains/base.cmake',
+        toolchain = 'toolchains/clangcl.cmake',
         configs   = configs,
     )
 
