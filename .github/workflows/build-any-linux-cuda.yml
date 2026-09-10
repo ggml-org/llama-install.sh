@@ -61,5 +61,5 @@ jobs:
           VERSION: ${{ inputs.llamacpp_version || 'test' }}
         shell: bash
         run: |
-          pip install -U "hf[hf_xet]"
+          pip install -U "huggingface_hub[hf_xet]"
           python scripts/upload.py "$HF_REPO/$VERSION"

@@ -69,7 +69,7 @@ jobs:
           HF_REPO: ${{ vars.HF_REPO }}
           VERSION: ${{ inputs.llamacpp_version }}
         run: |
-          pip install -U "hf[hf_xet]"
+          pip install -U "huggingface_hub[hf_xet]"
           mkdir output
           printf '%s' "$VERSION" > output/latest
           python scripts/upload.py "$HF_REPO"

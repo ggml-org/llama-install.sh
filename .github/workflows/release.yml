@@ -653,7 +653,7 @@ jobs:
           HF_REPO: ${{ vars.HF_REPO }}
           VERSION: ${{ needs.init.outputs.llamacpp_version }}
         run: |
-          pip install -U "hf[hf_xet]"
+          pip install -U "huggingface_hub[hf_xet]"
           python scripts/fetch-artefacts.py
           python scripts/upload.py "$HF_REPO/$VERSION"
           rm -rf output
