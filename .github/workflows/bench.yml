@@ -4,11 +4,13 @@ on:
   schedule:
     - cron: '0 0 * * 3'
   workflow_dispatch:
-    inputs:
+    inputs: &inputs
       version:
         required: false
         default: ''
         type: string
+  workflow_call:
+    inputs: *inputs
 
 permissions:
   contents: read
@@ -52,19 +54,21 @@ jobs:
           HF_TOKEN: ${{ secrets.HF_TOKEN_READ }}
         run: SKIP_INSTALL=1 sh install.sh
 
-      - name: Check model
-        id: check
+      - name: Download model
+        id: download
         env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN_READ }}
           MODEL: ${{ matrix.model }}
           QUANT: ${{ matrix.quant }}
         run: |
           if ~/.llama-app/llama download -hf "$MODEL:$QUANT" 1>/dev/null
           then echo "present=true"
-          else echo "present=false"
+          else echo "::notice::$MODEL:$QUANT not present, skipping"
+               echo "present=false"
           fi >> "$GITHUB_OUTPUT"
 
       - name: Bench
-        if: steps.check.outputs.present == 'true'
+        if: steps.download.outputs.present == 'true'
         env:
           MODEL: ${{ matrix.model }}
           BACKEND: ${{ matrix.backend }}
@@ -78,7 +82,7 @@ jobs:
           ~/.llama-app/llama bench --offline -v -fa 0,1 -hf "$MODEL:$QUANT" -o jsonl -r 10 > "output/$BACKEND/$NAME/$QUANT.jsonl"
 
       - name: Push
-        if: steps.check.outputs.present == 'true'
+        if: steps.download.outputs.present == 'true'
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN_BENCHES }}
           REPO: ${{ vars.HF_REPO_BENCHES }}
