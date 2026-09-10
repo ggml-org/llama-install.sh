@@ -18,7 +18,7 @@ permissions:
 jobs:
   completion:
     name: ${{ matrix.model }}:${{ matrix.quant }}
-    runs-on: [self-hosted, Linux, devlab-dispatch, strix-halo]
+    runs-on: [self-hosted, gfx1151]
     strategy:
       fail-fast: false
       matrix:
