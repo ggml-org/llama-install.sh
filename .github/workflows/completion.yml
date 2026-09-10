@@ -55,7 +55,7 @@ jobs:
         run: |
           if ~/.llama-app/llama download -hf "$MODEL:$QUANT" 1>/dev/null
           then echo "present=true"
-          else echo "::notice::$MODEL:$QUANT not present, skipping"
+          else echo "::notice::$MODEL:$QUANT not present, skipping" >&2
                echo "present=false"
           fi >> "$GITHUB_OUTPUT"
 
