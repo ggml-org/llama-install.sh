@@ -516,6 +516,27 @@ jobs:
       llamacpp_version: ${{ needs.init.outputs.llamacpp_version }}
       boringssl_version: ${{ needs.init.outputs.boringssl_version }}
     secrets: inherit
+  aarch64-windows-cuda:
+    name: ${{ matrix.filter }}
+    needs:
+      - init
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - filter: aarch64-windows-cuda-13-121
+            cuda_code: '134'
+          - filter: aarch64-windows-cuda-probe
+            cuda_code: '134'
+    uses: ./.github/workflows/build-any-windows-cuda.yml
+    with:
+      filter: ${{ matrix.filter }}
+      cuda_code: ${{ matrix.cuda_code }}
+      deploy: true
+      llamacpp_repo: ${{ inputs.llamacpp_repo }}
+      llamacpp_version: ${{ needs.init.outputs.llamacpp_version }}
+      boringssl_version: ${{ needs.init.outputs.boringssl_version }}
+    secrets: inherit
   x86_64-windows-cuda:
     name: ${{ matrix.filter }}
     needs:
@@ -640,6 +661,7 @@ jobs:
       - x86_64-windows-vulkan
       - aarch64-linux-cuda
       - x86_64-linux-cuda
+      - aarch64-windows-cuda
       - x86_64-windows-cuda
       - x86_64-linux-rocm
       - aarch64-macos-metal

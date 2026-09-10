@@ -28,14 +28,14 @@ permissions:
 
 jobs:
   build:
-    runs-on: windows-2022
+    runs-on: ${{ startsWith(inputs.filter, 'aarch64-') && 'windows-11-arm' || 'windows-2022' }}
     steps:
       - uses: actions/checkout@v5
 
       - name: Setup windows env
         uses: ilammy/msvc-dev-cmd@v1
         with:
-          arch: x64
+          arch: ${{ startsWith(inputs.filter, 'aarch64-') && 'arm64' || 'x64' }}
 
       - name: Install cuda
         env:

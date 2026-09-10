@@ -93,7 +93,7 @@ endif()
 #    -fno-finite-math-only
 #)
 
-if(CMAKE_C_COMPILER_ID STREQUAL "MSVC")
+if(MSVC)
     add_compile_options("$<$<OR:$<COMPILE_LANGUAGE:C>,$<COMPILE_LANGUAGE:CXX>>:/Gy>")
     add_compile_options("$<$<OR:$<COMPILE_LANGUAGE:C>,$<COMPILE_LANGUAGE:CXX>>:/Gw>")
     add_compile_options("$<$<OR:$<COMPILE_LANGUAGE:C>,$<COMPILE_LANGUAGE:CXX>>:/utf-8>")
@@ -109,7 +109,7 @@ endif()
 
 if(CMAKE_C_COMPILER_ID STREQUAL "AppleClang")
     add_link_options(-Wl,-dead_strip -Wl,-S)
-elseif(CMAKE_C_COMPILER_ID STREQUAL "MSVC")
+elseif(MSVC)
     add_link_options(/OPT:REF /OPT:ICF)
     set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 elseif(CMAKE_C_COMPILER_ID STREQUAL "Clang" OR CMAKE_C_COMPILER_ID STREQUAL "GNU")

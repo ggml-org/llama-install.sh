@@ -29,14 +29,14 @@ ROOT = Path.cwd() / "deps" / "cuda"
 DEST = ROOT.with_suffix(".tmp")
 
 COMPONENTS = [
-    ("libcublas",      "target", None),
-    ("cuda_cudart",    "target", None),
-    ("cuda_cccl",      "target", None),
-    ("cuda_crt",       "target", lambda manifest, t: "cuda_crt" in manifest),
-    ("libnvvm",        "host",   lambda manifest, t: "libnvvm" in manifest),
-    ("cuda_nvcc",      "host",   None),
-    ("cuda_nvprune",   "host",   lambda manifest, t: t == "linux"),
-    ("cuda_cuobjdump", "host",   lambda manifest, t: t == "linux"),
+    ("libcublas",      "target", None, None),
+    ("cuda_cudart",    "target", None, None),
+    ("cuda_cccl",      "target", None, lambda m: "cccl" if "cccl" in m else "cuda_cccl"),
+    ("cuda_crt",       "target", lambda m, t: "cuda_crt" in m, None),
+    ("libnvvm",        "host",   lambda m, t: "libnvvm" in m, None),
+    ("cuda_nvcc",      "host",   None, None),
+    ("cuda_nvprune",   "host",   lambda m, t: t == "linux", None),
+    ("cuda_cuobjdump", "host",   lambda m, t: t == "linux", None),
 ]
 
 def retry(func):
@@ -68,9 +68,7 @@ def platform_key(arch, os_name):
         return {"x86_64": "linux-x86_64", "aarch64": "linux-sbsa"}[arch]
 
     if os_name == "windows":
-        if arch != "x86_64":
-            sys.exit(f"No Windows CUDA redist for {arch}")
-        return "windows-x86_64"
+        return {"x86_64": "windows-x86_64", "aarch64": "windows-arm64"}[arch]
 
     sys.exit(f"Unsupported OS: {os_name}")
 
@@ -100,18 +98,18 @@ def _extract_tar(data, dest):
             members.append(member)
         tar.extractall(dest, members=members, filter="tar")
 
-def make_task(manifest, component, plat):
-    data = manifest[component]
+def make_task(manifest, component, key, plat):
+    data = manifest[key(manifest) if key else component]
     label = f"{data['name']} version {data['version']} ({plat})"
     return (label, data[plat]["relative_path"])
 
 def collect_tasks(manifest, target_plat, host_plat, target_os):
     tasks = []
-    for name, which, gate in COMPONENTS:
+    for name, which, gate, key in COMPONENTS:
         if gate is not None and not gate(manifest, target_os):
             continue
         plat = target_plat if which == "target" else host_plat
-        tasks.append(make_task(manifest, name, plat))
+        tasks.append(make_task(manifest, name, key, plat))
     return tasks
 
 @retry

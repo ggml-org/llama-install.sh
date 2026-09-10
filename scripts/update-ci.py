@@ -20,11 +20,7 @@ with urlopen("https://rocm.nightlies.amd.com/whl-multi-arch/rocm/") as r:
 with urlopen("https://developer.download.nvidia.com/compute/cuda/redist/") as r:
     index = r.read().decode()
 
-codes = set(generate.CUDA_ARCHS.values())
-
-for major in generate.CUDA_MAJORS:
-    for arch in generate.CUDA_ARCHS:
-        codes.add(generate.cuda_build_code(major, arch))
+codes = generate.cuda_codes()
 
 cuda_versions = {}
 for code in sorted(codes):
