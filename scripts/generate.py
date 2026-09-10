@@ -70,6 +70,14 @@ CUDA_ARCHS = {
 }
 CUDA_MAJORS = ["12", "13"]
 
+CUDA_PLATFORM_MIN = {
+    ("windows", "aarch64"): ("13", "134"),
+}
+
+CUDA_PLATFORM_ARCHS = {
+    ("windows", "aarch64"): ["121"],
+}
+
 BASELINE_FLAGS = {
     "x86_64":  "-march=x86-64-v3",
     "aarch64": "-march=armv8.2-a",
@@ -357,7 +365,7 @@ def generate_x86_64_linux_rocm_probe_preset():
 def generate_linux_cuda_presets(arch):
     configs = []
     last_arch = next(reversed(CUDA_ARCHS))
-    for cuda_arch in list(CUDA_ARCHS):
+    for cuda_arch in cuda_platform_archs('linux', arch):
         cache = {
             "GGML_CUDA": "ON",
             "GGML_STATIC": "ON",
@@ -397,20 +405,32 @@ def generate_linux_cuda_probe_preset(arch):
         configs   = configs,
     )
 
+def cuda_platform_majors(os_name, arch):
+    minimum = CUDA_PLATFORM_MIN.get((os_name, arch))
+    if minimum:
+        return [m for m in CUDA_MAJORS if int(m) >= int(minimum[0])]
+    return CUDA_MAJORS
+
+def cuda_platform_archs(os_name, arch):
+    return CUDA_PLATFORM_ARCHS.get((os_name, arch), list(CUDA_ARCHS))
+
 def generate_windows_cuda_presets(arch):
     configs = []
     last_arch = next(reversed(CUDA_ARCHS))
-    for major in CUDA_MAJORS:
-        for cuda_arch in list(CUDA_ARCHS):
+    msvc_flags = MSVC_BASELINE_FLAGS if arch == "x86_64" else None
+    cuda_flags = f"-Xcompiler={MSVC_BASELINE_FLAGS} " if arch == "x86_64" else ""
+    for major in cuda_platform_majors("windows", arch):
+        for cuda_arch in cuda_platform_archs("windows", arch):
             config_name = f"{major}/{cuda_arch}"
             cache = {
                 "GGML_CUDA": "ON",
                 "GGML_STATIC": "ON",
                 "CMAKE_CUDA_ARCHITECTURES": cuda_arch if cuda_arch == last_arch else f"{cuda_arch}-real",
                 "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc.exe",
-                "CMAKE_CUDA_FLAGS": f"-diag-suppress 221 -Xcompiler={MSVC_BASELINE_FLAGS} -isystem ${{sourceDir}}/deps/cuda/include",
-                "LLAMA_INSTALL_FLAGS": MSVC_BASELINE_FLAGS,
+                "CMAKE_CUDA_FLAGS": f"-diag-suppress 221 {cuda_flags}-isystem ${{sourceDir}}/deps/cuda/include",
             }
+            if msvc_flags:
+                cache["LLAMA_INSTALL_FLAGS"] = msvc_flags
             configs.append((config_name, cache))
 
     return generate_presets(
@@ -588,17 +608,36 @@ def generate_artefacts(cpu_os_archs):
         })
     return artefacts
 
-def cuda_build_code(major, arch):
-    return str(max(int(major + "0"), int(CUDA_ARCHS[arch])))
+def cuda_build_code(major, arch, os_name=None, cuda_arch=None):
+    # oldest CUDA redist supporting (cuda_arch or "any arch") on (os_name, arch)
+    code = int(CUDA_ARCHS[cuda_arch]) if cuda_arch else int(max(CUDA_ARCHS.values()))
+    if major:
+        code = max(code, int(major + "0"))
+    if os_name:
+        code = max(code, int(CUDA_PLATFORM_MIN.get((os_name, arch), ("", "0"))[1]))
+    return str(code)
 
 def preset_cuda_code(preset_name):
-    parts = preset_name.split("-")
-    if len(parts) >= 5 and parts[3] != "probe":
-        return cuda_build_code(parts[3], parts[4])
-    arch = parts[-1]
-    if arch in CUDA_ARCHS:
-        return CUDA_ARCHS[arch]
-    return max(CUDA_ARCHS.values())  # probe
+    arch, os_name, _, *rest = preset_name.split("-")
+    major = rest[0] if len(rest) > 1 else None
+    cuda_arch = rest[-1] if rest and rest[-1] in CUDA_ARCHS else None
+    return cuda_build_code(major, arch, os_name, cuda_arch)
+
+def generate_cuda_presets():
+    presets = []
+    for arch in ['aarch64', 'x86_64']:
+        presets += [generate_linux_cuda_presets(arch), generate_linux_cuda_probe_preset(arch)]
+    for arch in ['aarch64', 'x86_64']:
+        presets += [generate_windows_cuda_presets(arch), generate_windows_cuda_probe_preset(arch)]
+    return presets
+
+def cuda_codes():
+    # CUDA redist codes needed by the generated presets (incl. the CUDA_ARCHS baseline)
+    codes = set(CUDA_ARCHS.values())
+    for _, _, workflow in generate_cuda_presets():
+        for preset in workflow:
+            codes.add(preset_cuda_code(preset["name"]))
+    return codes
 
 def generate_jobs(workflow_presets):
     groups = defaultdict(list)
@@ -606,8 +645,6 @@ def generate_jobs(workflow_presets):
         parts = preset["name"].split("-")
         group = f"{parts[0]}-{parts[1]}-{parts[2]}"
         groups[group].append(preset["name"])
-
-    probe_code = max(CUDA_ARCHS.values())
 
     jobs = {}
     for group, filters in groups.items():
@@ -660,13 +697,7 @@ def main():
           for preset in (generate_vulkan_presets(os_name, arch),
                          generate_vulkan_probe_preset(os_name, arch))
         ],
-        *[preset
-          for arch in ['aarch64', 'x86_64']
-          for preset in (generate_linux_cuda_presets(arch),
-                         generate_linux_cuda_probe_preset(arch))
-        ],
-        generate_windows_cuda_presets('x86_64'),
-        generate_windows_cuda_probe_preset('x86_64'),
+        *generate_cuda_presets(),
         generate_x86_64_linux_rocm_presets(),
         generate_x86_64_linux_rocm_probe_preset(),
         generate_metal_presets(),

@@ -3208,6 +3208,39 @@
       "generator": "Ninja"
     },
     {
+      "name": "aarch64-windows-cuda-13-121",
+      "binaryDir": "build/${presetName}",
+      "cacheVariables": {
+        "LLAMA_INSTALL_DIR": "${sourceDir}/output/aarch64/windows/cuda/13/121",
+        "LLAMA_INSTALL_OS": "windows",
+        "LLAMA_INSTALL_ARCH": "aarch64",
+        "GGML_CUDA": "ON",
+        "GGML_STATIC": "ON",
+        "CMAKE_CUDA_ARCHITECTURES": "121",
+        "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc.exe",
+        "CMAKE_CUDA_FLAGS": "-diag-suppress 221 -isystem ${sourceDir}/deps/cuda/include"
+      },
+      "toolchainFile": "toolchains/base.cmake",
+      "generator": "Ninja"
+    },
+    {
+      "name": "aarch64-windows-cuda-probe",
+      "binaryDir": "build/${presetName}",
+      "cacheVariables": {
+        "LLAMA_INSTALL_DIR": "${sourceDir}/output/aarch64/windows/cuda/probe",
+        "LLAMA_INSTALL_OS": "windows",
+        "LLAMA_INSTALL_ARCH": "aarch64",
+        "LLAMA_INSTALL_PROBE": "cuda",
+        "LLAMA_INSTALL_PROBE_ARCHS": "75,80,86,89,90,100,120,121",
+        "LLAMA_INSTALL_PROBE_VERSIONS": "128,128,128,128,128,128,128,129",
+        "CMAKE_CUDA_ARCHITECTURES": "75;80;86;89;90;100;120;121",
+        "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc.exe",
+        "CMAKE_CUDA_FLAGS": "-diag-suppress 221 -isystem ${sourceDir}/deps/cuda/include"
+      },
+      "toolchainFile": "toolchains/base.cmake",
+      "generator": "Ninja"
+    },
+    {
       "name": "x86_64-windows-cuda-12-75",
       "binaryDir": "build/${presetName}",
       "cacheVariables": {
@@ -5893,6 +5926,22 @@
     {
       "name": "x86_64-linux-cuda-probe",
       "configurePreset": "x86_64-linux-cuda-probe",
+      "jobs": 0,
+      "targets": [
+        "llama-install"
+      ]
+    },
+    {
+      "name": "aarch64-windows-cuda-13-121",
+      "configurePreset": "aarch64-windows-cuda-13-121",
+      "jobs": 0,
+      "targets": [
+        "llama-install"
+      ]
+    },
+    {
+      "name": "aarch64-windows-cuda-probe",
+      "configurePreset": "aarch64-windows-cuda-probe",
       "jobs": 0,
       "targets": [
         "llama-install"
@@ -9509,6 +9558,32 @@
         {
           "type": "build",
           "name": "x86_64-linux-cuda-probe"
+        }
+      ]
+    },
+    {
+      "name": "aarch64-windows-cuda-13-121",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "aarch64-windows-cuda-13-121"
+        },
+        {
+          "type": "build",
+          "name": "aarch64-windows-cuda-13-121"
+        }
+      ]
+    },
+    {
+      "name": "aarch64-windows-cuda-probe",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "aarch64-windows-cuda-probe"
+        },
+        {
+          "type": "build",
+          "name": "aarch64-windows-cuda-probe"
         }
       ]
     },
