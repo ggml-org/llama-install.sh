@@ -370,7 +370,7 @@ def generate_linux_cuda_presets(arch):
             "GGML_STATIC": "ON",
             "CMAKE_CUDA_ARCHITECTURES": cuda_arch if cuda_arch == last_arch else f"{cuda_arch}-real",
             "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc",
-            "CMAKE_CUDA_FLAGS": f"-Xcompiler {BASELINE_FLAGS[arch]} -isystem ${{sourceDir}}/deps/cuda/include",
+            "CMAKE_CUDA_FLAGS": f"-isystem ${{sourceDir}}/deps/cuda/include",
             "LLAMA_INSTALL_FLAGS": BASELINE_FLAGS[arch],
         }
         configs.append((cuda_arch, cache))
@@ -424,7 +424,7 @@ def generate_windows_cuda_presets(arch):
                 "GGML_STATIC": "ON",
                 "CMAKE_CUDA_ARCHITECTURES": cuda_arch if cuda_arch == last_arch else f"{cuda_arch}-real",
                 "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc.exe",
-                "CMAKE_CUDA_FLAGS": f"-diag-suppress 221 -Xcompiler {BASELINE_FLAGS[arch]} -isystem ${{sourceDir}}/deps/cuda/include",
+                "CMAKE_CUDA_FLAGS": f"-diag-suppress 221 -isystem ${{sourceDir}}/deps/cuda/include",
                 "LLAMA_INSTALL_FLAGS": BASELINE_FLAGS[arch],
             }
             configs.append((config_name, cache))

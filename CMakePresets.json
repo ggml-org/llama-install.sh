@@ -2912,7 +2912,7 @@
         "GGML_STATIC": "ON",
         "CMAKE_CUDA_ARCHITECTURES": "75-real",
         "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc",
-        "CMAKE_CUDA_FLAGS": "-Xcompiler -march=armv8.2-a -isystem ${sourceDir}/deps/cuda/include",
+        "CMAKE_CUDA_FLAGS": "-isystem ${sourceDir}/deps/cuda/include",
         "LLAMA_INSTALL_FLAGS": "-march=armv8.2-a"
       },
       "toolchainFile": "toolchains/base.cmake",
@@ -2929,7 +2929,7 @@
         "GGML_STATIC": "ON",
         "CMAKE_CUDA_ARCHITECTURES": "80-real",
         "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc",
-        "CMAKE_CUDA_FLAGS": "-Xcompiler -march=armv8.2-a -isystem ${sourceDir}/deps/cuda/include",
+        "CMAKE_CUDA_FLAGS": "-isystem ${sourceDir}/deps/cuda/include",
         "LLAMA_INSTALL_FLAGS": "-march=armv8.2-a"
       },
       "toolchainFile": "toolchains/base.cmake",
@@ -2946,7 +2946,7 @@
         "GGML_STATIC": "ON",
         "CMAKE_CUDA_ARCHITECTURES": "86-real",
         "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc",
-        "CMAKE_CUDA_FLAGS": "-Xcompiler -march=armv8.2-a -isystem ${sourceDir}/deps/cuda/include",
+        "CMAKE_CUDA_FLAGS": "-isystem ${sourceDir}/deps/cuda/include",
         "LLAMA_INSTALL_FLAGS": "-march=armv8.2-a"
       },
       "toolchainFile": "toolchains/base.cmake",
@@ -2963,7 +2963,7 @@
         "GGML_STATIC": "ON",
         "CMAKE_CUDA_ARCHITECTURES": "89-real",
         "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc",
-        "CMAKE_CUDA_FLAGS": "-Xcompiler -march=armv8.2-a -isystem ${sourceDir}/deps/cuda/include",
+        "CMAKE_CUDA_FLAGS": "-isystem ${sourceDir}/deps/cuda/include",
         "LLAMA_INSTALL_FLAGS": "-march=armv8.2-a"
       },
       "toolchainFile": "toolchains/base.cmake",
@@ -2980,7 +2980,7 @@
         "GGML_STATIC": "ON",
         "CMAKE_CUDA_ARCHITECTURES": "90-real",
         "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc",
-        "CMAKE_CUDA_FLAGS": "-Xcompiler -march=armv8.2-a -isystem ${sourceDir}/deps/cuda/include",
+        "CMAKE_CUDA_FLAGS": "-isystem ${sourceDir}/deps/cuda/include",
         "LLAMA_INSTALL_FLAGS": "-march=armv8.2-a"
       },
       "toolchainFile": "toolchains/base.cmake",
@@ -2997,7 +2997,7 @@
         "GGML_STATIC": "ON",
         "CMAKE_CUDA_ARCHITECTURES": "100-real",
         "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc",
-        "CMAKE_CUDA_FLAGS": "-Xcompiler -march=armv8.2-a -isystem ${sourceDir}/deps/cuda/include",
+        "CMAKE_CUDA_FLAGS": "-isystem ${sourceDir}/deps/cuda/include",
         "LLAMA_INSTALL_FLAGS": "-march=armv8.2-a"
       },
       "toolchainFile": "toolchains/base.cmake",
@@ -3014,7 +3014,7 @@
         "GGML_STATIC": "ON",
         "CMAKE_CUDA_ARCHITECTURES": "120-real",
         "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc",
-        "CMAKE_CUDA_FLAGS": "-Xcompiler -march=armv8.2-a -isystem ${sourceDir}/deps/cuda/include",
+        "CMAKE_CUDA_FLAGS": "-isystem ${sourceDir}/deps/cuda/include",
         "LLAMA_INSTALL_FLAGS": "-march=armv8.2-a"
       },
       "toolchainFile": "toolchains/base.cmake",
@@ -3031,7 +3031,7 @@
         "GGML_STATIC": "ON",
         "CMAKE_CUDA_ARCHITECTURES": "121",
         "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc",
-        "CMAKE_CUDA_FLAGS": "-Xcompiler -march=armv8.2-a -isystem ${sourceDir}/deps/cuda/include",
+        "CMAKE_CUDA_FLAGS": "-isystem ${sourceDir}/deps/cuda/include",
         "LLAMA_INSTALL_FLAGS": "-march=armv8.2-a"
       },
       "toolchainFile": "toolchains/base.cmake",
@@ -3065,7 +3065,7 @@
         "GGML_STATIC": "ON",
         "CMAKE_CUDA_ARCHITECTURES": "75-real",
         "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc",
-        "CMAKE_CUDA_FLAGS": "-Xcompiler -march=x86-64-v3 -isystem ${sourceDir}/deps/cuda/include",
+        "CMAKE_CUDA_FLAGS": "-isystem ${sourceDir}/deps/cuda/include",
         "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
       "toolchainFile": "toolchains/base.cmake",
@@ -3082,7 +3082,7 @@
         "GGML_STATIC": "ON",
         "CMAKE_CUDA_ARCHITECTURES": "80-real",
         "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc",
-        "CMAKE_CUDA_FLAGS": "-Xcompiler -march=x86-64-v3 -isystem ${sourceDir}/deps/cuda/include",
+        "CMAKE_CUDA_FLAGS": "-isystem ${sourceDir}/deps/cuda/include",
         "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
       "toolchainFile": "toolchains/base.cmake",
@@ -3099,7 +3099,7 @@
         "GGML_STATIC": "ON",
         "CMAKE_CUDA_ARCHITECTURES": "86-real",
         "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc",
-        "CMAKE_CUDA_FLAGS": "-Xcompiler -march=x86-64-v3 -isystem ${sourceDir}/deps/cuda/include",
+        "CMAKE_CUDA_FLAGS": "-isystem ${sourceDir}/deps/cuda/include",
         "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
       "toolchainFile": "toolchains/base.cmake",
@@ -3116,7 +3116,7 @@
         "GGML_STATIC": "ON",
         "CMAKE_CUDA_ARCHITECTURES": "89-real",
         "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc",
-        "CMAKE_CUDA_FLAGS": "-Xcompiler -march=x86-64-v3 -isystem ${sourceDir}/deps/cuda/include",
+        "CMAKE_CUDA_FLAGS": "-isystem ${sourceDir}/deps/cuda/include",
         "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
       "toolchainFile": "toolchains/base.cmake",
@@ -3133,7 +3133,7 @@
         "GGML_STATIC": "ON",
         "CMAKE_CUDA_ARCHITECTURES": "90-real",
         "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc",
-        "CMAKE_CUDA_FLAGS": "-Xcompiler -march=x86-64-v3 -isystem ${sourceDir}/deps/cuda/include",
+        "CMAKE_CUDA_FLAGS": "-isystem ${sourceDir}/deps/cuda/include",
         "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
       "toolchainFile": "toolchains/base.cmake",
@@ -3150,7 +3150,7 @@
         "GGML_STATIC": "ON",
         "CMAKE_CUDA_ARCHITECTURES": "100-real",
         "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc",
-        "CMAKE_CUDA_FLAGS": "-Xcompiler -march=x86-64-v3 -isystem ${sourceDir}/deps/cuda/include",
+        "CMAKE_CUDA_FLAGS": "-isystem ${sourceDir}/deps/cuda/include",
         "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
       "toolchainFile": "toolchains/base.cmake",
@@ -3167,7 +3167,7 @@
         "GGML_STATIC": "ON",
         "CMAKE_CUDA_ARCHITECTURES": "120-real",
         "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc",
-        "CMAKE_CUDA_FLAGS": "-Xcompiler -march=x86-64-v3 -isystem ${sourceDir}/deps/cuda/include",
+        "CMAKE_CUDA_FLAGS": "-isystem ${sourceDir}/deps/cuda/include",
         "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
       "toolchainFile": "toolchains/base.cmake",
@@ -3184,7 +3184,7 @@
         "GGML_STATIC": "ON",
         "CMAKE_CUDA_ARCHITECTURES": "121",
         "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc",
-        "CMAKE_CUDA_FLAGS": "-Xcompiler -march=x86-64-v3 -isystem ${sourceDir}/deps/cuda/include",
+        "CMAKE_CUDA_FLAGS": "-isystem ${sourceDir}/deps/cuda/include",
         "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
       "toolchainFile": "toolchains/base.cmake",
@@ -3218,7 +3218,7 @@
         "GGML_STATIC": "ON",
         "CMAKE_CUDA_ARCHITECTURES": "121",
         "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc.exe",
-        "CMAKE_CUDA_FLAGS": "-diag-suppress 221 -Xcompiler -march=armv8.2-a -isystem ${sourceDir}/deps/cuda/include",
+        "CMAKE_CUDA_FLAGS": "-diag-suppress 221 -isystem ${sourceDir}/deps/cuda/include",
         "LLAMA_INSTALL_FLAGS": "-march=armv8.2-a"
       },
       "toolchainFile": "toolchains/clangcl.cmake",
@@ -3252,7 +3252,7 @@
         "GGML_STATIC": "ON",
         "CMAKE_CUDA_ARCHITECTURES": "75-real",
         "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc.exe",
-        "CMAKE_CUDA_FLAGS": "-diag-suppress 221 -Xcompiler -march=x86-64-v3 -isystem ${sourceDir}/deps/cuda/include",
+        "CMAKE_CUDA_FLAGS": "-diag-suppress 221 -isystem ${sourceDir}/deps/cuda/include",
         "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
       "toolchainFile": "toolchains/clangcl.cmake",
@@ -3269,7 +3269,7 @@
         "GGML_STATIC": "ON",
         "CMAKE_CUDA_ARCHITECTURES": "80-real",
         "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc.exe",
-        "CMAKE_CUDA_FLAGS": "-diag-suppress 221 -Xcompiler -march=x86-64-v3 -isystem ${sourceDir}/deps/cuda/include",
+        "CMAKE_CUDA_FLAGS": "-diag-suppress 221 -isystem ${sourceDir}/deps/cuda/include",
         "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
       "toolchainFile": "toolchains/clangcl.cmake",
@@ -3286,7 +3286,7 @@
         "GGML_STATIC": "ON",
         "CMAKE_CUDA_ARCHITECTURES": "86-real",
         "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc.exe",
-        "CMAKE_CUDA_FLAGS": "-diag-suppress 221 -Xcompiler -march=x86-64-v3 -isystem ${sourceDir}/deps/cuda/include",
+        "CMAKE_CUDA_FLAGS": "-diag-suppress 221 -isystem ${sourceDir}/deps/cuda/include",
         "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
       "toolchainFile": "toolchains/clangcl.cmake",
@@ -3303,7 +3303,7 @@
         "GGML_STATIC": "ON",
         "CMAKE_CUDA_ARCHITECTURES": "89-real",
         "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc.exe",
-        "CMAKE_CUDA_FLAGS": "-diag-suppress 221 -Xcompiler -march=x86-64-v3 -isystem ${sourceDir}/deps/cuda/include",
+        "CMAKE_CUDA_FLAGS": "-diag-suppress 221 -isystem ${sourceDir}/deps/cuda/include",
         "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
       "toolchainFile": "toolchains/clangcl.cmake",
@@ -3320,7 +3320,7 @@
         "GGML_STATIC": "ON",
         "CMAKE_CUDA_ARCHITECTURES": "90-real",
         "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc.exe",
-        "CMAKE_CUDA_FLAGS": "-diag-suppress 221 -Xcompiler -march=x86-64-v3 -isystem ${sourceDir}/deps/cuda/include",
+        "CMAKE_CUDA_FLAGS": "-diag-suppress 221 -isystem ${sourceDir}/deps/cuda/include",
         "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
       "toolchainFile": "toolchains/clangcl.cmake",
@@ -3337,7 +3337,7 @@
         "GGML_STATIC": "ON",
         "CMAKE_CUDA_ARCHITECTURES": "100-real",
         "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc.exe",
-        "CMAKE_CUDA_FLAGS": "-diag-suppress 221 -Xcompiler -march=x86-64-v3 -isystem ${sourceDir}/deps/cuda/include",
+        "CMAKE_CUDA_FLAGS": "-diag-suppress 221 -isystem ${sourceDir}/deps/cuda/include",
         "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
       "toolchainFile": "toolchains/clangcl.cmake",
@@ -3354,7 +3354,7 @@
         "GGML_STATIC": "ON",
         "CMAKE_CUDA_ARCHITECTURES": "120-real",
         "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc.exe",
-        "CMAKE_CUDA_FLAGS": "-diag-suppress 221 -Xcompiler -march=x86-64-v3 -isystem ${sourceDir}/deps/cuda/include",
+        "CMAKE_CUDA_FLAGS": "-diag-suppress 221 -isystem ${sourceDir}/deps/cuda/include",
         "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
       "toolchainFile": "toolchains/clangcl.cmake",
@@ -3371,7 +3371,7 @@
         "GGML_STATIC": "ON",
         "CMAKE_CUDA_ARCHITECTURES": "121",
         "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc.exe",
-        "CMAKE_CUDA_FLAGS": "-diag-suppress 221 -Xcompiler -march=x86-64-v3 -isystem ${sourceDir}/deps/cuda/include",
+        "CMAKE_CUDA_FLAGS": "-diag-suppress 221 -isystem ${sourceDir}/deps/cuda/include",
         "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
       "toolchainFile": "toolchains/clangcl.cmake",
@@ -3388,7 +3388,7 @@
         "GGML_STATIC": "ON",
         "CMAKE_CUDA_ARCHITECTURES": "75-real",
         "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc.exe",
-        "CMAKE_CUDA_FLAGS": "-diag-suppress 221 -Xcompiler -march=x86-64-v3 -isystem ${sourceDir}/deps/cuda/include",
+        "CMAKE_CUDA_FLAGS": "-diag-suppress 221 -isystem ${sourceDir}/deps/cuda/include",
         "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
       "toolchainFile": "toolchains/clangcl.cmake",
@@ -3405,7 +3405,7 @@
         "GGML_STATIC": "ON",
         "CMAKE_CUDA_ARCHITECTURES": "80-real",
         "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc.exe",
-        "CMAKE_CUDA_FLAGS": "-diag-suppress 221 -Xcompiler -march=x86-64-v3 -isystem ${sourceDir}/deps/cuda/include",
+        "CMAKE_CUDA_FLAGS": "-diag-suppress 221 -isystem ${sourceDir}/deps/cuda/include",
         "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
       "toolchainFile": "toolchains/clangcl.cmake",
@@ -3422,7 +3422,7 @@
         "GGML_STATIC": "ON",
         "CMAKE_CUDA_ARCHITECTURES": "86-real",
         "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc.exe",
-        "CMAKE_CUDA_FLAGS": "-diag-suppress 221 -Xcompiler -march=x86-64-v3 -isystem ${sourceDir}/deps/cuda/include",
+        "CMAKE_CUDA_FLAGS": "-diag-suppress 221 -isystem ${sourceDir}/deps/cuda/include",
         "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
       "toolchainFile": "toolchains/clangcl.cmake",
@@ -3439,7 +3439,7 @@
         "GGML_STATIC": "ON",
         "CMAKE_CUDA_ARCHITECTURES": "89-real",
         "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc.exe",
-        "CMAKE_CUDA_FLAGS": "-diag-suppress 221 -Xcompiler -march=x86-64-v3 -isystem ${sourceDir}/deps/cuda/include",
+        "CMAKE_CUDA_FLAGS": "-diag-suppress 221 -isystem ${sourceDir}/deps/cuda/include",
         "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
       "toolchainFile": "toolchains/clangcl.cmake",
@@ -3456,7 +3456,7 @@
         "GGML_STATIC": "ON",
         "CMAKE_CUDA_ARCHITECTURES": "90-real",
         "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc.exe",
-        "CMAKE_CUDA_FLAGS": "-diag-suppress 221 -Xcompiler -march=x86-64-v3 -isystem ${sourceDir}/deps/cuda/include",
+        "CMAKE_CUDA_FLAGS": "-diag-suppress 221 -isystem ${sourceDir}/deps/cuda/include",
         "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
       "toolchainFile": "toolchains/clangcl.cmake",
@@ -3473,7 +3473,7 @@
         "GGML_STATIC": "ON",
         "CMAKE_CUDA_ARCHITECTURES": "100-real",
         "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc.exe",
-        "CMAKE_CUDA_FLAGS": "-diag-suppress 221 -Xcompiler -march=x86-64-v3 -isystem ${sourceDir}/deps/cuda/include",
+        "CMAKE_CUDA_FLAGS": "-diag-suppress 221 -isystem ${sourceDir}/deps/cuda/include",
         "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
       "toolchainFile": "toolchains/clangcl.cmake",
@@ -3490,7 +3490,7 @@
         "GGML_STATIC": "ON",
         "CMAKE_CUDA_ARCHITECTURES": "120-real",
         "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc.exe",
-        "CMAKE_CUDA_FLAGS": "-diag-suppress 221 -Xcompiler -march=x86-64-v3 -isystem ${sourceDir}/deps/cuda/include",
+        "CMAKE_CUDA_FLAGS": "-diag-suppress 221 -isystem ${sourceDir}/deps/cuda/include",
         "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
       "toolchainFile": "toolchains/clangcl.cmake",
@@ -3507,7 +3507,7 @@
         "GGML_STATIC": "ON",
         "CMAKE_CUDA_ARCHITECTURES": "121",
         "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc.exe",
-        "CMAKE_CUDA_FLAGS": "-diag-suppress 221 -Xcompiler -march=x86-64-v3 -isystem ${sourceDir}/deps/cuda/include",
+        "CMAKE_CUDA_FLAGS": "-diag-suppress 221 -isystem ${sourceDir}/deps/cuda/include",
         "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
       "toolchainFile": "toolchains/clangcl.cmake",
