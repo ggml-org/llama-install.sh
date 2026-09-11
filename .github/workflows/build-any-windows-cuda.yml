@@ -37,10 +37,12 @@ jobs:
         with:
           arch: ${{ startsWith(inputs.filter, 'aarch64-') && 'arm64' || 'x64' }}
 
-      - name: Install cuda
+      - name: Install cuda and clang
         env:
           CUDA_CODE: ${{ inputs.cuda_code }}
-        run: python scripts/install-cuda.py
+        run: |
+          python scripts/install-cuda.py
+          python scripts/install-clang.py cuda
 
       - name: Build ${{ inputs.filter }}
         env:

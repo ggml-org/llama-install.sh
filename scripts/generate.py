@@ -379,7 +379,7 @@ def generate_linux_cuda_presets(arch):
         os_name   = 'linux',
         arch      = arch,
         backend   = 'cuda',
-        toolchain = 'toolchains/base.cmake',
+        toolchain = 'toolchains/clang.cmake',
         configs   = configs,
     )
 
@@ -400,7 +400,7 @@ def generate_linux_cuda_probe_preset(arch):
         os_name   = 'linux',
         arch      = arch,
         backend   = 'cuda',
-        toolchain = 'toolchains/base.cmake',
+        toolchain = 'toolchains/clang.cmake',
         configs   = configs,
     )
 
@@ -433,7 +433,7 @@ def generate_windows_cuda_presets(arch):
         os_name   = 'windows',
         arch      = arch,
         backend   = 'cuda',
-        toolchain = 'toolchains/clangcl.cmake',
+        toolchain = 'toolchains/clang.cmake',
         configs   = configs,
     )
 
@@ -454,7 +454,7 @@ def generate_windows_cuda_probe_preset(arch):
         os_name   = 'windows',
         arch      = arch,
         backend   = 'cuda',
-        toolchain = 'toolchains/clangcl.cmake',
+        toolchain = 'toolchains/clang.cmake',
         configs   = configs,
     )
 
