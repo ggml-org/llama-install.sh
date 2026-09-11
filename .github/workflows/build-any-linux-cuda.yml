@@ -32,15 +32,12 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
-      - name: Setup linux env
-        run: |
-          sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-12 100
-          sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-12 100
-
-      - name: Install cuda
+      - name: Install cuda and clang
         env:
           CUDA_CODE: ${{ inputs.cuda_code }}
-        run: python scripts/install-cuda.py
+        run: |
+          python scripts/install-cuda.py
+          python scripts/install-clang.py cuda
 
       - name: Build ${{ inputs.filter }}
         env:
