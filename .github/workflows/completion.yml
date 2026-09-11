@@ -18,7 +18,8 @@ permissions:
 jobs:
   completion:
     name: ${{ matrix.model }}:${{ matrix.quant }}
-    runs-on: [self-hosted, Linux, devlab-dispatch, strix-halo]
+    runs-on:
+      group: ggml-hfc-amd-r9700-1gpu
     strategy:
       fail-fast: false
       matrix:
