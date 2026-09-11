@@ -36,6 +36,7 @@ dl_bin() {
 	(*.zst) curl -fsSL "$REPO/$LLAMA_VERSION/$2" | unzstd ;;
 	(*)     curl -fsSL "$REPO/$LLAMA_VERSION/$2" ;;
 	esac > "$1.tmp" 2>/dev/null &&
+	[ -s "$1.tmp" ] &&
 	chmod +x "$1.tmp" && mv "$1.tmp" "$1" && return
 	info "Failed to download"
 	return 1
@@ -62,6 +63,14 @@ probe_rocm() {
 	CONFIG=$(./rocm-probe) 2>/dev/null &&
 	info "Found: $CONFIG" &&
 	dl_bin llama "$ARCH/$OS/rocm/$CONFIG/llama-app.zst"
+}
+
+probe_sycl() {
+	[ -z "$SKIP_SYCL" ] && info "Probing SYCL..." &&
+	dl_bin sycl-probe "$ARCH/$OS/sycl/probe/probe.zst" &&
+	CONFIG=$(./sycl-probe) 2>/dev/null &&
+	info "Found: $CONFIG" &&
+	dl_bin llama "$ARCH/$OS/sycl/$CONFIG/llama-app.zst"
 }
 
 probe_vulkan() {
@@ -135,6 +144,7 @@ main() {
 		(macos)   [ -x llama ] || probe_metal ;;
 		(linux)   [ -x llama ] || probe_cuda
 		          [ -x llama ] || probe_rocm
+		          [ -x llama ] || probe_sycl
 		          [ -x llama ] || probe_vulkan
 		          [ -x llama ] || probe_cpu ;;
 		(freebsd) [ -x llama ] || probe_cpu ;;
