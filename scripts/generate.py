@@ -78,6 +78,11 @@ CUDA_PLATFORM_ARCHS = {
     ("windows", "aarch64"): ["121"],
 }
 
+# windows-arm64 hardware is N1X only, for now
+CUDA_PLATFORM_BASELINE = {
+    ("windows", "aarch64"): "-march=armv9.2-a",
+}
+
 BASELINE_FLAGS = {
     "x86_64":  "-march=x86-64-v3",
     "aarch64": "-march=armv8.2-a",
@@ -371,7 +376,7 @@ def generate_linux_cuda_presets(arch):
             "CMAKE_CUDA_ARCHITECTURES": cuda_arch if cuda_arch == last_arch else f"{cuda_arch}-real",
             "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc",
             "CMAKE_CUDA_FLAGS": f"-isystem ${{sourceDir}}/deps/cuda/include",
-            "LLAMA_INSTALL_FLAGS": BASELINE_FLAGS[arch],
+            "LLAMA_INSTALL_FLAGS": cuda_baseline_flags('linux', arch),
         }
         configs.append((cuda_arch, cache))
 
@@ -413,6 +418,9 @@ def cuda_platform_majors(os_name, arch):
 def cuda_platform_archs(os_name, arch):
     return CUDA_PLATFORM_ARCHS.get((os_name, arch), list(CUDA_ARCHS))
 
+def cuda_baseline_flags(os_name, arch):
+    return CUDA_PLATFORM_BASELINE.get((os_name, arch), BASELINE_FLAGS[arch])
+
 def generate_windows_cuda_presets(arch):
     configs = []
     last_arch = next(reversed(CUDA_ARCHS))
@@ -425,7 +433,7 @@ def generate_windows_cuda_presets(arch):
                 "CMAKE_CUDA_ARCHITECTURES": cuda_arch if cuda_arch == last_arch else f"{cuda_arch}-real",
                 "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc.exe",
                 "CMAKE_CUDA_FLAGS": f"-diag-suppress 221 -isystem ${{sourceDir}}/deps/cuda/include",
-                "LLAMA_INSTALL_FLAGS": BASELINE_FLAGS[arch],
+                "LLAMA_INSTALL_FLAGS": cuda_baseline_flags("windows", arch),
             }
             configs.append((config_name, cache))
 

@@ -3219,7 +3219,7 @@
         "CMAKE_CUDA_ARCHITECTURES": "121",
         "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc.exe",
         "CMAKE_CUDA_FLAGS": "-diag-suppress 221 -isystem ${sourceDir}/deps/cuda/include",
-        "LLAMA_INSTALL_FLAGS": "-march=armv8.2-a"
+        "LLAMA_INSTALL_FLAGS": "-march=armv9.2-a"
       },
       "toolchainFile": "toolchains/clangcl.cmake",
       "generator": "Ninja"
