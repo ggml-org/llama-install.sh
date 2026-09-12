@@ -70,6 +70,11 @@ foreach(_lib cublas cublasLt)
         endif()
     endif()
 
+    if(NOT _available)
+        message(WARNING "Cannot detect ${_lib} architectures; skipping CUDA static-lib pruning")
+        continue()
+    endif()
+
     set(_best 0)
     foreach(_a ${_available})
         if(_a LESS_EQUAL ${_arch} AND _a GREATER ${_best})
@@ -84,24 +89,28 @@ foreach(_lib cublas cublasLt)
         message(FATAL_ERROR "No architecture <= sm_${_arch} found in ${_lib}; pruned library would be empty")
     endif()
 
-    set(_dst "${_pruned_dir}/lib${_lib}_sm${_arch}.a")
-    message(STATUS "Pruning ${_lib} for sm_${_prune_arch}...")
+    math(EXPR _prune_major "${_prune_arch} / 10")
+    set(_prune_archs "")
+    set(_prune_args "")
+    foreach(_a ${_available})
+        math(EXPR _major "${_a} / 10")
+        if(_major EQUAL _prune_major AND _a LESS_EQUAL _prune_arch)
+            list(APPEND _prune_archs ${_a})
+            list(APPEND _prune_args -gencode arch=compute_${_a},code=sm_${_a})
+        endif()
+    endforeach()
+
     if(_keep_ptx)
-        execute_process(
-            COMMAND ${_CUDA_NVPRUNE}
-                -gencode arch=compute_${_prune_arch},code=sm_${_prune_arch}
-                -gencode arch=compute_${_prune_arch},code=compute_${_prune_arch}
-                -o "${_dst}" "${_loc}"
-            OUTPUT_QUIET
-            RESULT_VARIABLE _rc
-        )
-    else()
-        execute_process(
-            COMMAND ${_CUDA_NVPRUNE} -arch sm_${_prune_arch} -o "${_dst}" "${_loc}"
-            OUTPUT_QUIET
-            RESULT_VARIABLE _rc
-        )
+        list(APPEND _prune_args -gencode arch=compute_${_prune_arch},code=compute_${_prune_arch})
     endif()
+
+    set(_dst "${_pruned_dir}/lib${_lib}_sm${_arch}.a")
+    message(STATUS "Pruning ${_lib} for architectures ${_prune_archs}...")
+    execute_process(
+        COMMAND ${_CUDA_NVPRUNE} ${_prune_args} -o "${_dst}" "${_loc}"
+        OUTPUT_QUIET
+        RESULT_VARIABLE _rc
+    )
     if(_rc)
         message(FATAL_ERROR "nvprune failed (rc=${_rc}) pruning ${_lib}")
     endif()
