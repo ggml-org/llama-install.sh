@@ -330,7 +330,7 @@ def generate_cpu_presets(os_name, arch):
 def rocwmma(arch):
     return arch.startswith(('11', '12')) or (arch.startswith('9') and arch not in {'900', '906'})
 
-def generate_x86_64_linux_rocm_presets():
+def generate_x86_64_rocm_presets(os_name):
     configs = []
     for arch in ROCM_ARCHS:
         name = f"gfx{arch}"
@@ -343,14 +343,14 @@ def generate_x86_64_linux_rocm_presets():
         configs.append((name, cache))
 
     return generate_presets(
-        os_name   = 'linux',
+        os_name   = os_name,
         arch      = 'x86_64',
         backend   = 'rocm',
         toolchain = 'toolchains/rocm.cmake',
         configs   = configs,
     )
 
-def generate_x86_64_linux_rocm_probe_preset():
+def generate_x86_64_rocm_probe_preset(os_name):
     configs = []
     name = "probe"
     cache = {
@@ -359,7 +359,7 @@ def generate_x86_64_linux_rocm_probe_preset():
     configs.append((name, cache))
 
     return generate_presets(
-        os_name   = 'linux',
+        os_name   = os_name,
         arch      = 'x86_64',
         backend   = 'rocm',
         toolchain = 'toolchains/rocm.cmake',
@@ -683,7 +683,7 @@ def generate_jobs(configure_presets):
     test_needs = ["init"]
     for group, group_presets in groups.items():
         _, os_name, backend = group.split("-")
-        workflow_name = f"{os_name}-{backend}" if backend == "cuda" else backend
+        workflow_name = f"{os_name}-{backend}" if backend in ("cuda", "rocm") else backend
         uses = f"./.github/workflows/build-any-{workflow_name}.yml"
         is_probe = lambda p: "LLAMA_INSTALL_PROBE" in p["cacheVariables"]
         probes = [p["name"] for p in group_presets if is_probe(p)]
@@ -716,8 +716,11 @@ def main():
                          generate_vulkan_probe_preset(os_name, arch))
         ],
         *generate_cuda_presets(),
-        generate_x86_64_linux_rocm_presets(),
-        generate_x86_64_linux_rocm_probe_preset(),
+        *[preset
+          for os_name in ['linux', 'windows']
+          for preset in (generate_x86_64_rocm_presets(os_name),
+                         generate_x86_64_rocm_probe_preset(os_name))
+        ],
         generate_metal_presets(),
     ]
     data = {

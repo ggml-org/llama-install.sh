@@ -750,7 +750,7 @@ jobs:
       matrix:
         preset:
           - x86_64-linux-rocm-probe
-    uses: ./.github/workflows/build-any-rocm.yml
+    uses: ./.github/workflows/build-any-linux-rocm.yml
     with:
       preset: ${{ matrix.preset }}
       deploy: true
@@ -785,7 +785,59 @@ jobs:
           - x86_64-linux-rocm-gfx1153
           - x86_64-linux-rocm-gfx1200
           - x86_64-linux-rocm-gfx1201
-    uses: ./.github/workflows/build-any-rocm.yml
+    uses: ./.github/workflows/build-any-linux-rocm.yml
+    with:
+      preset: ${{ matrix.preset }}
+      deploy: true
+      llamacpp_repo: ${{ inputs.llamacpp_repo }}
+      llamacpp_version: ${{ needs.init.outputs.llamacpp_version }}
+      boringssl_version: ${{ needs.init.outputs.boringssl_version }}
+    secrets: inherit
+  x86_64-windows-rocm-probe:
+    name: ${{ matrix.preset }}
+    needs:
+      - init
+    strategy:
+      fail-fast: false
+      matrix:
+        preset:
+          - x86_64-windows-rocm-probe
+    uses: ./.github/workflows/build-any-windows-rocm.yml
+    with:
+      preset: ${{ matrix.preset }}
+      deploy: true
+      llamacpp_repo: ${{ inputs.llamacpp_repo }}
+      llamacpp_version: ${{ needs.init.outputs.llamacpp_version }}
+      boringssl_version: ${{ needs.init.outputs.boringssl_version }}
+    secrets: inherit
+  x86_64-windows-rocm:
+    name: ${{ matrix.preset }}
+    needs:
+      - init
+      - x86_64-windows-rocm-probe
+    strategy:
+      fail-fast: false
+      matrix:
+        preset:
+          - x86_64-windows-rocm-gfx906
+          - x86_64-windows-rocm-gfx90a
+          - x86_64-windows-rocm-gfx942
+          - x86_64-windows-rocm-gfx950
+          - x86_64-windows-rocm-gfx1030
+          - x86_64-windows-rocm-gfx1031
+          - x86_64-windows-rocm-gfx1032
+          - x86_64-windows-rocm-gfx1011
+          - x86_64-windows-rocm-gfx1100
+          - x86_64-windows-rocm-gfx1101
+          - x86_64-windows-rocm-gfx1102
+          - x86_64-windows-rocm-gfx1103
+          - x86_64-windows-rocm-gfx1150
+          - x86_64-windows-rocm-gfx1151
+          - x86_64-windows-rocm-gfx1152
+          - x86_64-windows-rocm-gfx1153
+          - x86_64-windows-rocm-gfx1200
+          - x86_64-windows-rocm-gfx1201
+    uses: ./.github/workflows/build-any-windows-rocm.yml
     with:
       preset: ${{ matrix.preset }}
       deploy: true
@@ -833,6 +885,7 @@ jobs:
       - aarch64-windows-cuda
       - x86_64-windows-cuda
       - x86_64-linux-rocm
+      - x86_64-windows-rocm
       - aarch64-macos-metal
     if: ${{ vars.HF_REPO != '' }}
     uses: ./.github/workflows/test-release.yml
