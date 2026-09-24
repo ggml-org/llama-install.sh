@@ -96,6 +96,12 @@
 | `gfx1200`    | ROCWMMA+FlashAttn |
 | `gfx1201`    | ROCWMMA+FlashAttn |
 
+### SYCL (Intel)
+
+| Suffix | Features |
+| ------ | -------- |
+| `fp16` | FP16     |
+
 ### Metal (Apple Silicon)
 
 | Suffix | Architecture | Features |
