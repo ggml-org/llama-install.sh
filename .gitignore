@@ -4,3 +4,4 @@
 /reqs/
 /featcode
 /llama-app-*
+__pycache__/

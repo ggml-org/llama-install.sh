@@ -1,6 +1,7 @@
 find_path(VULKAN_HEADERS
     NAMES vulkan/vulkan.h
-    HINTS "/opt/vulkan-sdk/include"
+    HINTS "${CMAKE_SOURCE_DIR}/deps/vulkan"
+    PATH_SUFFIXES include
 )
 
 list(INSERT CMAKE_MODULE_PATH 0 "${CMAKE_CURRENT_LIST_DIR}")

@@ -12,6 +12,9 @@ on:
         default: ''
         type: string
 
+permissions:
+  contents: read
+
 jobs:
   bench:
     name: ${{ matrix.backend }}:${{ matrix.model }}:${{ matrix.quant }}
@@ -45,4 +48,8 @@ jobs:
       - name: Bench
         env:
           LLAMA_BUCKET: ${{ vars.HF_REPO }}
-        run: python3 scripts/bench-compare.py ${{ matrix.model }}:${{ matrix.quant }} ${{ inputs.base_version }} ${{ inputs.current_version }}
+          MODEL: ${{ matrix.model }}
+          QUANT: ${{ matrix.quant }}
+          BASE_VERSION: ${{ inputs.base_version }}
+          CURRENT_VERSION: ${{ inputs.current_version }}
+        run: python3 scripts/bench-compare.py "$MODEL:$QUANT" "$BASE_VERSION" "$CURRENT_VERSION"

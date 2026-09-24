@@ -4,7 +4,8 @@ if(VULKAN_HEADERS)
 
     find_program(GLSLC
         NAMES glslc
-        HINTS "/opt/vulkan-sdk/bin"
+        HINTS "${CMAKE_SOURCE_DIR}/deps/vulkan"
+        PATH_SUFFIXES bin
         REQUIRED
     )
     set(Vulkan_GLSLC_EXECUTABLE "${GLSLC}")

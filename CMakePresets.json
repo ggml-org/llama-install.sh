@@ -2912,9 +2912,10 @@
         "GGML_STATIC": "ON",
         "CMAKE_CUDA_ARCHITECTURES": "75-real",
         "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc",
-        "CMAKE_CUDA_FLAGS": "-isystem ${sourceDir}/deps/cuda/include"
+        "CMAKE_CUDA_FLAGS": "-isystem ${sourceDir}/deps/cuda/include",
+        "LLAMA_INSTALL_FLAGS": "-march=armv8.2-a"
       },
-      "toolchainFile": "toolchains/base.cmake",
+      "toolchainFile": "toolchains/clang.cmake",
       "generator": "Ninja"
     },
     {
@@ -2928,9 +2929,10 @@
         "GGML_STATIC": "ON",
         "CMAKE_CUDA_ARCHITECTURES": "80-real",
         "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc",
-        "CMAKE_CUDA_FLAGS": "-isystem ${sourceDir}/deps/cuda/include"
+        "CMAKE_CUDA_FLAGS": "-isystem ${sourceDir}/deps/cuda/include",
+        "LLAMA_INSTALL_FLAGS": "-march=armv8.2-a"
       },
-      "toolchainFile": "toolchains/base.cmake",
+      "toolchainFile": "toolchains/clang.cmake",
       "generator": "Ninja"
     },
     {
@@ -2944,9 +2946,10 @@
         "GGML_STATIC": "ON",
         "CMAKE_CUDA_ARCHITECTURES": "86-real",
         "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc",
-        "CMAKE_CUDA_FLAGS": "-isystem ${sourceDir}/deps/cuda/include"
+        "CMAKE_CUDA_FLAGS": "-isystem ${sourceDir}/deps/cuda/include",
+        "LLAMA_INSTALL_FLAGS": "-march=armv8.2-a"
       },
-      "toolchainFile": "toolchains/base.cmake",
+      "toolchainFile": "toolchains/clang.cmake",
       "generator": "Ninja"
     },
     {
@@ -2960,9 +2963,10 @@
         "GGML_STATIC": "ON",
         "CMAKE_CUDA_ARCHITECTURES": "89-real",
         "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc",
-        "CMAKE_CUDA_FLAGS": "-isystem ${sourceDir}/deps/cuda/include"
+        "CMAKE_CUDA_FLAGS": "-isystem ${sourceDir}/deps/cuda/include",
+        "LLAMA_INSTALL_FLAGS": "-march=armv8.2-a"
       },
-      "toolchainFile": "toolchains/base.cmake",
+      "toolchainFile": "toolchains/clang.cmake",
       "generator": "Ninja"
     },
     {
@@ -2976,9 +2980,10 @@
         "GGML_STATIC": "ON",
         "CMAKE_CUDA_ARCHITECTURES": "90-real",
         "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc",
-        "CMAKE_CUDA_FLAGS": "-isystem ${sourceDir}/deps/cuda/include"
+        "CMAKE_CUDA_FLAGS": "-isystem ${sourceDir}/deps/cuda/include",
+        "LLAMA_INSTALL_FLAGS": "-march=armv8.2-a"
       },
-      "toolchainFile": "toolchains/base.cmake",
+      "toolchainFile": "toolchains/clang.cmake",
       "generator": "Ninja"
     },
     {
@@ -2992,9 +2997,10 @@
         "GGML_STATIC": "ON",
         "CMAKE_CUDA_ARCHITECTURES": "100-real",
         "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc",
-        "CMAKE_CUDA_FLAGS": "-isystem ${sourceDir}/deps/cuda/include"
+        "CMAKE_CUDA_FLAGS": "-isystem ${sourceDir}/deps/cuda/include",
+        "LLAMA_INSTALL_FLAGS": "-march=armv8.2-a"
       },
-      "toolchainFile": "toolchains/base.cmake",
+      "toolchainFile": "toolchains/clang.cmake",
       "generator": "Ninja"
     },
     {
@@ -3008,9 +3014,10 @@
         "GGML_STATIC": "ON",
         "CMAKE_CUDA_ARCHITECTURES": "120-real",
         "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc",
-        "CMAKE_CUDA_FLAGS": "-isystem ${sourceDir}/deps/cuda/include"
+        "CMAKE_CUDA_FLAGS": "-isystem ${sourceDir}/deps/cuda/include",
+        "LLAMA_INSTALL_FLAGS": "-march=armv8.2-a"
       },
-      "toolchainFile": "toolchains/base.cmake",
+      "toolchainFile": "toolchains/clang.cmake",
       "generator": "Ninja"
     },
     {
@@ -3024,9 +3031,10 @@
         "GGML_STATIC": "ON",
         "CMAKE_CUDA_ARCHITECTURES": "121",
         "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc",
-        "CMAKE_CUDA_FLAGS": "-isystem ${sourceDir}/deps/cuda/include"
+        "CMAKE_CUDA_FLAGS": "-isystem ${sourceDir}/deps/cuda/include",
+        "LLAMA_INSTALL_FLAGS": "-march=armv8.2-a"
       },
-      "toolchainFile": "toolchains/base.cmake",
+      "toolchainFile": "toolchains/clang.cmake",
       "generator": "Ninja"
     },
     {
@@ -3043,7 +3051,7 @@
         "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc",
         "CMAKE_CUDA_FLAGS": "-isystem ${sourceDir}/deps/cuda/include"
       },
-      "toolchainFile": "toolchains/base.cmake",
+      "toolchainFile": "toolchains/clang.cmake",
       "generator": "Ninja"
     },
     {
@@ -3057,9 +3065,10 @@
         "GGML_STATIC": "ON",
         "CMAKE_CUDA_ARCHITECTURES": "75-real",
         "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc",
-        "CMAKE_CUDA_FLAGS": "-isystem ${sourceDir}/deps/cuda/include"
+        "CMAKE_CUDA_FLAGS": "-isystem ${sourceDir}/deps/cuda/include",
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
-      "toolchainFile": "toolchains/base.cmake",
+      "toolchainFile": "toolchains/clang.cmake",
       "generator": "Ninja"
     },
     {
@@ -3073,9 +3082,10 @@
         "GGML_STATIC": "ON",
         "CMAKE_CUDA_ARCHITECTURES": "80-real",
         "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc",
-        "CMAKE_CUDA_FLAGS": "-isystem ${sourceDir}/deps/cuda/include"
+        "CMAKE_CUDA_FLAGS": "-isystem ${sourceDir}/deps/cuda/include",
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
-      "toolchainFile": "toolchains/base.cmake",
+      "toolchainFile": "toolchains/clang.cmake",
       "generator": "Ninja"
     },
     {
@@ -3089,9 +3099,10 @@
         "GGML_STATIC": "ON",
         "CMAKE_CUDA_ARCHITECTURES": "86-real",
         "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc",
-        "CMAKE_CUDA_FLAGS": "-isystem ${sourceDir}/deps/cuda/include"
+        "CMAKE_CUDA_FLAGS": "-isystem ${sourceDir}/deps/cuda/include",
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
-      "toolchainFile": "toolchains/base.cmake",
+      "toolchainFile": "toolchains/clang.cmake",
       "generator": "Ninja"
     },
     {
@@ -3105,9 +3116,10 @@
         "GGML_STATIC": "ON",
         "CMAKE_CUDA_ARCHITECTURES": "89-real",
         "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc",
-        "CMAKE_CUDA_FLAGS": "-isystem ${sourceDir}/deps/cuda/include"
+        "CMAKE_CUDA_FLAGS": "-isystem ${sourceDir}/deps/cuda/include",
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
-      "toolchainFile": "toolchains/base.cmake",
+      "toolchainFile": "toolchains/clang.cmake",
       "generator": "Ninja"
     },
     {
@@ -3121,9 +3133,10 @@
         "GGML_STATIC": "ON",
         "CMAKE_CUDA_ARCHITECTURES": "90-real",
         "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc",
-        "CMAKE_CUDA_FLAGS": "-isystem ${sourceDir}/deps/cuda/include"
+        "CMAKE_CUDA_FLAGS": "-isystem ${sourceDir}/deps/cuda/include",
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
-      "toolchainFile": "toolchains/base.cmake",
+      "toolchainFile": "toolchains/clang.cmake",
       "generator": "Ninja"
     },
     {
@@ -3137,9 +3150,10 @@
         "GGML_STATIC": "ON",
         "CMAKE_CUDA_ARCHITECTURES": "100-real",
         "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc",
-        "CMAKE_CUDA_FLAGS": "-isystem ${sourceDir}/deps/cuda/include"
+        "CMAKE_CUDA_FLAGS": "-isystem ${sourceDir}/deps/cuda/include",
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
-      "toolchainFile": "toolchains/base.cmake",
+      "toolchainFile": "toolchains/clang.cmake",
       "generator": "Ninja"
     },
     {
@@ -3153,9 +3167,10 @@
         "GGML_STATIC": "ON",
         "CMAKE_CUDA_ARCHITECTURES": "120-real",
         "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc",
-        "CMAKE_CUDA_FLAGS": "-isystem ${sourceDir}/deps/cuda/include"
+        "CMAKE_CUDA_FLAGS": "-isystem ${sourceDir}/deps/cuda/include",
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
-      "toolchainFile": "toolchains/base.cmake",
+      "toolchainFile": "toolchains/clang.cmake",
       "generator": "Ninja"
     },
     {
@@ -3169,9 +3184,10 @@
         "GGML_STATIC": "ON",
         "CMAKE_CUDA_ARCHITECTURES": "121",
         "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc",
-        "CMAKE_CUDA_FLAGS": "-isystem ${sourceDir}/deps/cuda/include"
+        "CMAKE_CUDA_FLAGS": "-isystem ${sourceDir}/deps/cuda/include",
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
-      "toolchainFile": "toolchains/base.cmake",
+      "toolchainFile": "toolchains/clang.cmake",
       "generator": "Ninja"
     },
     {
@@ -3188,7 +3204,41 @@
         "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc",
         "CMAKE_CUDA_FLAGS": "-isystem ${sourceDir}/deps/cuda/include"
       },
-      "toolchainFile": "toolchains/base.cmake",
+      "toolchainFile": "toolchains/clang.cmake",
+      "generator": "Ninja"
+    },
+    {
+      "name": "aarch64-windows-cuda-13-121",
+      "binaryDir": "build/${presetName}",
+      "cacheVariables": {
+        "LLAMA_INSTALL_DIR": "${sourceDir}/output/aarch64/windows/cuda/13/121",
+        "LLAMA_INSTALL_OS": "windows",
+        "LLAMA_INSTALL_ARCH": "aarch64",
+        "GGML_CUDA": "ON",
+        "GGML_STATIC": "ON",
+        "CMAKE_CUDA_ARCHITECTURES": "121",
+        "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc.exe",
+        "CMAKE_CUDA_FLAGS": "-diag-suppress 221 -isystem ${sourceDir}/deps/cuda/include",
+        "LLAMA_INSTALL_FLAGS": "-march=armv9.2-a"
+      },
+      "toolchainFile": "toolchains/clang.cmake",
+      "generator": "Ninja"
+    },
+    {
+      "name": "aarch64-windows-cuda-probe",
+      "binaryDir": "build/${presetName}",
+      "cacheVariables": {
+        "LLAMA_INSTALL_DIR": "${sourceDir}/output/aarch64/windows/cuda/probe",
+        "LLAMA_INSTALL_OS": "windows",
+        "LLAMA_INSTALL_ARCH": "aarch64",
+        "LLAMA_INSTALL_PROBE": "cuda",
+        "LLAMA_INSTALL_PROBE_ARCHS": "75,80,86,89,90,100,120,121",
+        "LLAMA_INSTALL_PROBE_VERSIONS": "128,128,128,128,128,128,128,129",
+        "CMAKE_CUDA_ARCHITECTURES": "75;80;86;89;90;100;120;121",
+        "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc.exe",
+        "CMAKE_CUDA_FLAGS": "-diag-suppress 221 -isystem ${sourceDir}/deps/cuda/include"
+      },
+      "toolchainFile": "toolchains/clang.cmake",
       "generator": "Ninja"
     },
     {
@@ -3202,9 +3252,10 @@
         "GGML_STATIC": "ON",
         "CMAKE_CUDA_ARCHITECTURES": "75-real",
         "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc.exe",
-        "CMAKE_CUDA_FLAGS": "-diag-suppress 221 -isystem ${sourceDir}/deps/cuda/include"
+        "CMAKE_CUDA_FLAGS": "-diag-suppress 221 -isystem ${sourceDir}/deps/cuda/include",
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
-      "toolchainFile": "toolchains/base.cmake",
+      "toolchainFile": "toolchains/clang.cmake",
       "generator": "Ninja"
     },
     {
@@ -3218,9 +3269,10 @@
         "GGML_STATIC": "ON",
         "CMAKE_CUDA_ARCHITECTURES": "80-real",
         "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc.exe",
-        "CMAKE_CUDA_FLAGS": "-diag-suppress 221 -isystem ${sourceDir}/deps/cuda/include"
+        "CMAKE_CUDA_FLAGS": "-diag-suppress 221 -isystem ${sourceDir}/deps/cuda/include",
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
-      "toolchainFile": "toolchains/base.cmake",
+      "toolchainFile": "toolchains/clang.cmake",
       "generator": "Ninja"
     },
     {
@@ -3234,9 +3286,10 @@
         "GGML_STATIC": "ON",
         "CMAKE_CUDA_ARCHITECTURES": "86-real",
         "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc.exe",
-        "CMAKE_CUDA_FLAGS": "-diag-suppress 221 -isystem ${sourceDir}/deps/cuda/include"
+        "CMAKE_CUDA_FLAGS": "-diag-suppress 221 -isystem ${sourceDir}/deps/cuda/include",
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
-      "toolchainFile": "toolchains/base.cmake",
+      "toolchainFile": "toolchains/clang.cmake",
       "generator": "Ninja"
     },
     {
@@ -3250,9 +3303,10 @@
         "GGML_STATIC": "ON",
         "CMAKE_CUDA_ARCHITECTURES": "89-real",
         "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc.exe",
-        "CMAKE_CUDA_FLAGS": "-diag-suppress 221 -isystem ${sourceDir}/deps/cuda/include"
+        "CMAKE_CUDA_FLAGS": "-diag-suppress 221 -isystem ${sourceDir}/deps/cuda/include",
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
-      "toolchainFile": "toolchains/base.cmake",
+      "toolchainFile": "toolchains/clang.cmake",
       "generator": "Ninja"
     },
     {
@@ -3266,9 +3320,10 @@
         "GGML_STATIC": "ON",
         "CMAKE_CUDA_ARCHITECTURES": "90-real",
         "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc.exe",
-        "CMAKE_CUDA_FLAGS": "-diag-suppress 221 -isystem ${sourceDir}/deps/cuda/include"
+        "CMAKE_CUDA_FLAGS": "-diag-suppress 221 -isystem ${sourceDir}/deps/cuda/include",
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
-      "toolchainFile": "toolchains/base.cmake",
+      "toolchainFile": "toolchains/clang.cmake",
       "generator": "Ninja"
     },
     {
@@ -3282,9 +3337,10 @@
         "GGML_STATIC": "ON",
         "CMAKE_CUDA_ARCHITECTURES": "100-real",
         "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc.exe",
-        "CMAKE_CUDA_FLAGS": "-diag-suppress 221 -isystem ${sourceDir}/deps/cuda/include"
+        "CMAKE_CUDA_FLAGS": "-diag-suppress 221 -isystem ${sourceDir}/deps/cuda/include",
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
-      "toolchainFile": "toolchains/base.cmake",
+      "toolchainFile": "toolchains/clang.cmake",
       "generator": "Ninja"
     },
     {
@@ -3298,9 +3354,10 @@
         "GGML_STATIC": "ON",
         "CMAKE_CUDA_ARCHITECTURES": "120-real",
         "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc.exe",
-        "CMAKE_CUDA_FLAGS": "-diag-suppress 221 -isystem ${sourceDir}/deps/cuda/include"
+        "CMAKE_CUDA_FLAGS": "-diag-suppress 221 -isystem ${sourceDir}/deps/cuda/include",
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
-      "toolchainFile": "toolchains/base.cmake",
+      "toolchainFile": "toolchains/clang.cmake",
       "generator": "Ninja"
     },
     {
@@ -3314,9 +3371,10 @@
         "GGML_STATIC": "ON",
         "CMAKE_CUDA_ARCHITECTURES": "121",
         "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc.exe",
-        "CMAKE_CUDA_FLAGS": "-diag-suppress 221 -isystem ${sourceDir}/deps/cuda/include"
+        "CMAKE_CUDA_FLAGS": "-diag-suppress 221 -isystem ${sourceDir}/deps/cuda/include",
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
-      "toolchainFile": "toolchains/base.cmake",
+      "toolchainFile": "toolchains/clang.cmake",
       "generator": "Ninja"
     },
     {
@@ -3330,9 +3388,10 @@
         "GGML_STATIC": "ON",
         "CMAKE_CUDA_ARCHITECTURES": "75-real",
         "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc.exe",
-        "CMAKE_CUDA_FLAGS": "-diag-suppress 221 -isystem ${sourceDir}/deps/cuda/include"
+        "CMAKE_CUDA_FLAGS": "-diag-suppress 221 -isystem ${sourceDir}/deps/cuda/include",
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
-      "toolchainFile": "toolchains/base.cmake",
+      "toolchainFile": "toolchains/clang.cmake",
       "generator": "Ninja"
     },
     {
@@ -3346,9 +3405,10 @@
         "GGML_STATIC": "ON",
         "CMAKE_CUDA_ARCHITECTURES": "80-real",
         "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc.exe",
-        "CMAKE_CUDA_FLAGS": "-diag-suppress 221 -isystem ${sourceDir}/deps/cuda/include"
+        "CMAKE_CUDA_FLAGS": "-diag-suppress 221 -isystem ${sourceDir}/deps/cuda/include",
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
-      "toolchainFile": "toolchains/base.cmake",
+      "toolchainFile": "toolchains/clang.cmake",
       "generator": "Ninja"
     },
     {
@@ -3362,9 +3422,10 @@
         "GGML_STATIC": "ON",
         "CMAKE_CUDA_ARCHITECTURES": "86-real",
         "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc.exe",
-        "CMAKE_CUDA_FLAGS": "-diag-suppress 221 -isystem ${sourceDir}/deps/cuda/include"
+        "CMAKE_CUDA_FLAGS": "-diag-suppress 221 -isystem ${sourceDir}/deps/cuda/include",
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
-      "toolchainFile": "toolchains/base.cmake",
+      "toolchainFile": "toolchains/clang.cmake",
       "generator": "Ninja"
     },
     {
@@ -3378,9 +3439,10 @@
         "GGML_STATIC": "ON",
         "CMAKE_CUDA_ARCHITECTURES": "89-real",
         "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc.exe",
-        "CMAKE_CUDA_FLAGS": "-diag-suppress 221 -isystem ${sourceDir}/deps/cuda/include"
+        "CMAKE_CUDA_FLAGS": "-diag-suppress 221 -isystem ${sourceDir}/deps/cuda/include",
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
-      "toolchainFile": "toolchains/base.cmake",
+      "toolchainFile": "toolchains/clang.cmake",
       "generator": "Ninja"
     },
     {
@@ -3394,9 +3456,10 @@
         "GGML_STATIC": "ON",
         "CMAKE_CUDA_ARCHITECTURES": "90-real",
         "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc.exe",
-        "CMAKE_CUDA_FLAGS": "-diag-suppress 221 -isystem ${sourceDir}/deps/cuda/include"
+        "CMAKE_CUDA_FLAGS": "-diag-suppress 221 -isystem ${sourceDir}/deps/cuda/include",
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
-      "toolchainFile": "toolchains/base.cmake",
+      "toolchainFile": "toolchains/clang.cmake",
       "generator": "Ninja"
     },
     {
@@ -3410,9 +3473,10 @@
         "GGML_STATIC": "ON",
         "CMAKE_CUDA_ARCHITECTURES": "100-real",
         "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc.exe",
-        "CMAKE_CUDA_FLAGS": "-diag-suppress 221 -isystem ${sourceDir}/deps/cuda/include"
+        "CMAKE_CUDA_FLAGS": "-diag-suppress 221 -isystem ${sourceDir}/deps/cuda/include",
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
-      "toolchainFile": "toolchains/base.cmake",
+      "toolchainFile": "toolchains/clang.cmake",
       "generator": "Ninja"
     },
     {
@@ -3426,9 +3490,10 @@
         "GGML_STATIC": "ON",
         "CMAKE_CUDA_ARCHITECTURES": "120-real",
         "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc.exe",
-        "CMAKE_CUDA_FLAGS": "-diag-suppress 221 -isystem ${sourceDir}/deps/cuda/include"
+        "CMAKE_CUDA_FLAGS": "-diag-suppress 221 -isystem ${sourceDir}/deps/cuda/include",
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
-      "toolchainFile": "toolchains/base.cmake",
+      "toolchainFile": "toolchains/clang.cmake",
       "generator": "Ninja"
     },
     {
@@ -3442,9 +3507,10 @@
         "GGML_STATIC": "ON",
         "CMAKE_CUDA_ARCHITECTURES": "121",
         "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc.exe",
-        "CMAKE_CUDA_FLAGS": "-diag-suppress 221 -isystem ${sourceDir}/deps/cuda/include"
+        "CMAKE_CUDA_FLAGS": "-diag-suppress 221 -isystem ${sourceDir}/deps/cuda/include",
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
-      "toolchainFile": "toolchains/base.cmake",
+      "toolchainFile": "toolchains/clang.cmake",
       "generator": "Ninja"
     },
     {
@@ -3461,7 +3527,7 @@
         "CMAKE_CUDA_COMPILER": "${sourceDir}/deps/cuda/bin/nvcc.exe",
         "CMAKE_CUDA_FLAGS": "-diag-suppress 221 -isystem ${sourceDir}/deps/cuda/include"
       },
-      "toolchainFile": "toolchains/base.cmake",
+      "toolchainFile": "toolchains/clang.cmake",
       "generator": "Ninja"
     },
     {
@@ -3473,7 +3539,8 @@
         "LLAMA_INSTALL_ARCH": "x86_64",
         "GGML_HIP": "ON",
         "GGML_HIP_ROCWMMA_FATTN": "OFF",
-        "CMAKE_HIP_ARCHITECTURES": "gfx906"
+        "CMAKE_HIP_ARCHITECTURES": "gfx906",
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
       "toolchainFile": "toolchains/rocm.cmake",
       "generator": "Ninja"
@@ -3487,7 +3554,8 @@
         "LLAMA_INSTALL_ARCH": "x86_64",
         "GGML_HIP": "ON",
         "GGML_HIP_ROCWMMA_FATTN": "ON",
-        "CMAKE_HIP_ARCHITECTURES": "gfx90a"
+        "CMAKE_HIP_ARCHITECTURES": "gfx90a",
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
       "toolchainFile": "toolchains/rocm.cmake",
       "generator": "Ninja"
@@ -3501,7 +3569,8 @@
         "LLAMA_INSTALL_ARCH": "x86_64",
         "GGML_HIP": "ON",
         "GGML_HIP_ROCWMMA_FATTN": "ON",
-        "CMAKE_HIP_ARCHITECTURES": "gfx942"
+        "CMAKE_HIP_ARCHITECTURES": "gfx942",
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
       "toolchainFile": "toolchains/rocm.cmake",
       "generator": "Ninja"
@@ -3515,7 +3584,8 @@
         "LLAMA_INSTALL_ARCH": "x86_64",
         "GGML_HIP": "ON",
         "GGML_HIP_ROCWMMA_FATTN": "ON",
-        "CMAKE_HIP_ARCHITECTURES": "gfx950"
+        "CMAKE_HIP_ARCHITECTURES": "gfx950",
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
       "toolchainFile": "toolchains/rocm.cmake",
       "generator": "Ninja"
@@ -3529,7 +3599,8 @@
         "LLAMA_INSTALL_ARCH": "x86_64",
         "GGML_HIP": "ON",
         "GGML_HIP_ROCWMMA_FATTN": "OFF",
-        "CMAKE_HIP_ARCHITECTURES": "gfx1030"
+        "CMAKE_HIP_ARCHITECTURES": "gfx1030",
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
       "toolchainFile": "toolchains/rocm.cmake",
       "generator": "Ninja"
@@ -3543,7 +3614,8 @@
         "LLAMA_INSTALL_ARCH": "x86_64",
         "GGML_HIP": "ON",
         "GGML_HIP_ROCWMMA_FATTN": "OFF",
-        "CMAKE_HIP_ARCHITECTURES": "gfx1031"
+        "CMAKE_HIP_ARCHITECTURES": "gfx1031",
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
       "toolchainFile": "toolchains/rocm.cmake",
       "generator": "Ninja"
@@ -3557,7 +3629,8 @@
         "LLAMA_INSTALL_ARCH": "x86_64",
         "GGML_HIP": "ON",
         "GGML_HIP_ROCWMMA_FATTN": "OFF",
-        "CMAKE_HIP_ARCHITECTURES": "gfx1032"
+        "CMAKE_HIP_ARCHITECTURES": "gfx1032",
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
       "toolchainFile": "toolchains/rocm.cmake",
       "generator": "Ninja"
@@ -3571,7 +3644,8 @@
         "LLAMA_INSTALL_ARCH": "x86_64",
         "GGML_HIP": "ON",
         "GGML_HIP_ROCWMMA_FATTN": "OFF",
-        "CMAKE_HIP_ARCHITECTURES": "gfx1011"
+        "CMAKE_HIP_ARCHITECTURES": "gfx1011",
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
       "toolchainFile": "toolchains/rocm.cmake",
       "generator": "Ninja"
@@ -3585,7 +3659,8 @@
         "LLAMA_INSTALL_ARCH": "x86_64",
         "GGML_HIP": "ON",
         "GGML_HIP_ROCWMMA_FATTN": "ON",
-        "CMAKE_HIP_ARCHITECTURES": "gfx1100"
+        "CMAKE_HIP_ARCHITECTURES": "gfx1100",
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
       "toolchainFile": "toolchains/rocm.cmake",
       "generator": "Ninja"
@@ -3599,7 +3674,8 @@
         "LLAMA_INSTALL_ARCH": "x86_64",
         "GGML_HIP": "ON",
         "GGML_HIP_ROCWMMA_FATTN": "ON",
-        "CMAKE_HIP_ARCHITECTURES": "gfx1101"
+        "CMAKE_HIP_ARCHITECTURES": "gfx1101",
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
       "toolchainFile": "toolchains/rocm.cmake",
       "generator": "Ninja"
@@ -3613,7 +3689,8 @@
         "LLAMA_INSTALL_ARCH": "x86_64",
         "GGML_HIP": "ON",
         "GGML_HIP_ROCWMMA_FATTN": "ON",
-        "CMAKE_HIP_ARCHITECTURES": "gfx1102"
+        "CMAKE_HIP_ARCHITECTURES": "gfx1102",
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
       "toolchainFile": "toolchains/rocm.cmake",
       "generator": "Ninja"
@@ -3627,7 +3704,8 @@
         "LLAMA_INSTALL_ARCH": "x86_64",
         "GGML_HIP": "ON",
         "GGML_HIP_ROCWMMA_FATTN": "ON",
-        "CMAKE_HIP_ARCHITECTURES": "gfx1103"
+        "CMAKE_HIP_ARCHITECTURES": "gfx1103",
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
       "toolchainFile": "toolchains/rocm.cmake",
       "generator": "Ninja"
@@ -3641,7 +3719,8 @@
         "LLAMA_INSTALL_ARCH": "x86_64",
         "GGML_HIP": "ON",
         "GGML_HIP_ROCWMMA_FATTN": "ON",
-        "CMAKE_HIP_ARCHITECTURES": "gfx1150"
+        "CMAKE_HIP_ARCHITECTURES": "gfx1150",
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
       "toolchainFile": "toolchains/rocm.cmake",
       "generator": "Ninja"
@@ -3655,7 +3734,8 @@
         "LLAMA_INSTALL_ARCH": "x86_64",
         "GGML_HIP": "ON",
         "GGML_HIP_ROCWMMA_FATTN": "ON",
-        "CMAKE_HIP_ARCHITECTURES": "gfx1151"
+        "CMAKE_HIP_ARCHITECTURES": "gfx1151",
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
       "toolchainFile": "toolchains/rocm.cmake",
       "generator": "Ninja"
@@ -3669,7 +3749,8 @@
         "LLAMA_INSTALL_ARCH": "x86_64",
         "GGML_HIP": "ON",
         "GGML_HIP_ROCWMMA_FATTN": "ON",
-        "CMAKE_HIP_ARCHITECTURES": "gfx1152"
+        "CMAKE_HIP_ARCHITECTURES": "gfx1152",
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
       "toolchainFile": "toolchains/rocm.cmake",
       "generator": "Ninja"
@@ -3683,7 +3764,8 @@
         "LLAMA_INSTALL_ARCH": "x86_64",
         "GGML_HIP": "ON",
         "GGML_HIP_ROCWMMA_FATTN": "ON",
-        "CMAKE_HIP_ARCHITECTURES": "gfx1153"
+        "CMAKE_HIP_ARCHITECTURES": "gfx1153",
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
       "toolchainFile": "toolchains/rocm.cmake",
       "generator": "Ninja"
@@ -3697,7 +3779,8 @@
         "LLAMA_INSTALL_ARCH": "x86_64",
         "GGML_HIP": "ON",
         "GGML_HIP_ROCWMMA_FATTN": "ON",
-        "CMAKE_HIP_ARCHITECTURES": "gfx1200"
+        "CMAKE_HIP_ARCHITECTURES": "gfx1200",
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
       "toolchainFile": "toolchains/rocm.cmake",
       "generator": "Ninja"
@@ -3711,7 +3794,8 @@
         "LLAMA_INSTALL_ARCH": "x86_64",
         "GGML_HIP": "ON",
         "GGML_HIP_ROCWMMA_FATTN": "ON",
-        "CMAKE_HIP_ARCHITECTURES": "gfx1201"
+        "CMAKE_HIP_ARCHITECTURES": "gfx1201",
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
       },
       "toolchainFile": "toolchains/rocm.cmake",
       "generator": "Ninja"
@@ -3751,6 +3835,288 @@
         "LLAMA_INSTALL_PROBE": "sycl"
       },
       "toolchainFile": "toolchains/sycl.cmake",
+      "generator": "Ninja"
+    },
+    {
+      "name": "x86_64-windows-rocm-gfx906",
+      "binaryDir": "build/${presetName}",
+      "cacheVariables": {
+        "LLAMA_INSTALL_DIR": "${sourceDir}/output/x86_64/windows/rocm/gfx906",
+        "LLAMA_INSTALL_OS": "windows",
+        "LLAMA_INSTALL_ARCH": "x86_64",
+        "GGML_HIP": "ON",
+        "GGML_HIP_ROCWMMA_FATTN": "OFF",
+        "CMAKE_HIP_ARCHITECTURES": "gfx906",
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
+      },
+      "toolchainFile": "toolchains/rocm.cmake",
+      "generator": "Ninja"
+    },
+    {
+      "name": "x86_64-windows-rocm-gfx90a",
+      "binaryDir": "build/${presetName}",
+      "cacheVariables": {
+        "LLAMA_INSTALL_DIR": "${sourceDir}/output/x86_64/windows/rocm/gfx90a",
+        "LLAMA_INSTALL_OS": "windows",
+        "LLAMA_INSTALL_ARCH": "x86_64",
+        "GGML_HIP": "ON",
+        "GGML_HIP_ROCWMMA_FATTN": "ON",
+        "CMAKE_HIP_ARCHITECTURES": "gfx90a",
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
+      },
+      "toolchainFile": "toolchains/rocm.cmake",
+      "generator": "Ninja"
+    },
+    {
+      "name": "x86_64-windows-rocm-gfx942",
+      "binaryDir": "build/${presetName}",
+      "cacheVariables": {
+        "LLAMA_INSTALL_DIR": "${sourceDir}/output/x86_64/windows/rocm/gfx942",
+        "LLAMA_INSTALL_OS": "windows",
+        "LLAMA_INSTALL_ARCH": "x86_64",
+        "GGML_HIP": "ON",
+        "GGML_HIP_ROCWMMA_FATTN": "ON",
+        "CMAKE_HIP_ARCHITECTURES": "gfx942",
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
+      },
+      "toolchainFile": "toolchains/rocm.cmake",
+      "generator": "Ninja"
+    },
+    {
+      "name": "x86_64-windows-rocm-gfx950",
+      "binaryDir": "build/${presetName}",
+      "cacheVariables": {
+        "LLAMA_INSTALL_DIR": "${sourceDir}/output/x86_64/windows/rocm/gfx950",
+        "LLAMA_INSTALL_OS": "windows",
+        "LLAMA_INSTALL_ARCH": "x86_64",
+        "GGML_HIP": "ON",
+        "GGML_HIP_ROCWMMA_FATTN": "ON",
+        "CMAKE_HIP_ARCHITECTURES": "gfx950",
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
+      },
+      "toolchainFile": "toolchains/rocm.cmake",
+      "generator": "Ninja"
+    },
+    {
+      "name": "x86_64-windows-rocm-gfx1030",
+      "binaryDir": "build/${presetName}",
+      "cacheVariables": {
+        "LLAMA_INSTALL_DIR": "${sourceDir}/output/x86_64/windows/rocm/gfx1030",
+        "LLAMA_INSTALL_OS": "windows",
+        "LLAMA_INSTALL_ARCH": "x86_64",
+        "GGML_HIP": "ON",
+        "GGML_HIP_ROCWMMA_FATTN": "OFF",
+        "CMAKE_HIP_ARCHITECTURES": "gfx1030",
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
+      },
+      "toolchainFile": "toolchains/rocm.cmake",
+      "generator": "Ninja"
+    },
+    {
+      "name": "x86_64-windows-rocm-gfx1031",
+      "binaryDir": "build/${presetName}",
+      "cacheVariables": {
+        "LLAMA_INSTALL_DIR": "${sourceDir}/output/x86_64/windows/rocm/gfx1031",
+        "LLAMA_INSTALL_OS": "windows",
+        "LLAMA_INSTALL_ARCH": "x86_64",
+        "GGML_HIP": "ON",
+        "GGML_HIP_ROCWMMA_FATTN": "OFF",
+        "CMAKE_HIP_ARCHITECTURES": "gfx1031",
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
+      },
+      "toolchainFile": "toolchains/rocm.cmake",
+      "generator": "Ninja"
+    },
+    {
+      "name": "x86_64-windows-rocm-gfx1032",
+      "binaryDir": "build/${presetName}",
+      "cacheVariables": {
+        "LLAMA_INSTALL_DIR": "${sourceDir}/output/x86_64/windows/rocm/gfx1032",
+        "LLAMA_INSTALL_OS": "windows",
+        "LLAMA_INSTALL_ARCH": "x86_64",
+        "GGML_HIP": "ON",
+        "GGML_HIP_ROCWMMA_FATTN": "OFF",
+        "CMAKE_HIP_ARCHITECTURES": "gfx1032",
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
+      },
+      "toolchainFile": "toolchains/rocm.cmake",
+      "generator": "Ninja"
+    },
+    {
+      "name": "x86_64-windows-rocm-gfx1011",
+      "binaryDir": "build/${presetName}",
+      "cacheVariables": {
+        "LLAMA_INSTALL_DIR": "${sourceDir}/output/x86_64/windows/rocm/gfx1011",
+        "LLAMA_INSTALL_OS": "windows",
+        "LLAMA_INSTALL_ARCH": "x86_64",
+        "GGML_HIP": "ON",
+        "GGML_HIP_ROCWMMA_FATTN": "OFF",
+        "CMAKE_HIP_ARCHITECTURES": "gfx1011",
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
+      },
+      "toolchainFile": "toolchains/rocm.cmake",
+      "generator": "Ninja"
+    },
+    {
+      "name": "x86_64-windows-rocm-gfx1100",
+      "binaryDir": "build/${presetName}",
+      "cacheVariables": {
+        "LLAMA_INSTALL_DIR": "${sourceDir}/output/x86_64/windows/rocm/gfx1100",
+        "LLAMA_INSTALL_OS": "windows",
+        "LLAMA_INSTALL_ARCH": "x86_64",
+        "GGML_HIP": "ON",
+        "GGML_HIP_ROCWMMA_FATTN": "ON",
+        "CMAKE_HIP_ARCHITECTURES": "gfx1100",
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
+      },
+      "toolchainFile": "toolchains/rocm.cmake",
+      "generator": "Ninja"
+    },
+    {
+      "name": "x86_64-windows-rocm-gfx1101",
+      "binaryDir": "build/${presetName}",
+      "cacheVariables": {
+        "LLAMA_INSTALL_DIR": "${sourceDir}/output/x86_64/windows/rocm/gfx1101",
+        "LLAMA_INSTALL_OS": "windows",
+        "LLAMA_INSTALL_ARCH": "x86_64",
+        "GGML_HIP": "ON",
+        "GGML_HIP_ROCWMMA_FATTN": "ON",
+        "CMAKE_HIP_ARCHITECTURES": "gfx1101",
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
+      },
+      "toolchainFile": "toolchains/rocm.cmake",
+      "generator": "Ninja"
+    },
+    {
+      "name": "x86_64-windows-rocm-gfx1102",
+      "binaryDir": "build/${presetName}",
+      "cacheVariables": {
+        "LLAMA_INSTALL_DIR": "${sourceDir}/output/x86_64/windows/rocm/gfx1102",
+        "LLAMA_INSTALL_OS": "windows",
+        "LLAMA_INSTALL_ARCH": "x86_64",
+        "GGML_HIP": "ON",
+        "GGML_HIP_ROCWMMA_FATTN": "ON",
+        "CMAKE_HIP_ARCHITECTURES": "gfx1102",
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
+      },
+      "toolchainFile": "toolchains/rocm.cmake",
+      "generator": "Ninja"
+    },
+    {
+      "name": "x86_64-windows-rocm-gfx1103",
+      "binaryDir": "build/${presetName}",
+      "cacheVariables": {
+        "LLAMA_INSTALL_DIR": "${sourceDir}/output/x86_64/windows/rocm/gfx1103",
+        "LLAMA_INSTALL_OS": "windows",
+        "LLAMA_INSTALL_ARCH": "x86_64",
+        "GGML_HIP": "ON",
+        "GGML_HIP_ROCWMMA_FATTN": "ON",
+        "CMAKE_HIP_ARCHITECTURES": "gfx1103",
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
+      },
+      "toolchainFile": "toolchains/rocm.cmake",
+      "generator": "Ninja"
+    },
+    {
+      "name": "x86_64-windows-rocm-gfx1150",
+      "binaryDir": "build/${presetName}",
+      "cacheVariables": {
+        "LLAMA_INSTALL_DIR": "${sourceDir}/output/x86_64/windows/rocm/gfx1150",
+        "LLAMA_INSTALL_OS": "windows",
+        "LLAMA_INSTALL_ARCH": "x86_64",
+        "GGML_HIP": "ON",
+        "GGML_HIP_ROCWMMA_FATTN": "ON",
+        "CMAKE_HIP_ARCHITECTURES": "gfx1150",
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
+      },
+      "toolchainFile": "toolchains/rocm.cmake",
+      "generator": "Ninja"
+    },
+    {
+      "name": "x86_64-windows-rocm-gfx1151",
+      "binaryDir": "build/${presetName}",
+      "cacheVariables": {
+        "LLAMA_INSTALL_DIR": "${sourceDir}/output/x86_64/windows/rocm/gfx1151",
+        "LLAMA_INSTALL_OS": "windows",
+        "LLAMA_INSTALL_ARCH": "x86_64",
+        "GGML_HIP": "ON",
+        "GGML_HIP_ROCWMMA_FATTN": "ON",
+        "CMAKE_HIP_ARCHITECTURES": "gfx1151",
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
+      },
+      "toolchainFile": "toolchains/rocm.cmake",
+      "generator": "Ninja"
+    },
+    {
+      "name": "x86_64-windows-rocm-gfx1152",
+      "binaryDir": "build/${presetName}",
+      "cacheVariables": {
+        "LLAMA_INSTALL_DIR": "${sourceDir}/output/x86_64/windows/rocm/gfx1152",
+        "LLAMA_INSTALL_OS": "windows",
+        "LLAMA_INSTALL_ARCH": "x86_64",
+        "GGML_HIP": "ON",
+        "GGML_HIP_ROCWMMA_FATTN": "ON",
+        "CMAKE_HIP_ARCHITECTURES": "gfx1152",
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
+      },
+      "toolchainFile": "toolchains/rocm.cmake",
+      "generator": "Ninja"
+    },
+    {
+      "name": "x86_64-windows-rocm-gfx1153",
+      "binaryDir": "build/${presetName}",
+      "cacheVariables": {
+        "LLAMA_INSTALL_DIR": "${sourceDir}/output/x86_64/windows/rocm/gfx1153",
+        "LLAMA_INSTALL_OS": "windows",
+        "LLAMA_INSTALL_ARCH": "x86_64",
+        "GGML_HIP": "ON",
+        "GGML_HIP_ROCWMMA_FATTN": "ON",
+        "CMAKE_HIP_ARCHITECTURES": "gfx1153",
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
+      },
+      "toolchainFile": "toolchains/rocm.cmake",
+      "generator": "Ninja"
+    },
+    {
+      "name": "x86_64-windows-rocm-gfx1200",
+      "binaryDir": "build/${presetName}",
+      "cacheVariables": {
+        "LLAMA_INSTALL_DIR": "${sourceDir}/output/x86_64/windows/rocm/gfx1200",
+        "LLAMA_INSTALL_OS": "windows",
+        "LLAMA_INSTALL_ARCH": "x86_64",
+        "GGML_HIP": "ON",
+        "GGML_HIP_ROCWMMA_FATTN": "ON",
+        "CMAKE_HIP_ARCHITECTURES": "gfx1200",
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
+      },
+      "toolchainFile": "toolchains/rocm.cmake",
+      "generator": "Ninja"
+    },
+    {
+      "name": "x86_64-windows-rocm-gfx1201",
+      "binaryDir": "build/${presetName}",
+      "cacheVariables": {
+        "LLAMA_INSTALL_DIR": "${sourceDir}/output/x86_64/windows/rocm/gfx1201",
+        "LLAMA_INSTALL_OS": "windows",
+        "LLAMA_INSTALL_ARCH": "x86_64",
+        "GGML_HIP": "ON",
+        "GGML_HIP_ROCWMMA_FATTN": "ON",
+        "CMAKE_HIP_ARCHITECTURES": "gfx1201",
+        "LLAMA_INSTALL_FLAGS": "-march=x86-64-v3"
+      },
+      "toolchainFile": "toolchains/rocm.cmake",
+      "generator": "Ninja"
+    },
+    {
+      "name": "x86_64-windows-rocm-probe",
+      "binaryDir": "build/${presetName}",
+      "cacheVariables": {
+        "LLAMA_INSTALL_DIR": "${sourceDir}/output/x86_64/windows/rocm/probe",
+        "LLAMA_INSTALL_OS": "windows",
+        "LLAMA_INSTALL_ARCH": "x86_64",
+        "LLAMA_INSTALL_PROBE": "rocm"
+      },
+      "toolchainFile": "toolchains/rocm.cmake",
       "generator": "Ninja"
     },
     {
@@ -5874,6 +6240,22 @@
       ]
     },
     {
+      "name": "aarch64-windows-cuda-13-121",
+      "configurePreset": "aarch64-windows-cuda-13-121",
+      "jobs": 0,
+      "targets": [
+        "llama-install"
+      ]
+    },
+    {
+      "name": "aarch64-windows-cuda-probe",
+      "configurePreset": "aarch64-windows-cuda-probe",
+      "jobs": 0,
+      "targets": [
+        "llama-install"
+      ]
+    },
+    {
       "name": "x86_64-windows-cuda-12-75",
       "configurePreset": "x86_64-windows-cuda-12-75",
       "jobs": 0,
@@ -6156,6 +6538,158 @@
     {
       "name": "x86_64-linux-rocm-probe",
       "configurePreset": "x86_64-linux-rocm-probe",
+      "jobs": 0,
+      "targets": [
+        "llama-install"
+      ]
+    },
+    {
+      "name": "x86_64-windows-rocm-gfx906",
+      "configurePreset": "x86_64-windows-rocm-gfx906",
+      "jobs": 0,
+      "targets": [
+        "llama-install"
+      ]
+    },
+    {
+      "name": "x86_64-windows-rocm-gfx90a",
+      "configurePreset": "x86_64-windows-rocm-gfx90a",
+      "jobs": 0,
+      "targets": [
+        "llama-install"
+      ]
+    },
+    {
+      "name": "x86_64-windows-rocm-gfx942",
+      "configurePreset": "x86_64-windows-rocm-gfx942",
+      "jobs": 0,
+      "targets": [
+        "llama-install"
+      ]
+    },
+    {
+      "name": "x86_64-windows-rocm-gfx950",
+      "configurePreset": "x86_64-windows-rocm-gfx950",
+      "jobs": 0,
+      "targets": [
+        "llama-install"
+      ]
+    },
+    {
+      "name": "x86_64-windows-rocm-gfx1030",
+      "configurePreset": "x86_64-windows-rocm-gfx1030",
+      "jobs": 0,
+      "targets": [
+        "llama-install"
+      ]
+    },
+    {
+      "name": "x86_64-windows-rocm-gfx1031",
+      "configurePreset": "x86_64-windows-rocm-gfx1031",
+      "jobs": 0,
+      "targets": [
+        "llama-install"
+      ]
+    },
+    {
+      "name": "x86_64-windows-rocm-gfx1032",
+      "configurePreset": "x86_64-windows-rocm-gfx1032",
+      "jobs": 0,
+      "targets": [
+        "llama-install"
+      ]
+    },
+    {
+      "name": "x86_64-windows-rocm-gfx1011",
+      "configurePreset": "x86_64-windows-rocm-gfx1011",
+      "jobs": 0,
+      "targets": [
+        "llama-install"
+      ]
+    },
+    {
+      "name": "x86_64-windows-rocm-gfx1100",
+      "configurePreset": "x86_64-windows-rocm-gfx1100",
+      "jobs": 0,
+      "targets": [
+        "llama-install"
+      ]
+    },
+    {
+      "name": "x86_64-windows-rocm-gfx1101",
+      "configurePreset": "x86_64-windows-rocm-gfx1101",
+      "jobs": 0,
+      "targets": [
+        "llama-install"
+      ]
+    },
+    {
+      "name": "x86_64-windows-rocm-gfx1102",
+      "configurePreset": "x86_64-windows-rocm-gfx1102",
+      "jobs": 0,
+      "targets": [
+        "llama-install"
+      ]
+    },
+    {
+      "name": "x86_64-windows-rocm-gfx1103",
+      "configurePreset": "x86_64-windows-rocm-gfx1103",
+      "jobs": 0,
+      "targets": [
+        "llama-install"
+      ]
+    },
+    {
+      "name": "x86_64-windows-rocm-gfx1150",
+      "configurePreset": "x86_64-windows-rocm-gfx1150",
+      "jobs": 0,
+      "targets": [
+        "llama-install"
+      ]
+    },
+    {
+      "name": "x86_64-windows-rocm-gfx1151",
+      "configurePreset": "x86_64-windows-rocm-gfx1151",
+      "jobs": 0,
+      "targets": [
+        "llama-install"
+      ]
+    },
+    {
+      "name": "x86_64-windows-rocm-gfx1152",
+      "configurePreset": "x86_64-windows-rocm-gfx1152",
+      "jobs": 0,
+      "targets": [
+        "llama-install"
+      ]
+    },
+    {
+      "name": "x86_64-windows-rocm-gfx1153",
+      "configurePreset": "x86_64-windows-rocm-gfx1153",
+      "jobs": 0,
+      "targets": [
+        "llama-install"
+      ]
+    },
+    {
+      "name": "x86_64-windows-rocm-gfx1200",
+      "configurePreset": "x86_64-windows-rocm-gfx1200",
+      "jobs": 0,
+      "targets": [
+        "llama-install"
+      ]
+    },
+    {
+      "name": "x86_64-windows-rocm-gfx1201",
+      "configurePreset": "x86_64-windows-rocm-gfx1201",
+      "jobs": 0,
+      "targets": [
+        "llama-install"
+      ]
+    },
+    {
+      "name": "x86_64-windows-rocm-probe",
+      "configurePreset": "x86_64-windows-rocm-probe",
       "jobs": 0,
       "targets": [
         "llama-install"
@@ -9504,6 +10038,32 @@
       ]
     },
     {
+      "name": "aarch64-windows-cuda-13-121",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "aarch64-windows-cuda-13-121"
+        },
+        {
+          "type": "build",
+          "name": "aarch64-windows-cuda-13-121"
+        }
+      ]
+    },
+    {
+      "name": "aarch64-windows-cuda-probe",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "aarch64-windows-cuda-probe"
+        },
+        {
+          "type": "build",
+          "name": "aarch64-windows-cuda-probe"
+        }
+      ]
+    },
+    {
       "name": "x86_64-windows-cuda-12-75",
       "steps": [
         {
@@ -9994,6 +10554,253 @@
         {
           "type": "build",
           "name": "x86_64-linux-sycl-probe"
+        }
+      ]
+    },
+    {
+      "name": "x86_64-windows-rocm-gfx906",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "x86_64-windows-rocm-gfx906"
+        },
+        {
+          "type": "build",
+          "name": "x86_64-windows-rocm-gfx906"
+        }
+      ]
+    },
+    {
+      "name": "x86_64-windows-rocm-gfx90a",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "x86_64-windows-rocm-gfx90a"
+        },
+        {
+          "type": "build",
+          "name": "x86_64-windows-rocm-gfx90a"
+        }
+      ]
+    },
+    {
+      "name": "x86_64-windows-rocm-gfx942",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "x86_64-windows-rocm-gfx942"
+        },
+        {
+          "type": "build",
+          "name": "x86_64-windows-rocm-gfx942"
+        }
+      ]
+    },
+    {
+      "name": "x86_64-windows-rocm-gfx950",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "x86_64-windows-rocm-gfx950"
+        },
+        {
+          "type": "build",
+          "name": "x86_64-windows-rocm-gfx950"
+        }
+      ]
+    },
+    {
+      "name": "x86_64-windows-rocm-gfx1030",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "x86_64-windows-rocm-gfx1030"
+        },
+        {
+          "type": "build",
+          "name": "x86_64-windows-rocm-gfx1030"
+        }
+      ]
+    },
+    {
+      "name": "x86_64-windows-rocm-gfx1031",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "x86_64-windows-rocm-gfx1031"
+        },
+        {
+          "type": "build",
+          "name": "x86_64-windows-rocm-gfx1031"
+        }
+      ]
+    },
+    {
+      "name": "x86_64-windows-rocm-gfx1032",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "x86_64-windows-rocm-gfx1032"
+        },
+        {
+          "type": "build",
+          "name": "x86_64-windows-rocm-gfx1032"
+        }
+      ]
+    },
+    {
+      "name": "x86_64-windows-rocm-gfx1011",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "x86_64-windows-rocm-gfx1011"
+        },
+        {
+          "type": "build",
+          "name": "x86_64-windows-rocm-gfx1011"
+        }
+      ]
+    },
+    {
+      "name": "x86_64-windows-rocm-gfx1100",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "x86_64-windows-rocm-gfx1100"
+        },
+        {
+          "type": "build",
+          "name": "x86_64-windows-rocm-gfx1100"
+        }
+      ]
+    },
+    {
+      "name": "x86_64-windows-rocm-gfx1101",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "x86_64-windows-rocm-gfx1101"
+        },
+        {
+          "type": "build",
+          "name": "x86_64-windows-rocm-gfx1101"
+        }
+      ]
+    },
+    {
+      "name": "x86_64-windows-rocm-gfx1102",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "x86_64-windows-rocm-gfx1102"
+        },
+        {
+          "type": "build",
+          "name": "x86_64-windows-rocm-gfx1102"
+        }
+      ]
+    },
+    {
+      "name": "x86_64-windows-rocm-gfx1103",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "x86_64-windows-rocm-gfx1103"
+        },
+        {
+          "type": "build",
+          "name": "x86_64-windows-rocm-gfx1103"
+        }
+      ]
+    },
+    {
+      "name": "x86_64-windows-rocm-gfx1150",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "x86_64-windows-rocm-gfx1150"
+        },
+        {
+          "type": "build",
+          "name": "x86_64-windows-rocm-gfx1150"
+        }
+      ]
+    },
+    {
+      "name": "x86_64-windows-rocm-gfx1151",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "x86_64-windows-rocm-gfx1151"
+        },
+        {
+          "type": "build",
+          "name": "x86_64-windows-rocm-gfx1151"
+        }
+      ]
+    },
+    {
+      "name": "x86_64-windows-rocm-gfx1152",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "x86_64-windows-rocm-gfx1152"
+        },
+        {
+          "type": "build",
+          "name": "x86_64-windows-rocm-gfx1152"
+        }
+      ]
+    },
+    {
+      "name": "x86_64-windows-rocm-gfx1153",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "x86_64-windows-rocm-gfx1153"
+        },
+        {
+          "type": "build",
+          "name": "x86_64-windows-rocm-gfx1153"
+        }
+      ]
+    },
+    {
+      "name": "x86_64-windows-rocm-gfx1200",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "x86_64-windows-rocm-gfx1200"
+        },
+        {
+          "type": "build",
+          "name": "x86_64-windows-rocm-gfx1200"
+        }
+      ]
+    },
+    {
+      "name": "x86_64-windows-rocm-gfx1201",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "x86_64-windows-rocm-gfx1201"
+        },
+        {
+          "type": "build",
+          "name": "x86_64-windows-rocm-gfx1201"
+        }
+      ]
+    },
+    {
+      "name": "x86_64-windows-rocm-probe",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "x86_64-windows-rocm-probe"
+        },
+        {
+          "type": "build",
+          "name": "x86_64-windows-rocm-probe"
         }
       ]
     },

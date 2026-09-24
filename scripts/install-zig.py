@@ -1,5 +1,4 @@
 import sys
-import os
 import time
 import zipfile
 import tempfile
@@ -7,13 +6,13 @@ from urllib.request import urlopen, Request
 import tarfile
 import shutil
 import platform
-from pathlib import Path
 from functools import wraps
+from pathlib import Path
+from versions import ZIG_VERSION as VERSION
 
 ROOT = Path.cwd() / "deps" / "zig"
 DEST = ROOT.with_suffix(".tmp")
 
-VERSION = os.getenv("ZIG_VERSION", "0.17.0-dev.1387+01b60634c")
 URL = "https://zigmirror.com"
 
 def retry(func):

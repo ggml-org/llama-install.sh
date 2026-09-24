@@ -1,9 +1,9 @@
-name: Build any rocm
+name: Build any linux rocm
 
 on:
   workflow_call:
     inputs: &common_inputs
-      filter:
+      preset:
         type: string
         default: 'rocm'
       deploy:
@@ -20,41 +20,49 @@ on:
   workflow_dispatch:
     inputs: *common_inputs
 
+permissions:
+  contents: read
+
 jobs:
   build:
     runs-on: ubuntu-22.04
     env:
-      ROCM_VERSION: "7.15.0a20260728"
+      ROCM_VERSION: "10.2.0a20260916"
 
     steps:
       - uses: actions/checkout@v5
 
       - name: Install deps
+        env:
+          PRESET: ${{ inputs.preset }}
         run: |
-          GFX="${{ inputs.filter }}"
+          GFX="$PRESET"
           GFX="${GFX##*-}"
           case "$GFX" in
           (probe) ROCM="rocm[devel,libraries]" ;;
           (gfx*)  ROCM="rocm[devel,libraries,device-${GFX}]" ;;
           (*)     ROCM="rocm[devel,libraries,device-all]" ;;
           esac
-          pip install --extra-index-url https://rocm.nightlies.amd.com/whl-multi-arch/ "$ROCM==$ROCM_VERSION"
+          pip install --extra-index-url https://nightly.repo.amd.com/rocm/whl-next/ "$ROCM==$ROCM_VERSION"
           rocm-sdk init
           echo "ROCM_PATH=$(rocm-sdk path --root)" >> "$GITHUB_ENV"
 
-      - name: Build ${{ inputs.filter }}
+      - name: Build ${{ inputs.preset }}
         env:
           LLAMACPP_REPO: ${{ inputs.llamacpp_repo }}
           LLAMACPP_VERSION: ${{ inputs.llamacpp_version }}
           BORINGSSL_REPO: ${{ inputs.boringssl_repo }}
           BORINGSSL_VERSION: ${{ inputs.boringssl_version }}
           HF_TOKEN: ${{ secrets.HF_TOKEN_READ }}
-        run: cmake --workflow --preset ${{ inputs.filter }}
+          PRESET: ${{ inputs.preset }}
+        run: cmake --workflow --preset "$PRESET"
 
       - name: Deploy
         if: ${{ inputs.deploy && vars.HF_REPO != '' }}
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          HF_REPO: ${{ vars.HF_REPO }}
+          VERSION: ${{ inputs.llamacpp_version || 'test' }}
         run: |
-          pip install -U "hf[hf_xet]"
-          python scripts/upload.py ${{ vars.HF_REPO }}/${{ inputs.llamacpp_version || 'test' }}
+          pip install -U "huggingface_hub[hf_xet]"
+          python scripts/upload.py "$HF_REPO/$VERSION"

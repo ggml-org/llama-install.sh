@@ -4,25 +4,45 @@ on:
   schedule:
     - cron: '0 0 * * 3'
   workflow_dispatch:
-    inputs:
+    inputs: &inputs
       version:
         required: false
         default: ''
         type: string
+      skip_push:
+        description: 'Skip pushing benchmark results to the bucket'
+        required: false
+        default: false
+        type: boolean
+  workflow_call:
+    inputs: *inputs
+
+permissions:
+  contents: read
 
 jobs:
   bench:
-    name: ${{ matrix.backend }}:${{ matrix.model }}:${{ matrix.quant }}
-    runs-on: [self-hosted, "${{ matrix.backend }}"]
+    name: ${{ matrix.backend.id }}:${{ matrix.model }}:${{ matrix.quant }}
+    runs-on: ${{ matrix.backend.runner }}
+    container:
+      image: ${{ matrix.backend.container }}
     strategy:
       fail-fast: false
       matrix:
         backend:
-          - gfx1151
+          - id: gfx1151
+            runner: [self-hosted, Linux, devlab-dispatch, strix-halo]
+            container: ''
+          - id: gfx1201
+            runner:
+              group: ggml-hfc-amd-r9700-1gpu
+            container: rocm/dev-ubuntu-24.04:7.2.4-complete
         model:
           - unsloth/Qwen3.5-0.8B-GGUF
           - unsloth/Qwen3.6-27B-GGUF
+          - unsloth/Qwen3.8-27B-GGUF
           - unsloth/gpt-oss-20b-GGUF
+          - unsloth/gpt-oss-120b-GGUF
           - unsloth/gemma-4-26B-A4B-it-GGUF
           - unsloth/gemma-4-E4B-it-GGUF
         quant:
@@ -44,25 +64,27 @@ jobs:
         env:
           LLAMA_BUCKET: ${{ vars.HF_REPO }}
           LLAMA_VERSION: ${{ inputs.version }}
-          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          HF_TOKEN: ${{ secrets.HF_TOKEN_READ }}
         run: SKIP_INSTALL=1 sh install.sh
 
-      - name: Check model
-        id: check
+      - name: Download model
+        id: download
         env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN_READ }}
           MODEL: ${{ matrix.model }}
           QUANT: ${{ matrix.quant }}
         run: |
-          if ~/.llama-app/llama download --offline -hf "$MODEL:$QUANT" 1>/dev/null
+          if ~/.llama-app/llama download -hf "$MODEL:$QUANT" 1>/dev/null
           then echo "present=true"
-          else echo "present=false"
+          else echo "::notice::$MODEL:$QUANT not present, skipping" >&2
+               echo "present=false"
           fi >> "$GITHUB_OUTPUT"
 
       - name: Bench
-        if: steps.check.outputs.present == 'true'
+        if: steps.download.outputs.present == 'true'
         env:
           MODEL: ${{ matrix.model }}
-          BACKEND: ${{ matrix.backend }}
+          BACKEND: ${{ matrix.backend.id }}
           QUANT: ${{ matrix.quant }}
         run: |
           NAME="$MODEL"
@@ -73,7 +95,7 @@ jobs:
           ~/.llama-app/llama bench --offline -v -fa 0,1 -hf "$MODEL:$QUANT" -o jsonl -r 10 > "output/$BACKEND/$NAME/$QUANT.jsonl"
 
       - name: Push
-        if: steps.check.outputs.present == 'true'
+        if: steps.download.outputs.present == 'true' && !inputs.skip_push
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN_BENCHES }}
           REPO: ${{ vars.HF_REPO_BENCHES }}
@@ -85,5 +107,5 @@ jobs:
           (*) echo "Could not parse llama version: $OUT"; exit 1 ;;
           esac
           VERSION=b$N
-          pip install -U "hf[hf_xet]" ||:
+          python3 -m pip install -U --break-system-packages "huggingface_hub[hf_xet]"
           python3 scripts/upload.py "$REPO/$VERSION"

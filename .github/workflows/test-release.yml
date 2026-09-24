@@ -15,6 +15,9 @@ on:
   workflow_call:
     inputs: *inputs
 
+permissions:
+  contents: read
+
 jobs:
   test:
     name: Test (${{ matrix.platform }})
@@ -63,8 +66,10 @@ jobs:
       - name: Write latest file
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          HF_REPO: ${{ vars.HF_REPO }}
+          VERSION: ${{ inputs.llamacpp_version }}
         run: |
-          pip install -U "hf[hf_xet]"
+          pip install -U "huggingface_hub[hf_xet]"
           mkdir output
-          printf "${{ inputs.llamacpp_version }}" > output/latest
-          python scripts/upload.py ${{ vars.HF_REPO }}
+          printf '%s' "$VERSION" > output/latest
+          python scripts/upload.py "$HF_REPO"

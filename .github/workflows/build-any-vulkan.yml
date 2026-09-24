@@ -3,7 +3,7 @@ name: Build any vulkan
 on:
   workflow_call:
     inputs: &common_inputs
-      filter:
+      preset:
         type: string
         default: 'vulkan'
       deploy:
@@ -20,38 +20,37 @@ on:
   workflow_dispatch:
     inputs: *common_inputs
 
+permissions:
+  contents: read
+
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      ZIG_VERSION: "0.17.0-dev.1859+dcceb318e"
-      VULKAN_VERSION: "1.4.357.1"
 
     steps:
       - uses: actions/checkout@v5
 
-      - name: Setup Zig
-        run: python scripts/install-zig.py
-
-      - name: Setup Vulkan
+      - name: Setup Zig and Vulkan
         run: |
-          VULKAN="vulkansdk-linux-$(uname -m)-$VULKAN_VERSION"
-          curl -sSf "https://sdk.lunarg.com/sdk/download/$VULKAN_VERSION/linux/$VULKAN.tar.xz" | tar -Jxf- -C ~
-          sudo mv ~/"$VULKAN_VERSION/$(uname -m)" /opt/vulkan-sdk
+          python scripts/install-zig.py
+          python scripts/install-vulkan.py
 
-      - name: Build ${{ inputs.filter }}
+      - name: Build ${{ inputs.preset }}
         env:
           LLAMACPP_REPO: ${{ inputs.llamacpp_repo }}
           LLAMACPP_VERSION: ${{ inputs.llamacpp_version }}
           BORINGSSL_REPO: ${{ inputs.boringssl_repo }}
           BORINGSSL_VERSION: ${{ inputs.boringssl_version }}
           HF_TOKEN: ${{ secrets.HF_TOKEN_READ }}
-        run: cmake --workflow --preset ${{ inputs.filter }}
+          PRESET: ${{ inputs.preset }}
+        run: cmake --workflow --preset "$PRESET"
 
       - name: Deploy
         if: ${{ inputs.deploy && vars.HF_REPO != '' }}
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          HF_REPO: ${{ vars.HF_REPO }}
+          VERSION: ${{ inputs.llamacpp_version || 'test' }}
         run: |
-          pip install -U "hf[hf_xet]"
-          python scripts/upload.py ${{ vars.HF_REPO }}/${{ inputs.llamacpp_version || 'test' }}
+          pip install -U "huggingface_hub[hf_xet]"
+          python scripts/upload.py "$HF_REPO/$VERSION"

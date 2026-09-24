@@ -1,11 +1,11 @@
-name: Build any metal
+name: Build any windows rocm
 
 on:
   workflow_call:
     inputs: &common_inputs
       preset:
         type: string
-        default: 'metal'
+        default: 'x86_64-windows-rocm-gfx1100'
       deploy:
         type: boolean
       llamacpp_repo:
@@ -25,9 +25,34 @@ permissions:
 
 jobs:
   build:
-    runs-on: macos-26
+    runs-on: windows-2022
+    env:
+      ROCM_VERSION: "10.2.0a20260916"
+
     steps:
       - uses: actions/checkout@v5
+
+      - name: Setup windows env
+        uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: x64
+
+      - name: Install rocm
+        env:
+          PRESET: ${{ inputs.preset }}
+        run: |
+          $Gfx = "$env:PRESET".Split('-')[-1]
+          $Rocm = switch -Regex ($Gfx) {
+            ('^probe$')  { 'rocm[devel,libraries]' }
+            ('^gfx\d+$') { "rocm[devel,libraries,device-$Gfx]" }
+            default      { 'rocm[devel,libraries,device-all]' }
+          }
+          pip install --extra-index-url https://nightly.repo.amd.com/rocm/whl-next/ "$Rocm==$env:ROCM_VERSION"
+          rocm-sdk init
+          $Root = rocm-sdk path --root
+          "ROCM_PATH=$Root" >> $env:GITHUB_ENV
+          "HIP_PATH=$Root" >> $env:GITHUB_ENV
+          "HIP_DEVICE_LIB_PATH=$Root\lib\llvm\amdgcn\bitcode" >> $env:GITHUB_ENV
 
       - name: Build ${{ inputs.preset }}
         env:
@@ -37,7 +62,7 @@ jobs:
           BORINGSSL_VERSION: ${{ inputs.boringssl_version }}
           HF_TOKEN: ${{ secrets.HF_TOKEN_READ }}
           PRESET: ${{ inputs.preset }}
-        run: cmake --workflow --preset "$PRESET"
+        run: cmake --workflow --preset "$env:PRESET"
 
       - name: Deploy
         if: ${{ inputs.deploy && vars.HF_REPO != '' }}
@@ -47,4 +72,4 @@ jobs:
           VERSION: ${{ inputs.llamacpp_version || 'test' }}
         run: |
           pip install -U "huggingface_hub[hf_xet]"
-          python scripts/upload.py "$HF_REPO/$VERSION"
+          python scripts/upload.py "$env:HF_REPO/$env:VERSION"

@@ -1,11 +1,14 @@
-name: Build any metal
+name: Build any linux cuda
 
 on:
   workflow_call:
     inputs: &common_inputs
       preset:
         type: string
-        default: 'metal'
+        default: 'x86_64-linux-cuda-80'
+      cuda_code:
+        type: string
+        default: '128'
       deploy:
         type: boolean
       llamacpp_repo:
@@ -25,9 +28,16 @@ permissions:
 
 jobs:
   build:
-    runs-on: macos-26
+    runs-on: ${{ startsWith(inputs.preset, 'aarch64-') && 'ubuntu-22.04-arm' || 'ubuntu-22.04' }}
     steps:
       - uses: actions/checkout@v5
+
+      - name: Install cuda and clang
+        env:
+          CUDA_CODE: ${{ inputs.cuda_code }}
+        run: |
+          python scripts/install-cuda.py
+          python scripts/install-clang.py cuda
 
       - name: Build ${{ inputs.preset }}
         env:
@@ -37,6 +47,7 @@ jobs:
           BORINGSSL_VERSION: ${{ inputs.boringssl_version }}
           HF_TOKEN: ${{ secrets.HF_TOKEN_READ }}
           PRESET: ${{ inputs.preset }}
+        shell: bash
         run: cmake --workflow --preset "$PRESET"
 
       - name: Deploy
@@ -45,6 +56,7 @@ jobs:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
           HF_REPO: ${{ vars.HF_REPO }}
           VERSION: ${{ inputs.llamacpp_version || 'test' }}
+        shell: bash
         run: |
           pip install -U "huggingface_hub[hf_xet]"
           python scripts/upload.py "$HF_REPO/$VERSION"

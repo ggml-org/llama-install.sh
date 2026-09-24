@@ -96,6 +96,8 @@ def analyze_pe(path, arch):
         b"CreateFile2":   8,
         b"VirtualAlloc2": 10,
     }
+    if arch == "aarch64":
+        version = 10  # Windows on ARM exists only since Windows 10
     pe.parse_data_directories(directories=[
         pefile.DIRECTORY_ENTRY['IMAGE_DIRECTORY_ENTRY_IMPORT']
     ])
