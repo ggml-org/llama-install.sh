@@ -466,6 +466,39 @@ def generate_windows_cuda_probe_preset(arch):
         configs   = configs,
     )
 
+def generate_x86_64_linux_sycl_presets():
+    configs = []
+    name = "fp16"
+    cache = {
+        "GGML_SYCL": "ON",
+        "GGML_SYCL_F16": "ON",
+    }
+    configs.append((name, cache))
+
+    return generate_presets(
+        os_name   = 'linux',
+        arch      = 'x86_64',
+        backend   = 'sycl',
+        toolchain = 'toolchains/sycl.cmake',
+        configs   = configs,
+    )
+
+def generate_x86_64_linux_sycl_probe_preset():
+    configs = []
+    name = "probe"
+    cache = {
+        "LLAMA_INSTALL_PROBE": "sycl",
+    }
+    configs.append((name, cache))
+
+    return generate_presets(
+        os_name   = 'linux',
+        arch      = 'x86_64',
+        backend   = 'sycl',
+        toolchain = 'toolchains/sycl.cmake',
+        configs   = configs,
+    )
+
 def generate_vulkan_presets(os_name, arch):
     configs = []
     for name, flags in CPU_ARCHS[arch].items():
@@ -588,6 +621,10 @@ def generate_report():
         make_table(["Architecture", "Features"], [
             [f"`gfx{arch}`", "ROCWMMA+FlashAttn" if rocwmma(arch) else "-"]
             for arch in ROCM_ARCHS
+        ]),
+        "### SYCL (Intel)",
+        make_table(["Suffix", "Features"], [
+            ["`fp16`", "FP16"]
         ]),
         "### Metal (Apple Silicon)",
         make_table(["Suffix", "Architecture", "Features"], [
@@ -721,6 +758,12 @@ def main():
           for preset in (generate_x86_64_rocm_presets(os_name),
                          generate_x86_64_rocm_probe_preset(os_name))
         ],
+        generate_windows_cuda_presets('x86_64'),
+        generate_windows_cuda_probe_preset('x86_64'),
+        generate_x86_64_linux_rocm_presets(),
+        generate_x86_64_linux_rocm_probe_preset(),
+        generate_x86_64_linux_sycl_presets(),
+        generate_x86_64_linux_sycl_probe_preset(),
         generate_metal_presets(),
     ]
     data = {
