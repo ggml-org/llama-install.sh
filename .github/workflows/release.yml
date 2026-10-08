@@ -24,42 +24,68 @@ jobs:
   init:
     runs-on: ubuntu-latest
     outputs:
-      llamacpp_version: ${{ steps.tags.outputs.llamacpp_version }}
+      llamacpp_commit: ${{ steps.llamacpp.outputs.llamacpp_commit }}
+      llamacpp_version: ${{ steps.llamacpp.outputs.llamacpp_version }}
       boringssl_version: ${{ steps.tags.outputs.boringssl_version }}
       write_latest: ${{ steps.tags.outputs.write_latest }}
     steps:
       - name: Get tags
         id: tags
         env:
-          GH_TOKEN: ${{ github.token }}
-          LLAMACPP_INPUT: ${{ inputs.llamacpp_version }}
           EVENT_NAME: ${{ github.event_name }}
           WRITE_LATEST_INPUT: ${{ inputs.write_latest }}
         run: |
-          if [ "$LLAMACPP_INPUT" ]
-          then LLAMACPP_VERSION="$LLAMACPP_INPUT"
-          else LLAMACPP_VERSION=$(gh api "repos/ggml-org/llama.cpp/releases?per_page=30" --jq '[.[] | select(.tag_name|test("^b[0-9]+$"))][0].tag_name')
-          fi
           BORINGSSL_VERSION=$(git ls-remote --tags https://boringssl.googlesource.com/boringssl | sed -nE 's,.*/tags/(0\.[0-9]+\.0)$,\1,p' | sort | tail -n 1)
           if [ "$EVENT_NAME" = "schedule" ]
           then WRITE_LATEST="true"
           else WRITE_LATEST="$WRITE_LATEST_INPUT"
           fi
-          cat <<EOF >> "$GITHUB_OUTPUT"
-          llamacpp_version=$LLAMACPP_VERSION
+          tee -a "$GITHUB_OUTPUT" <<EOF
           boringssl_version=$BORINGSSL_VERSION
           write_latest=$WRITE_LATEST
           EOF
-          grep _version= "$GITHUB_OUTPUT"
 
       - uses: actions/checkout@v5
+
+      - name: Fetch llama.cpp
+        id: llamacpp
+        env:
+          LLAMACPP_REPO: ${{ inputs.llamacpp_repo }}
+          LLAMACPP_VERSION: ${{ inputs.llamacpp_version }}
+          VERSION: ${{ inputs.llamacpp_version }}
+        run: |
+          cmake -B build
+          [ "$VERSION" ] || VERSION="b$(git -C deps/llamacpp rev-list --count HEAD)"
+          tee -a "$GITHUB_OUTPUT" <<EOF
+          llamacpp_commit=$(git -C deps/llamacpp rev-parse HEAD)
+          llamacpp_version=$VERSION
+          EOF
+
+      - name: Setup Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: "24"
+
+      - name: Build UI assets
+        if: ${{ vars.HF_REPO != '' }}
+        env:
+          VERSION: ${{ steps.llamacpp.outputs.llamacpp_version }}
+        run: |
+          cd deps/llamacpp/tools/ui
+          npm ci
+          LLAMA_BUILD_NUMBER="$VERSION" npm run build
+          npx vitest --project=unit --run tests/unit/pwa.spec.ts
+          cd -
+          mkdir -p output
+          tar -czf output/dist.tar.gz -C deps/llamacpp/tools/ui/dist .
+          (cd output && sha256sum dist.tar.gz > dist.tar.gz.sha256)
 
       - name: Upload artefacts
         if: ${{ vars.HF_REPO != '' }}
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
           HF_REPO: ${{ vars.HF_REPO }}
-          VERSION: ${{ steps.tags.outputs.llamacpp_version || 'test' }}
+          VERSION: ${{ steps.llamacpp.outputs.llamacpp_version }}
         run: |
           pip install -U huggingface_hub
           python scripts/fetch-artefacts.py
@@ -93,6 +119,7 @@ jobs:
       deploy: true
       llamacpp_repo: ${{ inputs.llamacpp_repo }}
       llamacpp_version: ${{ needs.init.outputs.llamacpp_version }}
+      llamacpp_commit: ${{ needs.init.outputs.llamacpp_commit }}
       boringssl_version: ${{ needs.init.outputs.boringssl_version }}
     secrets: inherit
   x86_64-linux-cpu:
@@ -141,6 +168,7 @@ jobs:
       deploy: true
       llamacpp_repo: ${{ inputs.llamacpp_repo }}
       llamacpp_version: ${{ needs.init.outputs.llamacpp_version }}
+      llamacpp_commit: ${{ needs.init.outputs.llamacpp_commit }}
       boringssl_version: ${{ needs.init.outputs.boringssl_version }}
     secrets: inherit
   aarch64-windows-cpu:
@@ -171,6 +199,7 @@ jobs:
       deploy: true
       llamacpp_repo: ${{ inputs.llamacpp_repo }}
       llamacpp_version: ${{ needs.init.outputs.llamacpp_version }}
+      llamacpp_commit: ${{ needs.init.outputs.llamacpp_commit }}
       boringssl_version: ${{ needs.init.outputs.boringssl_version }}
     secrets: inherit
   x86_64-windows-cpu:
@@ -219,6 +248,7 @@ jobs:
       deploy: true
       llamacpp_repo: ${{ inputs.llamacpp_repo }}
       llamacpp_version: ${{ needs.init.outputs.llamacpp_version }}
+      llamacpp_commit: ${{ needs.init.outputs.llamacpp_commit }}
       boringssl_version: ${{ needs.init.outputs.boringssl_version }}
     secrets: inherit
   aarch64-freebsd-cpu:
@@ -249,6 +279,7 @@ jobs:
       deploy: true
       llamacpp_repo: ${{ inputs.llamacpp_repo }}
       llamacpp_version: ${{ needs.init.outputs.llamacpp_version }}
+      llamacpp_commit: ${{ needs.init.outputs.llamacpp_commit }}
       boringssl_version: ${{ needs.init.outputs.boringssl_version }}
     secrets: inherit
   x86_64-freebsd-cpu:
@@ -297,6 +328,7 @@ jobs:
       deploy: true
       llamacpp_repo: ${{ inputs.llamacpp_repo }}
       llamacpp_version: ${{ needs.init.outputs.llamacpp_version }}
+      llamacpp_commit: ${{ needs.init.outputs.llamacpp_commit }}
       boringssl_version: ${{ needs.init.outputs.boringssl_version }}
     secrets: inherit
   aarch64-linux-vulkan-probe:
@@ -314,6 +346,7 @@ jobs:
       deploy: true
       llamacpp_repo: ${{ inputs.llamacpp_repo }}
       llamacpp_version: ${{ needs.init.outputs.llamacpp_version }}
+      llamacpp_commit: ${{ needs.init.outputs.llamacpp_commit }}
       boringssl_version: ${{ needs.init.outputs.boringssl_version }}
     secrets: inherit
   aarch64-linux-vulkan:
@@ -345,6 +378,7 @@ jobs:
       deploy: true
       llamacpp_repo: ${{ inputs.llamacpp_repo }}
       llamacpp_version: ${{ needs.init.outputs.llamacpp_version }}
+      llamacpp_commit: ${{ needs.init.outputs.llamacpp_commit }}
       boringssl_version: ${{ needs.init.outputs.boringssl_version }}
     secrets: inherit
   x86_64-linux-vulkan-probe:
@@ -362,6 +396,7 @@ jobs:
       deploy: true
       llamacpp_repo: ${{ inputs.llamacpp_repo }}
       llamacpp_version: ${{ needs.init.outputs.llamacpp_version }}
+      llamacpp_commit: ${{ needs.init.outputs.llamacpp_commit }}
       boringssl_version: ${{ needs.init.outputs.boringssl_version }}
     secrets: inherit
   x86_64-linux-vulkan:
@@ -411,6 +446,7 @@ jobs:
       deploy: true
       llamacpp_repo: ${{ inputs.llamacpp_repo }}
       llamacpp_version: ${{ needs.init.outputs.llamacpp_version }}
+      llamacpp_commit: ${{ needs.init.outputs.llamacpp_commit }}
       boringssl_version: ${{ needs.init.outputs.boringssl_version }}
     secrets: inherit
   aarch64-windows-vulkan-probe:
@@ -428,6 +464,7 @@ jobs:
       deploy: true
       llamacpp_repo: ${{ inputs.llamacpp_repo }}
       llamacpp_version: ${{ needs.init.outputs.llamacpp_version }}
+      llamacpp_commit: ${{ needs.init.outputs.llamacpp_commit }}
       boringssl_version: ${{ needs.init.outputs.boringssl_version }}
     secrets: inherit
   aarch64-windows-vulkan:
@@ -459,6 +496,7 @@ jobs:
       deploy: true
       llamacpp_repo: ${{ inputs.llamacpp_repo }}
       llamacpp_version: ${{ needs.init.outputs.llamacpp_version }}
+      llamacpp_commit: ${{ needs.init.outputs.llamacpp_commit }}
       boringssl_version: ${{ needs.init.outputs.boringssl_version }}
     secrets: inherit
   x86_64-windows-vulkan-probe:
@@ -476,6 +514,7 @@ jobs:
       deploy: true
       llamacpp_repo: ${{ inputs.llamacpp_repo }}
       llamacpp_version: ${{ needs.init.outputs.llamacpp_version }}
+      llamacpp_commit: ${{ needs.init.outputs.llamacpp_commit }}
       boringssl_version: ${{ needs.init.outputs.boringssl_version }}
     secrets: inherit
   x86_64-windows-vulkan:
@@ -525,6 +564,7 @@ jobs:
       deploy: true
       llamacpp_repo: ${{ inputs.llamacpp_repo }}
       llamacpp_version: ${{ needs.init.outputs.llamacpp_version }}
+      llamacpp_commit: ${{ needs.init.outputs.llamacpp_commit }}
       boringssl_version: ${{ needs.init.outputs.boringssl_version }}
     secrets: inherit
   aarch64-linux-cuda-probe:
@@ -544,6 +584,7 @@ jobs:
       deploy: true
       llamacpp_repo: ${{ inputs.llamacpp_repo }}
       llamacpp_version: ${{ needs.init.outputs.llamacpp_version }}
+      llamacpp_commit: ${{ needs.init.outputs.llamacpp_commit }}
       boringssl_version: ${{ needs.init.outputs.boringssl_version }}
     secrets: inherit
   aarch64-linux-cuda:
@@ -578,6 +619,7 @@ jobs:
       deploy: true
       llamacpp_repo: ${{ inputs.llamacpp_repo }}
       llamacpp_version: ${{ needs.init.outputs.llamacpp_version }}
+      llamacpp_commit: ${{ needs.init.outputs.llamacpp_commit }}
       boringssl_version: ${{ needs.init.outputs.boringssl_version }}
     secrets: inherit
   x86_64-linux-cuda-probe:
@@ -597,6 +639,7 @@ jobs:
       deploy: true
       llamacpp_repo: ${{ inputs.llamacpp_repo }}
       llamacpp_version: ${{ needs.init.outputs.llamacpp_version }}
+      llamacpp_commit: ${{ needs.init.outputs.llamacpp_commit }}
       boringssl_version: ${{ needs.init.outputs.boringssl_version }}
     secrets: inherit
   x86_64-linux-cuda:
@@ -631,6 +674,7 @@ jobs:
       deploy: true
       llamacpp_repo: ${{ inputs.llamacpp_repo }}
       llamacpp_version: ${{ needs.init.outputs.llamacpp_version }}
+      llamacpp_commit: ${{ needs.init.outputs.llamacpp_commit }}
       boringssl_version: ${{ needs.init.outputs.boringssl_version }}
     secrets: inherit
   aarch64-windows-cuda-probe:
@@ -650,6 +694,7 @@ jobs:
       deploy: true
       llamacpp_repo: ${{ inputs.llamacpp_repo }}
       llamacpp_version: ${{ needs.init.outputs.llamacpp_version }}
+      llamacpp_commit: ${{ needs.init.outputs.llamacpp_commit }}
       boringssl_version: ${{ needs.init.outputs.boringssl_version }}
     secrets: inherit
   aarch64-windows-cuda:
@@ -670,6 +715,7 @@ jobs:
       deploy: true
       llamacpp_repo: ${{ inputs.llamacpp_repo }}
       llamacpp_version: ${{ needs.init.outputs.llamacpp_version }}
+      llamacpp_commit: ${{ needs.init.outputs.llamacpp_commit }}
       boringssl_version: ${{ needs.init.outputs.boringssl_version }}
     secrets: inherit
   x86_64-windows-cuda-probe:
@@ -689,6 +735,7 @@ jobs:
       deploy: true
       llamacpp_repo: ${{ inputs.llamacpp_repo }}
       llamacpp_version: ${{ needs.init.outputs.llamacpp_version }}
+      llamacpp_commit: ${{ needs.init.outputs.llamacpp_commit }}
       boringssl_version: ${{ needs.init.outputs.boringssl_version }}
     secrets: inherit
   x86_64-windows-cuda:
@@ -739,6 +786,7 @@ jobs:
       deploy: true
       llamacpp_repo: ${{ inputs.llamacpp_repo }}
       llamacpp_version: ${{ needs.init.outputs.llamacpp_version }}
+      llamacpp_commit: ${{ needs.init.outputs.llamacpp_commit }}
       boringssl_version: ${{ needs.init.outputs.boringssl_version }}
     secrets: inherit
   x86_64-linux-rocm-probe:
@@ -756,6 +804,7 @@ jobs:
       deploy: true
       llamacpp_repo: ${{ inputs.llamacpp_repo }}
       llamacpp_version: ${{ needs.init.outputs.llamacpp_version }}
+      llamacpp_commit: ${{ needs.init.outputs.llamacpp_commit }}
       boringssl_version: ${{ needs.init.outputs.boringssl_version }}
     secrets: inherit
   x86_64-linux-rocm:
@@ -791,6 +840,7 @@ jobs:
       deploy: true
       llamacpp_repo: ${{ inputs.llamacpp_repo }}
       llamacpp_version: ${{ needs.init.outputs.llamacpp_version }}
+      llamacpp_commit: ${{ needs.init.outputs.llamacpp_commit }}
       boringssl_version: ${{ needs.init.outputs.boringssl_version }}
     secrets: inherit
   x86_64-windows-rocm-probe:
@@ -808,6 +858,7 @@ jobs:
       deploy: true
       llamacpp_repo: ${{ inputs.llamacpp_repo }}
       llamacpp_version: ${{ needs.init.outputs.llamacpp_version }}
+      llamacpp_commit: ${{ needs.init.outputs.llamacpp_commit }}
       boringssl_version: ${{ needs.init.outputs.boringssl_version }}
     secrets: inherit
   x86_64-windows-rocm:
@@ -843,6 +894,7 @@ jobs:
       deploy: true
       llamacpp_repo: ${{ inputs.llamacpp_repo }}
       llamacpp_version: ${{ needs.init.outputs.llamacpp_version }}
+      llamacpp_commit: ${{ needs.init.outputs.llamacpp_commit }}
       boringssl_version: ${{ needs.init.outputs.boringssl_version }}
     secrets: inherit
   aarch64-macos-metal:
@@ -865,6 +917,7 @@ jobs:
       deploy: true
       llamacpp_repo: ${{ inputs.llamacpp_repo }}
       llamacpp_version: ${{ needs.init.outputs.llamacpp_version }}
+      llamacpp_commit: ${{ needs.init.outputs.llamacpp_commit }}
       boringssl_version: ${{ needs.init.outputs.boringssl_version }}
     secrets: inherit
   test:

@@ -5,7 +5,7 @@ find_program(ZSTD zstd REQUIRED)
 
 include(FetchContent)
 
-function(FetchDep NAME DEFAULT_REPO DEFAULT_VERSION)
+function(FetchDep NAME DEFAULT_REPO DEFAULT_TAG)
     string(TOUPPER ${NAME} NAME_UPPER)
 
     if(NOT "$ENV{${NAME_UPPER}_REPO}" STREQUAL "")
@@ -13,11 +13,13 @@ function(FetchDep NAME DEFAULT_REPO DEFAULT_VERSION)
     endif()
     set(${NAME_UPPER}_REPO "${DEFAULT_REPO}" CACHE STRING "${NAME} repository")
 
-    if(NOT "$ENV{${NAME_UPPER}_VERSION}" STREQUAL "")
-        set(DEFAULT_VERSION "$ENV{${NAME_UPPER}_VERSION}")
+    if(NOT "$ENV{${NAME_UPPER}_COMMIT}" STREQUAL "")
+        set(DEFAULT_TAG "$ENV{${NAME_UPPER}_COMMIT}")
+    elseif(NOT "$ENV{${NAME_UPPER}_VERSION}" STREQUAL "")
+        set(DEFAULT_TAG "$ENV{${NAME_UPPER}_VERSION}")
     endif()
-    set(${NAME_UPPER}_VERSION "${DEFAULT_VERSION}" CACHE STRING "${NAME} version")
-    message(STATUS "${NAME} version: ${${NAME_UPPER}_VERSION}")
+    set(${NAME_UPPER}_TAG "${DEFAULT_TAG}" CACHE STRING "${NAME} git tag")
+    message(STATUS "${NAME} tag: ${${NAME_UPPER}_TAG}")
 
     if(EXISTS "${CMAKE_SOURCE_DIR}/deps/${NAME}/CMakeLists.txt")
         FetchContent_Declare(${NAME}
@@ -27,7 +29,7 @@ function(FetchDep NAME DEFAULT_REPO DEFAULT_VERSION)
     else()
         FetchContent_Declare(${NAME}
             GIT_REPOSITORY "${${NAME_UPPER}_REPO}"
-            GIT_TAG        "${${NAME_UPPER}_VERSION}"
+            GIT_TAG        "${${NAME_UPPER}_TAG}"
             SOURCE_DIR     "${CMAKE_SOURCE_DIR}/deps/${NAME}"
             ${ARGN}
         )
@@ -71,6 +73,10 @@ set(LLAMA_BUILD_TOOLS     ON  CACHE BOOL "" FORCE)
 set(LLAMA_BUILD_SERVER    ON  CACHE BOOL "" FORCE)
 set(LLAMA_BUILD_APP       ON  CACHE BOOL "" FORCE)
 set(LLAMA_BUILD_UI        OFF CACHE BOOL "" FORCE)
+
+if(DEFINED ENV{HF_REPO})
+    set(LLAMA_UI_HF_BUCKET "$ENV{HF_REPO}")
+endif()
 
 # LibreSSL is supported as an alternative SSL backend in this cross Zig
 # pipeline. It needs a few knobs to build cleanly when selected with

@@ -12,6 +12,8 @@ on:
         type: string
       llamacpp_version:
         type: string
+      llamacpp_commit:
+        type: string
       boringssl_repo:
         type: string
       boringssl_version:
@@ -32,10 +34,11 @@ jobs:
       - name: Build ${{ inputs.preset }}
         env:
           LLAMACPP_REPO: ${{ inputs.llamacpp_repo }}
-          LLAMACPP_VERSION: ${{ inputs.llamacpp_version }}
+          LLAMACPP_COMMIT: ${{ inputs.llamacpp_commit }}
           BORINGSSL_REPO: ${{ inputs.boringssl_repo }}
           BORINGSSL_VERSION: ${{ inputs.boringssl_version }}
           HF_TOKEN: ${{ secrets.HF_TOKEN_READ }}
+          HF_REPO: ${{ vars.HF_REPO }}
           PRESET: ${{ inputs.preset }}
         run: cmake --workflow --preset "$PRESET"
 
@@ -44,7 +47,7 @@ jobs:
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
           HF_REPO: ${{ vars.HF_REPO }}
-          VERSION: ${{ inputs.llamacpp_version || 'test' }}
+          VERSION: ${{ inputs.llamacpp_version }}
         run: |
           pip install -U huggingface_hub
           python scripts/upload.py "$HF_REPO/$VERSION"

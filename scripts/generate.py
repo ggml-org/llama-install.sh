@@ -668,6 +668,7 @@ def make_job(uses, backend, presets, needs):
             "deploy": True,
             "llamacpp_repo": "${{ inputs.llamacpp_repo }}",
             "llamacpp_version": "${{ needs.init.outputs.llamacpp_version }}",
+            "llamacpp_commit": "${{ needs.init.outputs.llamacpp_commit }}",
             "boringssl_version": "${{ needs.init.outputs.boringssl_version }}",
         },
         "secrets": "inherit",
