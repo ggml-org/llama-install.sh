@@ -10,7 +10,7 @@ It automatically detects your OS, architecture, and GPU capabilities, so you can
 - Supported architectures: `x86_64`, `aarch64`.
 - Supported OS: `Linux`, `macOS`, `FreeBSD`, `Windows`.
 - **Automatic detection** for **CPU acceleration**.
-- **Automatic detection** for **GPU acceleration**: `CUDA`, `ROCm`, `Vulkan`, `Metal`.
+- **Automatic detection** for **GPU acceleration**: `CUDA`, `ROCm`, `SYCL`, `Vulkan`, `Metal`.
 - Builds are kept as **lightweight** as possible without compromising performance.
 
 See the full list of supported hardware and build configurations in [PRESETS.md](PRESETS.md).
@@ -33,7 +33,7 @@ You can do this by setting environment variables before piping to `sh`:
 
     curl https://llama.app/install.sh | SKIP_CUDA=1 sh
 
-Available options: `SKIP_CUDA=1`, `SKIP_ROCM=1`, `SKIP_VULKAN=1`.
+Available options: `SKIP_CUDA=1`, `SKIP_ROCM=1`, `SKIP_SYCL=1`, `SKIP_VULKAN=1`.
 
 ### Windows
 
