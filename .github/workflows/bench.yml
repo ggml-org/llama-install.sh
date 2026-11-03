@@ -94,10 +94,6 @@ jobs:
           mkdir -p "output/$BACKEND/$NAME"
           bench() { ~/.llama-app/llama bench --offline -v -fa 0,1 -hf "$MODEL:$QUANT" -o jsonl -r 10 "$@"; }
           bench > "output/$BACKEND/$NAME/$QUANT.jsonl"
-          bench -p 512-65536*2 -n 0 > "output/$BACKEND/$NAME/$QUANT-pp.jsonl" \
-            || echo "::warning::PP sweep failed for $MODEL:$QUANT"
-          bench -p 0 -n 128 -d 512-65536*2 > "output/$BACKEND/$NAME/$QUANT-tg.jsonl" \
-            || echo "::warning::TG sweep failed for $MODEL:$QUANT"
 
       - name: Push
         if: steps.download.outputs.present == 'true' && !inputs.skip_push
