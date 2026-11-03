@@ -33,10 +33,6 @@ jobs:
           - id: gfx1151
             runner: [self-hosted, Linux, devlab-dispatch, strix-halo]
             container: ''
-          - id: gfx1201
-            runner:
-              group: ggml-hfc-amd-r9700-1gpu
-            container: rocm/dev-ubuntu-24.04:7.2.4-complete
         model:
           - unsloth/Qwen3.5-0.8B-GGUF
           - unsloth/Qwen3.6-27B-GGUF
