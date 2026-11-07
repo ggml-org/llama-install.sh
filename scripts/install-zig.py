@@ -36,14 +36,8 @@ def detect_arch():
     return machine
 
 def detect_os():
-    system = platform.system()
-    if system == "Linux":
-        return "linux"
-    if system == "Windows":
-        return "windows"
-    if system == "Darwin":
-        return "macos"
-    return system.lower()
+    system = platform.system().lower()
+    return {"darwin": "macos"}.get(system, system)
 
 def fetch(file):
     req = Request(f"{URL}/{file}", headers={"User-Agent": "curl/8.0"})

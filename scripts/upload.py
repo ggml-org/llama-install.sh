@@ -18,7 +18,7 @@ class RetryTransport(httpx.BaseTransport):
                 if attempt == self._max_retries:
                     return response
                 response.close()
-            except (httpx.TransportError, httpx.TimeoutException):
+            except httpx.TransportError:
                 if attempt == self._max_retries:
                     raise
             time.sleep(min(2**attempt, 30))

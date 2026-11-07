@@ -56,7 +56,6 @@ def analyze_elf(path, name, arch):
         case "freebsd": interp, sym = "ld-elf",   "FBSD"
         case _: raise Exception(f"Unsupported OS: {name}")
 
-    reqs = "-"
     libs = []
 
     with open(path, 'rb') as f:
@@ -77,8 +76,7 @@ def analyze_elf(path, name, arch):
                     if tag.entry.d_tag == 'DT_NEEDED':
                         libs.append(tag.needed)
 
-        if v := get_max_symbol_version(elf, sym):
-            reqs = v
+        reqs = get_max_symbol_version(elf, sym) or "-"
 
     return reqs, libs
 
@@ -105,9 +103,8 @@ def analyze_pe(path, arch):
         if entry.dll:
             libs.append(entry.dll.decode('utf-8', errors='ignore'))
         for imp in entry.imports:
-            if imp.name and imp.name in winapi:
-                if winapi[imp.name] > version:
-                    version = winapi[imp.name]
+            if imp.name in winapi:
+                version = max(version, winapi[imp.name])
 
     return f"Windows {version}", libs
 
@@ -172,11 +169,10 @@ def main():
     for entry in entries:
         name, arch, backend, version, libs = entry
         parts = backend.split('/')
+        family = "/".join(parts[:-1])
         if parts[-1] == "probe":
-            family = "/".join(parts[:-1])
             groups[(name, arch, family)]["probe"] = entry
         else:
-            family = "/".join(parts[:-1])
             groups[(name, arch, family)]["real"].append(entry)
 
     cols = ["Name", "Arch", "Backend", "Version", "Libraries"]
@@ -195,14 +191,6 @@ def main():
                 version,
                 " ".join(f"`{lib}`" for lib in libs) or "-"
             ])
-            if probe and (probe[3], probe[4]) != (version, libs):
-                rows.append([
-                    name,
-                    f"`{arch}`",
-                    f"`{family}/probe`",
-                    probe[3],
-                    " ".join(f"`{lib}`" for lib in probe[4]) or "-"
-                ])
         else:
             for _, _, backend, version, libs in sorted(reals):
                 rows.append([
@@ -212,14 +200,14 @@ def main():
                     version,
                     " ".join(f"`{lib}`" for lib in libs) or "-"
                 ])
-            if probe:
-                rows.append([
-                    name,
-                    f"`{arch}`",
-                    f"`{family}/probe`",
-                    probe[3],
-                    " ".join(f"`{lib}`" for lib in probe[4]) or "-"
-                ])
+        if probe and (not collapsed or (probe[3], probe[4]) != (version, libs)):
+            rows.append([
+                name,
+                f"`{arch}`",
+                f"`{family}/probe`",
+                probe[3],
+                " ".join(f"`{lib}`" for lib in probe[4]) or "-"
+            ])
     rows.sort(key=lambda r: (r[0], r[1].strip('`'), r[2].strip('`').split('/')))
     widths = [max(map(len, x)) for x in zip(*([cols] + rows))]
     header = [[c.ljust(w) for c, w in zip(cols, widths)], ["-" * w for w in widths]]

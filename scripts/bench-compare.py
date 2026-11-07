@@ -45,8 +45,7 @@ def download(version):
     if version and detected != version:
         sys.exit(f"Error: version mismatch (expected {version}, got {detected})")
 
-    tag = detected
-    dest = Path(f"llama-app-{tag}{suffix}").resolve()
+    dest = Path(f"llama-app-{detected}{suffix}").resolve()
     shutil.copy2(src, dest)
     return dest
 
@@ -54,7 +53,7 @@ def run_bench(binary, model_tag):
     try:
         r = subprocess.run([str(binary), "bench", "--offline", "-fa", "0,1", "-hf", model_tag, "-o", "jsonl", "-r", "10"],
                            capture_output=True, text=True, timeout=300)
-    except (subprocess.TimeoutExpired, FileNotFoundError, OSError) as e:
+    except (subprocess.TimeoutExpired, OSError) as e:
         print(f"  error: {e}")
         return None
     if r.returncode != 0:
@@ -93,8 +92,6 @@ def collect_pairs(base_bin, cur_bin, model_tag, rounds=NUM_ROUNDS):
 
 def holm_bonferroni(p_raws, alpha=ALPHA):
     m = len(p_raws)
-    if m == 0:
-        return [], []
     indexed = sorted(enumerate(p_raws), key=lambda x: x[1])
     p_adjs = [0.0] * m
     prev = 0.0
@@ -129,21 +126,20 @@ def compare(base_s, cur_s):
         bn, cn = b[:n], c[:n]
         bm = statistics.mean(bn) if n else 0.0
         cm = statistics.mean(cn) if n else 0.0
+        rel_drop = (bm - cm) / bm if bm else 0.0
 
-        p = sign_perm_test(bn, cn) if n >= 2 else 1.0
-        p_raws.append(p)
-        results[key] = dict(p_adj=1.0, sig=False, base_mean=bm, cur_mean=cm, n=n)
+        p_raws.append(sign_perm_test(bn, cn))
+        results[key] = dict(
+            p_adj=1.0, sig=False, base_mean=bm, cur_mean=cm, n=n,
+            rel_drop=rel_drop, worse=False,
+        )
 
     p_adjs, rejects = holm_bonferroni(p_raws)
 
     for key, pa, rej in zip(keys, p_adjs, rejects):
         results[key]["p_adj"] = pa
         results[key]["sig"] = rej
-        bm = results[key]["base_mean"]
-        cm = results[key]["cur_mean"]
-        rel_drop = (bm - cm) / bm if bm else 0.0
-        results[key]["rel_drop"] = rel_drop
-        results[key]["worse"] = rej and rel_drop >= DROP_TOLERANCE
+        results[key]["worse"] = rej and results[key]["rel_drop"] >= DROP_TOLERANCE
 
     return results
 
@@ -165,17 +161,10 @@ def main():
     base_s, cur_s = collect_pairs(base_bin, cur_bin, model_tag)
 
     if not any(cur_s.values()):
-        if not any(base_s.values()):
-            print(f"skipped: {model_tag} produced no results (model or quant may not exist)")
-            sys.exit(0)
-        sys.exit(f"current ({cur_bin.stem}) produced no results")
-
-    if not any(base_s.values()):
+        print(f"skipped: {model_tag} produced no results (model or quant may not exist)")
         sys.exit(0)
 
-    base_lens = [len(v) for v in base_s.values() if v]
-    cur_lens = [len(v) for v in cur_s.values() if v]
-    n = min(min(base_lens), min(cur_lens)) if base_lens and cur_lens else 0
+    n = min(len(v) for v in cur_s.values())
 
     if n < 2:
         sys.exit(f"not enough paired runs ({n})")
@@ -183,7 +172,7 @@ def main():
     comp = compare(base_s, cur_s)
     any_worse = any(r["worse"] for r in comp.values())
 
-    for key in sorted(comp):
+    for key in comp:
         r = comp[key]
         verdict = "WORSE" if r["worse"] else "ok"
         print(f"{key:>10}: {r['base_mean']:>6.2f} {r['cur_mean']:>6.2f} p={r['p_adj']:.4f} {verdict}")

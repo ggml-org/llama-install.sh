@@ -654,7 +654,7 @@ def make_matrix(backend, presets):
     return {"preset": presets}
 
 def make_job(uses, backend, presets, needs):
-    job = {
+    return {
         "name": "${{ matrix.preset }}",
         "needs": needs,
         "strategy": {
@@ -673,7 +673,6 @@ def make_job(uses, backend, presets, needs):
         },
         "secrets": "inherit",
     }
-    return job
 
 def generate_jobs(configure_presets):
     groups = defaultdict(list)

@@ -59,7 +59,8 @@ def resolve_version(arg):
         arg = CLANG_CUDA_MAX[code]
     if arg in CLANG_VERSIONS:
         return CLANG_VERSIONS[arg]
-    if all(p.isdigit() for p in arg.split(".")) and len(arg.split(".")) == 3:
+    parts = arg.split(".")
+    if len(parts) == 3 and all(p.isdigit() for p in parts):
         return arg
     known = ", ".join(f"{k} -> {v}" for k, v in sorted(CLANG_VERSIONS.items()))
     sys.exit(f"Unknown clang version '{arg}' (expected 'cuda', a major in {known} or a full X.Y.Z version)")
