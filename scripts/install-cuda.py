@@ -98,18 +98,15 @@ def _extract_tar(data, dest):
             members.append(member)
         tar.extractall(dest, members=members, filter="tar")
 
-def make_task(manifest, component, key, plat):
-    data = manifest[key(manifest) if key else component]
-    label = f"{data['name']} version {data['version']} ({plat})"
-    return (label, data[plat]["relative_path"])
-
 def collect_tasks(manifest, target_plat, host_plat, target_os):
     tasks = []
     for name, which, gate, key in COMPONENTS:
         if gate is not None and not gate(manifest, target_os):
             continue
         plat = target_plat if which == "target" else host_plat
-        tasks.append(make_task(manifest, name, key, plat))
+        data = manifest[key(manifest) if key else name]
+        label = f"{data['name']} version {data['version']} ({plat})"
+        tasks.append((label, data[plat]["relative_path"]))
     return tasks
 
 @retry
