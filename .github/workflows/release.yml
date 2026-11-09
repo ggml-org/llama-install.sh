@@ -80,15 +80,29 @@ jobs:
           tar -czf output/dist.tar.gz -C deps/llamacpp/tools/ui/dist .
           (cd output && sha256sum dist.tar.gz > dist.tar.gz.sha256)
 
+      - name: Setup Java
+        if: ${{ vars.HF_REPO != '' }}
+        uses: actions/setup-java@v6
+        with:
+          distribution: zulu
+          java-version: "25"
+
       - name: Upload artefacts
         if: ${{ vars.HF_REPO != '' }}
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
           HF_REPO: ${{ vars.HF_REPO }}
           VERSION: ${{ steps.llamacpp.outputs.llamacpp_version }}
+          AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+          AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+          AZURE_TS_ENDPOINT: ${{ secrets.AZURE_TS_ENDPOINT }}
+          AZURE_TS_ACCOUNT_NAME: ${{ secrets.AZURE_TS_ACCOUNT_NAME }}
+          AZURE_TS_PROFILE_NAME: ${{ secrets.AZURE_TS_PROFILE_NAME }}
         run: |
           pip install -U huggingface_hub
           python scripts/fetch-artefacts.py
+          python scripts/sign.py output
           python scripts/upload.py "$HF_REPO/$VERSION"
 
   aarch64-linux-cpu:

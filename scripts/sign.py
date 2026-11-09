@@ -17,10 +17,14 @@ SIGN_ENV = (
     "AZURE_TS_PROFILE_NAME",
 )
 
-files = sys.argv[1:]
+files = [
+    str(file)
+    for arg in sys.argv[1:]
+    for file in (sorted(Path(arg).rglob("*.exe")) if Path(arg).is_dir() else [Path(arg)])
+]
 
 if not files:
-    sys.exit("usage: sign.py FILE...")
+    sys.exit("usage: sign.py FILE|DIR...")
 
 missing = [name for name in SIGN_ENV if not os.environ.get(name)]
 
