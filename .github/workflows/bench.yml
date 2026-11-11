@@ -9,8 +9,11 @@ on:
         required: false
         default: ''
         type: string
+      target:
+        required: false
+        default: ''
+        type: string
       skip_push:
-        description: 'Skip pushing benchmark results to the bucket'
         required: false
         default: false
         type: boolean
@@ -22,6 +25,7 @@ permissions:
 
 jobs:
   bench:
+    if: ${{ !inputs.target }}
     name: ${{ matrix.backend.id }}:${{ matrix.target }}
     runs-on: ${{ matrix.backend.runner }}
     container:
@@ -29,7 +33,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        backend:
+        backend: &backend
           - id: gfx1151
             runner: [self-hosted, Linux, devlab-dispatch, strix-halo]
             container: ''
@@ -143,7 +147,7 @@ jobs:
           - unsloth/gpt-oss-20b-GGUF:Q5_K_S
           - unsloth/gpt-oss-20b-GGUF:Q6_K
           - unsloth/gpt-oss-20b-GGUF:Q8_0
-    steps:
+    steps: &steps
       - uses: actions/checkout@v5
 
       - name: Install
@@ -196,3 +200,16 @@ jobs:
           VERSION=b$N
           python3 -m pip install -U --break-system-packages huggingface_hub
           python3 scripts/upload.py "$REPO/$VERSION"
+
+  custom:
+    if: ${{ inputs.target != '' }}
+    name: ${{ matrix.backend.id }}:${{ matrix.target }}
+    runs-on: ${{ matrix.backend.runner }}
+    container:
+      image: ${{ matrix.backend.container }}
+    strategy:
+      matrix:
+        backend: *backend
+        target:
+          - ${{ inputs.target }}
+    steps: *steps
