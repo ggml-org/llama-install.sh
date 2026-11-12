@@ -1,4 +1,4 @@
-name: Bench
+name: Bench gfx1201
 
 on:
   schedule:
@@ -25,21 +25,11 @@ permissions:
 
 jobs:
   bench:
-    if: ${{ !inputs.target }}
-    name: ${{ matrix.backend.id }}:${{ matrix.target }}
-    runs-on: ${{ matrix.backend.runner }}
-    container:
-      image: ${{ matrix.backend.container }}
+    name: ${{ matrix.target }}
+    runs-on: [self-hosted, Linux, devlab-dispatch, radeon-r9700]
     strategy:
       fail-fast: false
       matrix:
-        backend: &backend
-          - id: gfx1151
-            runner: [self-hosted, Linux, devlab-dispatch, strix-halo]
-            container: ''
-          - id: gfx1201
-            runner: [self-hosted, Linux, devlab-dispatch, radeon-r9700]
-            container: ''
         target:
           - LiquidAI/LFM3-Omni-2B-GGUF:BF16
           - LiquidAI/LFM3-Omni-2B-GGUF:Q4_0
@@ -56,7 +46,6 @@ jobs:
           - unsloth/Qwen3.5-0.8B-GGUF:Q5_K_S
           - unsloth/Qwen3.5-0.8B-GGUF:Q6_K
           - unsloth/Qwen3.5-0.8B-GGUF:Q8_0
-          - unsloth/Qwen3.6-27B-GGUF:BF16
           - unsloth/Qwen3.6-27B-GGUF:Q3_K_M
           - unsloth/Qwen3.6-27B-GGUF:Q3_K_S
           - unsloth/Qwen3.6-27B-GGUF:Q4_0
@@ -67,7 +56,6 @@ jobs:
           - unsloth/Qwen3.6-27B-GGUF:Q5_K_S
           - unsloth/Qwen3.6-27B-GGUF:Q6_K
           - unsloth/Qwen3.6-27B-GGUF:Q8_0
-          - unsloth/Qwen3.6-35B-A3B-GGUF:BF16
           - unsloth/Qwen3.6-35B-A3B-GGUF:MXFP4_MOE
           - unsloth/Qwen3.6-35B-A3B-GGUF:Q3_K_M
           - unsloth/Qwen3.6-35B-A3B-GGUF:Q3_K_S
@@ -76,8 +64,6 @@ jobs:
           - unsloth/Qwen3.6-35B-A3B-GGUF:Q5_K_M
           - unsloth/Qwen3.6-35B-A3B-GGUF:Q5_K_S
           - unsloth/Qwen3.6-35B-A3B-GGUF:Q6_K
-          - unsloth/Qwen3.6-35B-A3B-GGUF:Q8_0
-          - unsloth/Qwen3.8-27B-GGUF:BF16
           - unsloth/Qwen3.8-27B-GGUF:Q4_0
           - unsloth/Qwen3.8-27B-GGUF:Q4_1
           - unsloth/Qwen3.8-27B-GGUF:Q4_K_M
@@ -97,7 +83,6 @@ jobs:
           - unsloth/gemma-4-12B-it-GGUF:Q5_K_S
           - unsloth/gemma-4-12B-it-GGUF:Q6_K
           - unsloth/gemma-4-12B-it-GGUF:Q8_0
-          - unsloth/gemma-4-26B-A4B-it-GGUF:BF16
           - unsloth/gemma-4-26B-A4B-it-GGUF:MXFP4_MOE
           - unsloth/gemma-4-26B-A4B-it-GGUF:Q3_K_M
           - unsloth/gemma-4-26B-A4B-it-GGUF:Q4_K_M
@@ -128,17 +113,6 @@ jobs:
           - unsloth/gemma-4-E4B-it-GGUF:Q5_K_S
           - unsloth/gemma-4-E4B-it-GGUF:Q6_K
           - unsloth/gemma-4-E4B-it-GGUF:Q8_0
-          - unsloth/gpt-oss-120b-GGUF:F16
-          - unsloth/gpt-oss-120b-GGUF:Q3_K_M
-          - unsloth/gpt-oss-120b-GGUF:Q3_K_S
-          - unsloth/gpt-oss-120b-GGUF:Q4_0
-          - unsloth/gpt-oss-120b-GGUF:Q4_1
-          - unsloth/gpt-oss-120b-GGUF:Q4_K_M
-          - unsloth/gpt-oss-120b-GGUF:Q4_K_S
-          - unsloth/gpt-oss-120b-GGUF:Q5_K_M
-          - unsloth/gpt-oss-120b-GGUF:Q5_K_S
-          - unsloth/gpt-oss-120b-GGUF:Q6_K
-          - unsloth/gpt-oss-120b-GGUF:Q8_0
           - unsloth/gpt-oss-20b-GGUF:F16
           - unsloth/gpt-oss-20b-GGUF:Q3_K_M
           - unsloth/gpt-oss-20b-GGUF:Q3_K_S
@@ -150,7 +124,8 @@ jobs:
           - unsloth/gpt-oss-20b-GGUF:Q5_K_S
           - unsloth/gpt-oss-20b-GGUF:Q6_K
           - unsloth/gpt-oss-20b-GGUF:Q8_0
-    steps: &steps
+
+    steps:
       - uses: actions/checkout@v5
 
       - name: Install
@@ -160,23 +135,10 @@ jobs:
           HF_TOKEN: ${{ secrets.HF_TOKEN_READ }}
         run: SKIP_INSTALL=1 sh install.sh
 
-      - name: Download model
-        id: download
+      - name: Bench
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN_READ }}
           TARGET: ${{ matrix.target }}
-        run: |
-          if ~/.llama-app/llama download -hf "$TARGET" 1>/dev/null
-          then echo "present=true"
-          else echo "::notice::$TARGET not present, skipping" >&2
-               echo "present=false"
-          fi >> "$GITHUB_OUTPUT"
-
-      - name: Bench
-        if: steps.download.outputs.present == 'true'
-        env:
-          TARGET: ${{ matrix.target }}
-          BACKEND: ${{ matrix.backend.id }}
         run: |
           MODEL="${TARGET%:*}"
           QUANT="${TARGET##*:}"
@@ -184,12 +146,12 @@ jobs:
           NAME="${NAME%-GGUF}"
           NAME="${NAME#*/}"
           rm -rf output
-          mkdir -p "output/$BACKEND/$NAME"
-          bench() { ~/.llama-app/llama bench --offline -v -fa 0,1 -hf "$MODEL:$QUANT" -o jsonl -r 10 "$@"; }
-          bench > "output/$BACKEND/$NAME/$QUANT.jsonl"
+          mkdir -p "output/$NAME"
+          bench() { ~/.llama-app/llama bench -v -fa 0,1 -hf "$MODEL:$QUANT" -o jsonl -r 10 "$@"; }
+          bench > "output/$NAME/$QUANT.jsonl"
 
       - name: Push
-        if: steps.download.outputs.present == 'true' && !inputs.skip_push
+        if: ${{ !inputs.skip_push }}
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN_BENCHES }}
           REPO: ${{ vars.HF_REPO_BENCHES }}
@@ -202,17 +164,4 @@ jobs:
           esac
           VERSION=b$N
           python3 -m pip install -U --break-system-packages huggingface_hub
-          python3 scripts/upload.py "$REPO/$VERSION"
-
-  custom:
-    if: ${{ inputs.target != '' }}
-    name: ${{ matrix.backend.id }}:${{ matrix.target }}
-    runs-on: ${{ matrix.backend.runner }}
-    container:
-      image: ${{ matrix.backend.container }}
-    strategy:
-      matrix:
-        backend: *backend
-        target:
-          - ${{ inputs.target }}
-    steps: *steps
+          python3 scripts/upload.py "$REPO/$VERSION/gfx1201"
