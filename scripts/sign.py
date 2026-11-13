@@ -2,6 +2,7 @@ import hashlib
 import os
 import subprocess
 import sys
+import time
 from pathlib import Path
 from urllib.request import Request, urlopen
 
@@ -56,9 +57,17 @@ cmd = [
     "--alg", "SHA-256",
     "--tsmode", "RFC3161",
     "--tsaurl", "http://timestamp.acs.microsoft.com",
-    *files,
 ]
 try:
-    sys.exit(subprocess.run(cmd).returncode)
+    for file in files:
+        for attempt in range(3):
+            code = subprocess.run([*cmd, file]).returncode
+            if code == 0:
+                break
+            if code < 0 or attempt == 2:
+                sys.exit(code)
+            delay = 5 * (attempt + 1)
+            print(f"Signing failed for {file}, retrying in {delay}s...", file=sys.stderr)
+            time.sleep(delay)
 except FileNotFoundError:
     sys.exit("java not found, install a java runtime to sign")
