@@ -123,9 +123,19 @@ main() {
 	esac
 	[ "$STAMP" ] || die "Invalid version: $LLAMA_VERSION"
 
-	case "$(~/.local/bin/llama version 2>/dev/null)" in
-	(*"$STAMP"*) info "Already up to date"; return ;;
-	esac
+	if [ -z "$FORCE_UPDATE" ]; then
+		case "$(~/.local/bin/llama version 2>/dev/null)" in
+		(*"$STAMP"*) cat <<-EOF
+			Already up to date
+
+			To force an update, run:
+
+			  curl https://llama.app/install.sh | FORCE_UPDATE=1 sh
+
+			EOF
+			return
+		esac
+	fi
 
 	(
 		rm -rf ~/.llama-app
