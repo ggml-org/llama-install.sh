@@ -112,7 +112,24 @@ function Main {
     if (!$LLAMA_VERSION) { Die "No version found" }
     "Version: $LLAMA_VERSION"
 
+    if ($LLAMA_VERSION -match "^b([0-9]+)$") {
+        $STAMP = "build $($Matches[1]),"
+    } elseif ($LLAMA_VERSION -match "^g([0-9a-f]+)$") {
+        $STAMP = "commit $($Matches[1]))"
+    } else {
+        Die "Invalid version: $LLAMA_VERSION"
+    }
     $INSTALL_DIR = Join-Path $env:LOCALAPPDATA "Microsoft\WindowsApps"
+    if (!$env:FORCE_UPDATE -and (Test-Path "$INSTALL_DIR\llama.exe") -and (& "$INSTALL_DIR\llama.exe" version | Out-String).Contains($STAMP)) {
+        "Already up to date"
+        ""
+        "To force an update, run:"
+        ""
+        "  `$env:FORCE_UPDATE = '1'"
+        "  irm https://llama.app/install.ps1 | iex"
+        ""
+        return
+    }
     $DIR = Join-Path $env:LOCALAPPDATA "llama-app"
     Remove-Item $DIR -Recurse -Force 2>$null
     New-Item -Path $DIR -Force -ItemType "Directory" | Out-Null
@@ -133,13 +150,6 @@ function Main {
 
     if ($LASTEXITCODE) {
         Die "Downloaded llama binary failed to run"
-    }
-    if ($LLAMA_VERSION -match "^b([0-9]+)$") {
-        $STAMP = "build $($Matches[1]),"
-    } elseif ($LLAMA_VERSION -match "^g([0-9a-f]+)$") {
-        $STAMP = "commit $($Matches[1]))"
-    } else {
-        Die "Invalid version: $LLAMA_VERSION"
     }
     if (!$Version.Contains($STAMP)) {
         Die "Version mismatch: expected $LLAMA_VERSION, got $Version"

@@ -117,6 +117,26 @@ main() {
 	[ "$LLAMA_VERSION" ] || die "No version found"
 	info "Version: $LLAMA_VERSION"
 
+	case "$LLAMA_VERSION" in (b|g|b*[!0-9]*|g*[!0-9a-f]*) ;;
+	(b*) STAMP="build ${LLAMA_VERSION#b},"  ;;
+	(g*) STAMP="commit ${LLAMA_VERSION#g})" ;;
+	esac
+	[ "$STAMP" ] || die "Invalid version: $LLAMA_VERSION"
+
+	if [ -z "$FORCE_UPDATE" ]; then
+		case "$(~/.local/bin/llama version 2>/dev/null)" in
+		(*"$STAMP"*) cat <<-EOF
+			Already up to date
+
+			To force an update, run:
+
+			  curl https://llama.app/install.sh | FORCE_UPDATE=1 sh
+
+			EOF
+			return
+		esac
+	fi
+
 	(
 		rm -rf ~/.llama-app
 		mkdir -p ~/.llama-app
@@ -141,14 +161,8 @@ main() {
 		return
 	fi
 
-	VERSION=$(~/.llama-app/llama version) || die \
+	VERSION=$(~/.llama-app/llama version 2>/dev/null) || die \
 		"Downloaded llama binary failed to run"
-
-	case "$LLAMA_VERSION" in (b|g|b*[!0-9]*|g*[!0-9a-f]*) ;;
-	(b*) STAMP="build ${LLAMA_VERSION#b},"  ;;
-	(g*) STAMP="commit ${LLAMA_VERSION#g})" ;;
-	esac
-	[ "$STAMP" ] || die "Invalid version: $LLAMA_VERSION"
 
 	case "$VERSION" in
 	(*"$STAMP"*) ;;
