@@ -117,6 +117,16 @@ main() {
 	[ "$LLAMA_VERSION" ] || die "No version found"
 	info "Version: $LLAMA_VERSION"
 
+	case "$LLAMA_VERSION" in (b|g|b*[!0-9]*|g*[!0-9a-f]*) ;;
+	(b*) STAMP="build ${LLAMA_VERSION#b},"  ;;
+	(g*) STAMP="commit ${LLAMA_VERSION#g})" ;;
+	esac
+	[ "$STAMP" ] || die "Invalid version: $LLAMA_VERSION"
+
+	case "$(~/.local/bin/llama version 2>/dev/null)" in
+	(*"$STAMP"*) info "Already up to date"; return ;;
+	esac
+
 	(
 		rm -rf ~/.llama-app
 		mkdir -p ~/.llama-app
@@ -141,14 +151,8 @@ main() {
 		return
 	fi
 
-	VERSION=$(~/.llama-app/llama version) || die \
+	VERSION=$(~/.llama-app/llama version 2>/dev/null) || die \
 		"Downloaded llama binary failed to run"
-
-	case "$LLAMA_VERSION" in (b|g|b*[!0-9]*|g*[!0-9a-f]*) ;;
-	(b*) STAMP="build ${LLAMA_VERSION#b},"  ;;
-	(g*) STAMP="commit ${LLAMA_VERSION#g})" ;;
-	esac
-	[ "$STAMP" ] || die "Invalid version: $LLAMA_VERSION"
 
 	case "$VERSION" in
 	(*"$STAMP"*) ;;
