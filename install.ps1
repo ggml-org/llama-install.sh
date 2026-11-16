@@ -120,7 +120,7 @@ function Main {
         Die "Invalid version: $LLAMA_VERSION"
     }
     $INSTALL_DIR = Join-Path $env:LOCALAPPDATA "Microsoft\WindowsApps"
-    if (!$env:FORCE_UPDATE -and Test-Path "$INSTALL_DIR\llama.exe" -and (& "$INSTALL_DIR\llama.exe" version | Out-String).Contains($STAMP)) {
+    if (!$env:FORCE_UPDATE -and (Test-Path "$INSTALL_DIR\llama.exe") -and (& "$INSTALL_DIR\llama.exe" version | Out-String).Contains($STAMP)) {
         "Already up to date"
         ""
         "To force an update, run:"
