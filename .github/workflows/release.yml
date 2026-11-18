@@ -54,7 +54,7 @@ jobs:
           LLAMACPP_VERSION: ${{ inputs.llamacpp_version }}
           VERSION: ${{ inputs.llamacpp_version }}
         run: |
-          cmake -B build
+          cmake -B build/fetch
           [ "$VERSION" ] || VERSION="b$(git -C deps/llamacpp rev-list --count HEAD)"
           tee -a "$GITHUB_OUTPUT" <<EOF
           llamacpp_commit=$(git -C deps/llamacpp rev-parse HEAD)
@@ -71,13 +71,14 @@ jobs:
         env:
           VERSION: ${{ steps.llamacpp.outputs.llamacpp_version }}
         run: |
-          cd deps/llamacpp/tools/ui
-          npm ci
-          LLAMA_BUILD_NUMBER="$VERSION" npm run build
-          npx vitest --project=unit --run tests/unit/pwa.spec.ts
-          cd -
+          cmake -S deps/llamacpp -B build \
+            -DLLAMA_BUILD_UI=ON \
+            -DLLAMA_USE_PREBUILT_UI=OFF \
+            -DLLAMA_BUILD_NUMBER="$VERSION"
+          cmake --build build --target llama-ui-assets
+          test -s build/ui/apps/chat/dist/index.html
           mkdir -p output
-          tar -czf output/dist.tar.gz -C deps/llamacpp/tools/ui/dist .
+          tar -czf output/dist.tar.gz -C build/ui/apps/chat/dist .
           (cd output && sha256sum dist.tar.gz > dist.tar.gz.sha256)
 
       - name: Setup Java
