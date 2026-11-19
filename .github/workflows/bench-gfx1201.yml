@@ -149,6 +149,7 @@ jobs:
           mkdir -p "output/$NAME"
           bench() { ~/.llama-app/llama bench -v -fa 0,1 -hf "$MODEL:$QUANT" -o jsonl -r 10 "$@"; }
           bench > "output/$NAME/$QUANT.jsonl"
+          bench -p 0 -n 128 -d 512-32768*2 > "output/$NAME/$QUANT-tg.jsonl"
 
       - name: Push
         if: ${{ !inputs.skip_push }}
