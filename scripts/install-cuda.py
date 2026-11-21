@@ -31,6 +31,7 @@ DEST = ROOT.with_suffix(".tmp")
 COMPONENTS = [
     ("libcublas",      "target", None, None),
     ("cuda_cudart",    "target", None, None),
+    ("cuda_nvml_dev",  "target", None, None),
     ("cuda_cccl",      "target", None, lambda m: "cccl" if "cccl" in m else "cuda_cccl"),
     ("cuda_crt",       "target", lambda m, t: "cuda_crt" in m, None),
     ("libnvvm",        "host",   lambda m, t: "libnvvm" in m, None),
